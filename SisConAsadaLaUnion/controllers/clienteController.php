@@ -9,8 +9,6 @@ include_once("../models/clienteData.php");
 
 function principal(){
 
-	header("Content-Type: application/json");
-
     if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
 
            $_POST['metodo']();

@@ -43,7 +43,7 @@ function enviarFormularioCliente(idForm,url,metodoNombre,datosFormulario){
     },
     error: function(error){
 
-    alertify.error("Es posible que se haya presentado un error de conexión, inténtelo nuevamente");
+    alertify.error("Error de conexión al tratar de registrar el cliente, inténtelo de nuevo");
 
     $(".alertify-logs").css("top", scrollY+"px");
 

@@ -12,7 +12,7 @@ class clienteData{
 
 	function __construct(){
 	
-		$this->baseDatos = new conexionBaseDatos("mysql.hostinger.es","u932158522_ucr22","tcu663AsadaLaUnion","u932158522_asada");
+		$this->baseDatos = new conexionBaseDatos("localhost","root","1234","BDASADA_LaUnion");
 	}
 
 
