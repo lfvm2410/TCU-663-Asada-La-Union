@@ -40,6 +40,26 @@
         placeholder="Ingrese el correo electrónico del cliente" required/> 
      </div>
      <div class="form-group">
+        <label id="idLblTel1Cli" for="idTipoTel1Cliente">Teléfono 1:</label>
+        <select class="form-control" name="tipoTel1Cliente" id="idTipoTel1Cliente" required>
+             <option value="">Seleccione</option>
+             <option value="Fijo">Fijo</option>
+             <option value="Móvil">Móvil</option>
+        </select>
+        <input type="number" class="form-control" name="numTel1Cliente" id="idNumTel1Cliente" minlength="8" maxlength="8"
+        placeholder="Ingrese un número de teléfono" required/> 
+     </div>
+     <div class="form-group">
+        <label id="idLblTel2Cli" for="idTipoTel2Cliente" for="idNumTel2Cliente">Teléfono 2 (Opcional):</label>
+        <select class="form-control" name="tipoTel2Cliente" id="idTipoTel2Cliente">
+             <option value="">Seleccione</option>
+             <option value="Fijo">Fijo</option>
+             <option value="Móvil">Móvil</option>
+        </select>
+        <input type="number" class="form-control" name="numTel2Cliente" id="idNumTel2Cliente" minlength="8" maxlength="8"
+        placeholder="Ingrese un número de teléfono"/>
+     </div>
+     <div class="form-group">
         <label id="idLblDirCli" for="idDireccionCliente">Dirección:</label> 
         <textarea class="form-control" name="direccionCliente" rows="2" id="idDireccionCliente" maxlength="300" 
         placeholder="Ingrese la dirección del cliente" required></textarea>
