@@ -4,7 +4,7 @@ include_once("conexionBaseDatos.php");
 include_once("../domain/telefono.php");
 
 /*
-* Clase encargada de contener todas las operaciones de datos referentes al modulo de mantenimiento de cliente
+* Clase encargada de contener todas las operaciones de datos referentes a la clase cliente
 */
 
 class clienteData{
