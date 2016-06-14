@@ -1,103 +1,148 @@
-/*
-//Metodo principal (llamado de todas las funciones hechas en este .js)
-*/
+  /*
+  //Metodo principal (llamado de todas las funciones hechas en este .js)
+  */
 
-$(document).on("ready", function () {
+  $(document).on("ready", function () {
 
-var idForm = $("#idRegistrarClienteForm");
+  var idForm = $("#idRegistrarClienteForm");
 
-activarEnvioDatos(idForm);
+  var idCedula = $("#idCedulaCliente");
 
-});
+  blurCampos(idCedula,"verificarCedulaExistente",idCedula.val(),"de la cédula digitada");
 
-/*
-//Metodo para enviar el formulario de cliente, usa ajax para la comunicacion del servidor
-*/
+  activarEnvioDatos(idForm);
 
-function enviarFormularioCliente(idForm,url,metodoNombre,datosFormulario){
-
-  var scrollY = window.pageYOffset;
-
-  $.ajax({
-    url:  url,
-    type: "POST",
-    data: datosFormulario+"&metodo="+metodoNombre,
-    success: function(respuesta){
-
-    if (respuesta == "true") {
-    	
-    	  alertify.success("Cliente registrado con éxito");
-
-        $(".alertify-logs").css("top", scrollY+"px");
-
-    	  limpiarCamposForm(idForm);
-
-    }else{
-    	
-        alertify.error("Ha ocurrido un error al tratar de registrar el cliente, inténtelo de nuevo");
-
-        $(".alertify-logs").css("top", scrollY+"px");
-
-    }
-
-    },
-    error: function(error){
-
-    alertify.error("Error de conexión al tratar de registrar el cliente, inténtelo de nuevo");
-
-    $(".alertify-logs").css("top", scrollY+"px");
-
-    }
   });
 
-}
+  /*
+  //Metodo para enviar el formulario de cliente, usa ajax para la comunicacion del servidor
+  */
 
-/*
-//Metodo para que el usuario confirme la transaccion
-*/
+  function enviarFormularioCliente(idForm,url,metodoNombre,datosFormulario){
 
-function confirmarTransaccion(mensaje) {
+    var scrollY = window.pageYOffset;
 
-return confirm(mensaje);
+    $.ajax({
+      url:  url,
+      type: "POST",
+      data: datosFormulario+"&metodo="+metodoNombre,
+      success: function(respuesta){
 
-}
+      if (respuesta == "true") {
+      	
+      	  alertify.success("Cliente registrado con éxito");
 
-/*
-//Metodo para limpiar campos de formulario
-*/
+          $(".alertify-logs").css("top", scrollY+"px");
 
-function limpiarCamposForm(idForm){
+      	  limpiarCamposForm(idForm);
 
-idForm.each (function(){
+      }else{
+      	
+          alertify.error("Ha ocurrido un error al tratar de registrar el cliente, inténtelo de nuevo");
+
+          $(".alertify-logs").css("top", scrollY+"px");
+
+      }
+
+      },
+      error: function(error){
+
+      alertify.error("Error de conexión al tratar de registrar el cliente, inténtelo de nuevo");
+
+      $(".alertify-logs").css("top", scrollY+"px");
+
+      }
+    });
+
+  }
+
+  /*
+  //Metodo para que el usuario confirme la transaccion
+  */
+
+  function confirmarTransaccion(mensaje) {
+
+  return confirm(mensaje);
+
+  }
+
+  /*
+  //Metodo para limpiar campos de formulario
+  */
+
+  function limpiarCamposForm(idForm){
+
+  idForm.each (function(){
+    
+    this.reset();
+
+  });
+
+  }
+
+  /*
+  //Metodo para enviar el formulario de registro de cliente
+  */
+
+  function activarEnvioDatos(idForm){
+
+    idForm.on('submit', function(e){
+
+      e.preventDefault(); 
+
+    	if (confirmarTransaccion('¿Está seguro de proceder con el registro del cliente?')) 
+    		{
+    			
+  		var url = "../controllers/clienteController.php";
+
+  		var metodoNombre = "registrarCliente";
+
+  		var datosFormulario = idForm.serialize();
+
+  		enviarFormularioCliente(idForm,url,metodoNombre,datosFormulario);
+
+    		}
+  });
+
+  }
+
+  /*
+  //Metodo para activar evento blur en el campo que se necesite
+  */
+
+  function blurCampos(idCampo,metodoNombre,datosEnvio,mensajeError){
+
+      idCampo.blur(function(){
+      
+      verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError);
+
+      });
+  }
+
+  /*
+  //Metodo ajax que permite verificar la existencia de varios campos del formulario en la base de datos
+  */
+
+  function verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError){
+        //$("#infoVerificacionCedula").html("<img src='loader.gif'/>").fadeOut(1000);
+
+        $.ajax({
+          url:  "../controllers/clienteController.php",
+          type: "POST",
+          data: "valor="+datosEnvio+"&metodo="+metodoNombre,
+          success: function(respuesta) {
+
+          $('#infoVerificacionCedula').fadeIn(1000).html(respuesta);
+          
+          },
+          error: function(error){
+
+          alertify.error("Error de conexión al tratar de verificar la disponibilidad "+mensajeError);
+
+          $(".alertify-logs").css("top", scrollY+"px");
+
+          }
+
+        });
   
-  this.reset();
-
-});
-
-}
-
-/*
-//Metodo para enviar el formulario de registro de cliente
-*/
-
-function activarEnvioDatos(idForm){
-
-  idForm.on('submit', function(e){
-
-    e.preventDefault(); 
-
-  	if (confirmarTransaccion('¿Está seguro de proceder con el registro del cliente?')) 
-  		{
-  			
-		var url = "../controllers/clienteController.php";
-
-		var metodoNombre = "registrarCliente";
-
-		var datosFormulario = idForm.serialize();
-
-		enviarFormularioCliente(idForm,url,metodoNombre,datosFormulario);
-
-  		}
-});
-
-}
+  }

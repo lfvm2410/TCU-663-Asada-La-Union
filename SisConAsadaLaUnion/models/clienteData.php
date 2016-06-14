@@ -1,104 +1,133 @@
-<?php 
+    <?php 
 
-include_once("conexionBaseDatos.php");
-include_once("../domain/telefono.php");
-
-/*
-* Clase encargada de contener todas las operaciones de datos referentes a la clase cliente
-*/
-
-class clienteData{
-		
-    private $baseDatos;
-
-	function __construct(){
-	
-		$this->baseDatos = new conexionBaseDatos("localhost","root","1234","BDASADA_LaUnion");
-	}
-
+    include_once("conexionBaseDatos.php");
+    include_once("../domain/telefono.php");
 
     /*
-    ** Metodo encargado de registrar un cliente en la base de datos
+    * Clase encargada de contener todas las operaciones de datos referentes a la clase cliente
     */
-    
-    function registrarCliente($cliente, $listaTelefonos){
 
-    $conexionBD = $this->baseDatos->getConexion();
+    class clienteData{
+    		
+        private $baseDatos;
 
-    mysql_set_charset('utf8');
+    	function __construct(){
+    	
+    		$this->baseDatos = new conexionBaseDatos("localhost","root","1234","BDASADA_LaUnion");
+    	}
 
-    $cedula = $cliente->getCedula();
-    $nombre = $cliente->getNombre();
-    $apellidos = $cliente->getApellidos();
-    $correoElectronico = $cliente->getCorreoElectronico();
-    $direccion = $cliente->getDireccion();
-    $numeroPlano = $cliente->getNumeroPlano(); 
 
-    $estadoTransaccion = false;
-    $contadorTransaccionesTel = 0;
+        /*
+        ** Metodo encargado de registrar un cliente en la base de datos
+        */
+        
+        function registrarCliente($cliente, $listaTelefonos){
 
-    mysql_query("SET AUTOCOMMIT=0",$conexionBD);  
+        $conexionBD = $this->baseDatos->getConexion();
 
-    mysql_query("START TRANSACTION",$conexionBD);
+        mysql_set_charset('utf8');
 
-    // Se registra una persona en la base de datos
+        $cedula = $cliente->getCedula();
+        $nombre = $cliente->getNombre();
+        $apellidos = $cliente->getApellidos();
+        $correoElectronico = $cliente->getCorreoElectronico();
+        $direccion = $cliente->getDireccion();
+        $numeroPlano = $cliente->getNumeroPlano(); 
 
-    $resultadoRegistroPersona = mysql_query("call SP_registrarPersona('$cedula','$nombre'
-            ,'$apellidos','$correoElectronico','$direccion',@idPersona)",$conexionBD);
+        $estadoTransaccion = false;
+        $contadorTransaccionesTel = 0;
 
-    // Se toma la ultima persona que ha sido ingresada a la base de datos
+        mysql_query("SET AUTOCOMMIT=0",$conexionBD);  
 
-    $consultaPersona = mysql_query("select @idPersona",$conexionBD);
-    
-    $retornoRegistroPersona = mysql_fetch_array($consultaPersona);
+        mysql_query("START TRANSACTION",$conexionBD);
 
-    // Se captura la persona que se ha consultado
-    
-    $idPersona = $retornoRegistroPersona['@idPersona'];
+        // Se registra una persona en la base de datos
 
-    // Se registra un cliente en la base de datos
+        $resultadoRegistroPersona = mysql_query("call SP_registrarPersona('$cedula','$nombre'
+                ,'$apellidos','$correoElectronico','$direccion',@idPersona)",$conexionBD);
 
-    $resultadoRegistroCliente = mysql_query("call SP_registrarCliente('$numeroPlano','$idPersona')", $conexionBD);
+        // Se toma la ultima persona que ha sido ingresada a la base de datos
 
-    // Se recorre la lista de telefonos para insertar en la base de datos
+        $consultaPersona = mysql_query("select @idPersona",$conexionBD);
+        
+        $retornoRegistroPersona = mysql_fetch_array($consultaPersona);
 
-    foreach ($listaTelefonos as $telefono) { 
+        // Se captura la persona que se ha consultado
+        
+        $idPersona = $retornoRegistroPersona['@idPersona'];
 
-     $tipo = $telefono->getTipo();
+        // Se registra un cliente en la base de datos
 
-     $numero = $telefono->getNumero();
+        $resultadoRegistroCliente = mysql_query("call SP_registrarCliente('$numeroPlano','$idPersona')", $conexionBD);
 
-     // Se registra cada telefono perteneciente a la persona
+        // Se recorre la lista de telefonos para insertar en la base de datos
 
-     $registroTelefono = mysql_query("call SP_registrarTelefono('$tipo','$numero',$idPersona)", $conexionBD);   
+        foreach ($listaTelefonos as $telefono) { 
 
-      if (!$registroTelefono) {
+         $tipo = $telefono->getTipo();
 
-        // Contador para controlar que cada uno de los registros se esta efectuando o no
+         $numero = $telefono->getNumero();
 
-        $contadorTransaccionesTel++;
-                         
-      }
- 
-    }        
+         // Se registra cada telefono perteneciente a la persona
 
-    if ($resultadoRegistroPersona && $consultaPersona && $resultadoRegistroCliente && $contadorTransaccionesTel == 0) {  // determina el commit y rollback dependiendo del estado de las transacciones
+         $registroTelefono = mysql_query("call SP_registrarTelefono('$tipo','$numero',$idPersona)", $conexionBD);   
+
+          if (!$registroTelefono) {
+
+            // Contador para controlar que cada uno de los registros se esta efectuando o no
+
+            $contadorTransaccionesTel++;
+                             
+          }
+     
+        }        
+
+        if ($resultadoRegistroPersona && $consultaPersona && $resultadoRegistroCliente && $contadorTransaccionesTel == 0) {  // determina el commit y rollback dependiendo del estado de las transacciones
+               
+        mysql_query("COMMIT",$conexionBD);
+
+        $estadoTransaccion = true;
+                 
+        }else{
+              
+        mysql_query("ROLLBACK",$conexionBD);
+
+        }
            
-    mysql_query("COMMIT",$conexionBD);
+        mysql_close($conexionBD);     
 
-    $estadoTransaccion = true;
-             
-    }else{
-          
-    mysql_query("ROLLBACK",$conexionBD);
+        return $estadoTransaccion;
+    }
+
+        /*
+        ** Metodo encargado de comprobar si un número de plano existe dentro de la base de datos
+        */
+        
+        function comprobarExistenciaNumeroPlano($numeroPlano){
+
+        $conexionBD = $this->baseDatos->getConexion();
+
+        mysql_set_charset('utf8');
+
+        $consultaPlanoExistente = mysql_query("call SP_comprobarExistenciaNumeroPlano('$numeroPlano')",$conexionBD) or die("Error al tratar de verificar el número de plano ingresado en la base de datos");
+
+        $planoExistente = false;
+
+        if ($consultaPlanoExistente) {
+            
+            if (mysql_num_rows($consultaPlanoExistente) > 0) {
+
+                $planoExistente = true;
+
+            }
+        }
+
+        mysql_close($conexionBD);
+
+        return $planoExistente;
+
+        }
 
     }
-       
-    mysql_close($conexionBD);     
 
-    return $estadoTransaccion;
-}
-
-}
-
-?>
+    ?>
