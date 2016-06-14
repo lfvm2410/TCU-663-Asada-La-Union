@@ -1,6 +1,7 @@
 <?php 
 
 include_once("conexionBaseDatos.php");
+include_once("../domain/telefono.php");
 
 /*
 * Clase encargada de contener todas las operaciones de datos referentes al modulo de mantenimiento de cliente
@@ -20,7 +21,7 @@ class clienteData{
     ** Metodo encargado de registrar un cliente en la base de datos
     */
     
-    function registrarCliente($cliente){
+    function registrarCliente($cliente, $listaTelefonos){
 
     $conexionBD = $this->baseDatos->getConexion();
 
@@ -34,6 +35,7 @@ class clienteData{
     $numeroPlano = $cliente->getNumeroPlano(); 
 
     $estadoTransaccion = false;
+    $contadorTransaccionesTel = 0;
 
     mysql_query("SET AUTOCOMMIT=0",$conexionBD);  
 
@@ -56,9 +58,31 @@ class clienteData{
 
     // Se registra un cliente en la base de datos
 
-    $resultadoRegistroCliente = mysql_query("call SP_registrarCliente('$numeroPlano','$idPersona')", $conexionBD);  
+    $resultadoRegistroCliente = mysql_query("call SP_registrarCliente('$numeroPlano','$idPersona')", $conexionBD);
 
-    if ($resultadoRegistroPersona && $consultaPersona && $resultadoRegistroCliente) {  // determina el commit y rollback dependiendo del estado de las transacciones
+    // Se recorre la lista de telefonos para insertar en la base de datos
+
+    foreach ($listaTelefonos as $telefono) { 
+
+     $tipo = $telefono->getTipo();
+
+     $numero = $telefono->getNumero();
+
+     // Se registra cada telefono perteneciente a la persona
+
+     $registroTelefono = mysql_query("call SP_registrarTelefono('$tipo','$numero',$idPersona)", $conexionBD);   
+
+      if (!$registroTelefono) {
+
+        // Contador para controlar que cada uno de los registros se esta efectuando o no
+
+        $contadorTransaccionesTel++;
+                         
+      }
+ 
+    }        
+
+    if ($resultadoRegistroPersona && $consultaPersona && $resultadoRegistroCliente && $contadorTransaccionesTel == 0) {  // determina el commit y rollback dependiendo del estado de las transacciones
            
     mysql_query("COMMIT",$conexionBD);
 
