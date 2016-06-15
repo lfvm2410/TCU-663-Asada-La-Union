@@ -80,8 +80,6 @@
       
       }else{
 
-        echo "cedula: ".$cedula;
-
          echo "<div class='alert alert-success'>
                <strong><span class='glyphicon glyphicon-ok'></span></strong> 
                     Cédula disponible para ser registrada

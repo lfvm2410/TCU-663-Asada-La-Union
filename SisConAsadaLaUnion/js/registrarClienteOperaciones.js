@@ -8,7 +8,7 @@
 
   var idCedula = $("#idCedulaCliente");
 
-  blurCampos(idCedula,"verificarCedulaExistente",idCedula.val(),"de la cédula digitada");
+  blurCampos(idCedula,"verificarCedulaExistente","de la cédula ingresada");
 
   activarEnvioDatos(idForm);
 
@@ -110,11 +110,21 @@
   //Metodo para activar evento blur en el campo que se necesite
   */
 
-  function blurCampos(idCampo,metodoNombre,datosEnvio,mensajeError){
+  function blurCampos(idCampo,metodoNombre,mensajeError){
 
       idCampo.blur(function(){
-      
+
+      var datosEnvio = idCampo.val();
+
+      if (datosEnvio!="") {
+          
       verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError);
+
+      }else{
+
+       $('#mensajeVerificacionCedula').html("");
+
+      }
 
       });
   }
@@ -132,7 +142,7 @@
           data: "valor="+datosEnvio+"&metodo="+metodoNombre,
           success: function(respuesta) {
 
-          $('#infoVerificacionCedula').fadeIn(1000).html(respuesta);
+          $('#mensajeVerificacionCedula').fadeIn(1000).html(respuesta);
           
           },
           error: function(error){

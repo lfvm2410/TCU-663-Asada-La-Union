@@ -23,7 +23,7 @@
         <input type="number" class="form-control" name="cedulaCliente" id="idCedulaCliente" maxlength="16" 
         placeholder="Ingrese la cédula del cliente" required/>
      </div>
-     <div id="infoVerificacionCedula"></div>
+     <div class="row" id="mensajeVerificacionCedula"></div>
      <div class="form-group">
         <label  id="idLblNomCli" for="idNombreCliente">Nombre:</label> 
         <input type="text" class="form-control" name="nombreCliente" id="idNombreCliente" maxlength="30" 
