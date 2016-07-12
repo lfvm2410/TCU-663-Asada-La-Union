@@ -11,6 +11,7 @@
     	function __construct(){
 
             parent::__construct();
+            
             $this->listaTelefonos = array();
     	
     	}
@@ -41,7 +42,7 @@
         
         function comprobarExistenciaTelefono($numeroTelefono){
 
-        $conexionBD = $this->baseDatos->getConexion();
+        $conexionBD = $this->getConexionInstance()->getConexion();
 
         mysql_set_charset('utf8');
 
