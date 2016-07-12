@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
 ** Clase dominio de LecturaMedidor
@@ -59,4 +59,5 @@ class lecturaMedidor
 		return $this->idServicio;
 	}
 }
+
 ?>

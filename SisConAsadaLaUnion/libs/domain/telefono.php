@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 /*
 ** Clase dominio de telefono
 */

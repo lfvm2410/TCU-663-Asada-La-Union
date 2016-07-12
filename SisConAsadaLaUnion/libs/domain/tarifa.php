@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
 ** Clase dominio de tarifa
@@ -83,4 +83,5 @@ class tarifa
 		return $this->idAbonadoAsada;
 	}
 }
+
 ?>

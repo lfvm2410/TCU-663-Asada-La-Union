@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
 ** Clase dominio de servicio
@@ -60,4 +60,5 @@ class servicio
 		return $this->fechaModificacion;
 	}
 }
+
 ?>

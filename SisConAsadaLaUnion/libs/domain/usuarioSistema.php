@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 /*
 ** Clase dominio de usuarioSistema
 */
@@ -96,4 +95,5 @@ class usuarioSistema
 		return $this->contrasenia;
 	}
 }
+
 ?>
