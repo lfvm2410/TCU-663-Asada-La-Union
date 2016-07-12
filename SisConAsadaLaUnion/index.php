@@ -43,14 +43,14 @@
       	 require_once LIBS.$class.".php";
       }
 
-      if (file_exists(LIBS."domain/".$class.".php")) {
+      if (file_exists(DOMAIN.$class.".php")) {
 
-      	 require_once LIBS."domain/".$class.".php";
+      	 require_once DOMAIN.$class.".php";
       }
 
-      if (file_exists("models/".$class.".php")) {
+      if (file_exists(MODELS.$class.".php")) {
 
-      	 require_once "models/".$class.".php";
+      	 require_once MODELS.$class.".php";
       }
 
 	});
