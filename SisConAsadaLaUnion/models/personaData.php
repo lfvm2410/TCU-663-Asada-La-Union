@@ -1,20 +1,15 @@
-    <?php 
-
-    include_once("conexionBaseDatos.php");
-
+<?php
+    
     /*
     * Clase encargada de contener todas las operaciones de datos referentes a la clase persona
     */
 
-    class personaData{
-    		
-        private $baseDatos;
+    class personaData extends modelo{
 
     	function __construct(){
     	
-    		$this->baseDatos = new conexionBaseDatos("localhost","root","1234","BDASADA_LaUnion");
+    		parent::__construct();
     	}
-
 
         /*
         ** Metodo encargado de comprobar si una cédula existe dentro de la base de datos
@@ -75,5 +70,4 @@
         }
 
     }
-
-    ?>
+?>

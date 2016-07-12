@@ -1,19 +1,14 @@
-    <?php 
-
-    include_once("conexionBaseDatos.php");
-    include_once("../domain/telefono.php");
+<?php
 
     /*
     * Clase encargada de contener todas las operaciones de datos referentes a la clase cliente
     */
 
-    class clienteData{
-    		
-        private $baseDatos;
+    class clienteData extends modelo{
 
     	function __construct(){
-    	
-    		$this->baseDatos = new conexionBaseDatos("localhost","root","1234","BDASADA_LaUnion");
+
+    		parent::__construct();
     	}
 
 
@@ -129,5 +124,5 @@
         }
 
     }
-
-    ?>
+    
+?>

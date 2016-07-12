@@ -18,14 +18,14 @@
   //Metodo para enviar el formulario de cliente, usa ajax para la comunicacion del servidor
   */
 
-  function enviarFormularioCliente(idForm,url,metodoNombre,datosFormulario){
+  function enviarFormularioCliente(idForm,url,datosFormulario){
 
     var scrollY = window.pageYOffset;
 
     $.ajax({
       url:  url,
       type: "POST",
-      data: datosFormulario+"&metodo="+metodoNombre,
+      data: datosFormulario,
       success: function(respuesta){
 
       if (respuesta == "true") {
@@ -35,6 +35,8 @@
           $(".alertify-logs").css("top", scrollY+"px");
 
       	  limpiarCamposForm(idForm);
+
+          $('#mensajeVerificacionCedula').html("");
 
       }else{
       	
@@ -93,13 +95,11 @@
     	if (confirmarTransaccion('¿Está seguro de proceder con el registro del cliente?')) 
     		{
     			
-  		var url = "../controllers/clienteController.php";
-
-  		var metodoNombre = "registrarCliente";
+  		var url = "../clienteController/registrarCliente";
 
   		var datosFormulario = idForm.serialize();
 
-  		enviarFormularioCliente(idForm,url,metodoNombre,datosFormulario);
+  		enviarFormularioCliente(idForm,url,datosFormulario);
 
     		}
   });
@@ -137,9 +137,9 @@
         //$("#infoVerificacionCedula").html("<img src='loader.gif'/>").fadeOut(1000);
 
         $.ajax({
-          url:  "../controllers/clienteController.php",
+          url:  "../clienteController/verificarCedulaExistente",
           type: "POST",
-          data: "valor="+datosEnvio+"&metodo="+metodoNombre,
+          data: "valor="+datosEnvio,
           success: function(respuesta) {
 
           $('#mensajeVerificacionCedula').fadeIn(1000).html(respuesta);

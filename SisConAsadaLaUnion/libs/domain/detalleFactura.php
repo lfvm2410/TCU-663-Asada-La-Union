@@ -46,4 +46,5 @@ class detalleFactura{
 		return $this->monto;
 	}
 }
+
 ?>

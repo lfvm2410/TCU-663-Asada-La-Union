@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Cliente</title>
-    <script src="../js/jquery-1.12.0.js" type="text/javascript"></script>
-    <script src="../css/bootstrap-3.3.6-dist/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="../js/alertify.js-0.3.11/lib/alertify.js"></script>
-    <script src="../js/alertify.js-0.3.11/lib/alertify.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap-3.3.6-dist/css/bootstrap.min.css">
-    <link href="../js/alertify.js-0.3.11/themes/alertify.bootstrap.css" rel="stylesheet" />
-    <link href="../js/alertify.js-0.3.11/themes/alertify.core.css" rel="stylesheet" />
-    <link href="../js/alertify.js-0.3.11/themes/alertify.default.css" rel="stylesheet" />
-    <script src="../js/registrarClienteOperaciones.js" type="text/javascript"></script>
+    <script src="../public/js/jquery-1.12.0.js" type="text/javascript"></script>
+    <script src="../public/css/bootstrap-3.3.6-dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../public/js/alertify.js-0.3.11/lib/alertify.js"></script>
+    <script src="../public/js/alertify.js-0.3.11/lib/alertify.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../public/css/bootstrap-3.3.6-dist/css/bootstrap.min.css">
+    <link href="../public/js/alertify.js-0.3.11/themes/alertify.bootstrap.css" rel="stylesheet" />
+    <link href="../public/js/alertify.js-0.3.11/themes/alertify.core.css" rel="stylesheet" />
+    <link href="../public/js/alertify.js-0.3.11/themes/alertify.default.css" rel="stylesheet" />
+    <script src="../public/js/registrarClienteOperaciones.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="container" style="margin-top:2%; width:30%;">

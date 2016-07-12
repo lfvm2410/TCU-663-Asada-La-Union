@@ -1,22 +1,22 @@
-    <?php
+<?php
 
-    include_once("../domain/cliente.php");
-    include_once("../domain/telefono.php");
-    include_once("../models/clienteData.php");
-    include_once("../models/personaData.php");
-    include_once("../models/telefonoData.php");
+    class clienteController extends controlador
+    {
+      
+      function __construct(){
+
+      parent::__construct();
+
+    }
 
     /*
-    ** Metodo principal
+    // Metodos para mostrar las vistas asociadas a este controlador
     */
 
-    function principal(){
+    function registrarClienteForm(){
+  
+    $this->vista->render($this,'registrarCliente');
 
-        if (isset($_POST['metodo']) && !empty($_POST['metodo'])) {
-
-               $_POST['metodo']();
-
-           }
     }
 
     /*
@@ -25,7 +25,7 @@
 
     function registrarCliente(){
 
-    	$cedula = $_POST['cedulaCliente'];
+      	$cedula = $_POST['cedulaCliente'];
         $nombre = $_POST['nombreCliente'];
         $apellidos = $_POST['apellidosCliente'];
         $correoElectronico = $_POST['correoCliente'];
@@ -36,8 +36,6 @@
 
         $cliente = new cliente(0,$cedula,$nombre,$apellidos,$correoElectronico,$direccion,
         	                   0,$numeroPlano);
-        
-        $dataCliente = new clienteData();
 
         $dataTelefono = new telefonoData();
 
@@ -45,10 +43,8 @@
         $dataTelefono->setTelefonoALista($telefono2);
 
         $listaTelefonos = $dataTelefono->getListaTelefonos(); 
-        
-        $resultadoRegistroCliente = $dataCliente->registrarCliente($cliente,$listaTelefonos);
 
-        if ($resultadoRegistroCliente) {
+        if ($this->modelo->registrarCliente($cliente,$listaTelefonos)) {
              
             echo "true";
 
@@ -69,9 +65,7 @@
 
       $dataPersona = new personaData();
 
-      $existenciaCedula = $dataPersona->comprobarExistenciaCedula($cedula);
-
-      if ($existenciaCedula) {
+      if ($dataPersona->comprobarExistenciaCedula($cedula)) {
         
          echo "<div class='alert alert-danger'>
                <strong><span class='glyphicon glyphicon-remove'></span></strong> 
@@ -89,6 +83,6 @@
     
     }
 
-    principal();
+  }
 
-    ?>
+?>

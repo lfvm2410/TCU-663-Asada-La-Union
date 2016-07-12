@@ -1,10 +1,8 @@
-<?php 
+<?php
 
 /*
 ** Clase dominio de cliente
 */
-
-include_once("persona.php");
 
 class cliente extends persona
 {

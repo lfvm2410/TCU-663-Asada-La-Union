@@ -1,15 +1,16 @@
-    <?php 
+<?php
 
     /*
     * Clase encargada de contener todas las operaciones de datos referentes al modulo de mantenimiento de cliente
     */
 
-    class telefonoData{
+    class telefonoData extends modelo{
     		
         private $listaTelefonos;
 
     	function __construct(){
 
+            parent::__construct();
             $this->listaTelefonos = array();
     	
     	}
@@ -64,5 +65,4 @@
         }
 
     }
-
-    ?>
+?>

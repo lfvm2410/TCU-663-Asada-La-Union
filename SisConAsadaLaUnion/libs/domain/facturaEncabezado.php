@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 /*
 ** Clase dominio de facturaEncabezado
 */
@@ -143,4 +142,5 @@ class facturaEncabezado
 	}
 
 }
+
 ?>
