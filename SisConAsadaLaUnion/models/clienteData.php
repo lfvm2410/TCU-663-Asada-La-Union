@@ -123,6 +123,36 @@
 
         }
 
+        function getClientePorCedula($cedulaCliente){
+
+        $conexionBD = $this->baseDatos->getConexion();
+
+        mysql_set_charset('utf8');
+
+        $consultaCliente = mysql_query("call SP_obtenerClientePorCedula('$cedulaCliente')",$conexionBD);
+
+        $cliente = array();
+
+        if($consultaCliente != NULL){
+
+            $cli = mysql_fetch_array($consultaCliente);
+            if(mysql_num_rows($consultaCliente) > 0){
+                
+                $numeroPlano = $cli['numeroPlano_Cliente'];
+                $cedula = $cli['cedula_Persona'];
+                $nombre = $cli['nombre_Persona'];
+                $apellidos = $cli['apellidos_Persona'];
+
+                $cliente = array('numeroPlano' => $numeroPlano, 'cedula' => $cedula, 'nombre' => $nombre, 'apellidos' => $apellidos);
+
+            }
+        }
+
+        mysql_close($conexionBD);
+        
+        return $cliente;
+    }
+
     }
     
 ?>
