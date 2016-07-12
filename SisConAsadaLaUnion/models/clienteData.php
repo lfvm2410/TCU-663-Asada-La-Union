@@ -18,7 +18,7 @@
         
         function registrarCliente($cliente, $listaTelefonos){
 
-        $conexionBD = $this->baseDatos->getConexion();
+        $conexionBD = $this->getConexionInstance()->getConexion();
 
         mysql_set_charset('utf8');
 
@@ -100,7 +100,7 @@
         
         function comprobarExistenciaNumeroPlano($numeroPlano){
 
-        $conexionBD = $this->baseDatos->getConexion();
+        $conexionBD = $this->getConexionInstance()->getConexion();
 
         mysql_set_charset('utf8');
 
@@ -125,7 +125,7 @@
 
         function getClientePorCedula($cedulaCliente){
 
-        $conexionBD = $this->baseDatos->getConexion();
+        $conexionBD = $this->getConexionInstance()->getConexion();
 
         mysql_set_charset('utf8');
 

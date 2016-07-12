@@ -17,7 +17,7 @@
         
         function comprobarExistenciaCedula($cedula){
 
-        $conexionBD = $this->baseDatos->getConexion();
+        $conexionBD = $this->getConexionInstance()->getConexion();
 
         mysql_set_charset('utf8');
 
@@ -46,7 +46,7 @@
         
         function comprobarExistenciaCorreoElectronico($correoElectronico){
 
-        $conexionBD = $this->baseDatos->getConexion();
+        $conexionBD = $this->getConexionInstance()->getConexion();
 
         mysql_set_charset('utf8');
 
