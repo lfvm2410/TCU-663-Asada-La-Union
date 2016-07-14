@@ -13,12 +13,22 @@
     // Metodos para mostrar las vistas asociadas a este controlador
     */
 
-    function registrarClienteForm(){
-  
-    $this->vista->render($this,'registrarCliente');
+    function index(){
+
+      //Temporal, mientras se define la vista principal del controlador
+
+      header('Location: '.URL);
+
+      exit;
 
     }
 
+    function registrarClienteForm(){
+  
+      $this->vista->render($this,'registrarCliente');
+
+    }
+    
     /*
     ** Metodo para registrar un cliente
     */

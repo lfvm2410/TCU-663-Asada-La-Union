@@ -95,7 +95,7 @@
     	if (confirmarTransaccion('¿Está seguro de proceder con el registro del cliente?')) 
     		{
     			
-  		var url = "../clienteController/registrarCliente";
+  		var url = "/SisConAsadaLaUnion/cliente/registrarCliente";
 
   		var datosFormulario = idForm.serialize();
 
@@ -137,7 +137,7 @@
         //$("#infoVerificacionCedula").html("<img src='loader.gif'/>").fadeOut(1000);
 
         $.ajax({
-          url:  "../clienteController/verificarCedulaExistente",
+          url: "/SisConAsadaLaUnion/cliente/verificarCedulaExistente",
           type: "POST",
           data: "valor="+datosEnvio,
           success: function(respuesta) {

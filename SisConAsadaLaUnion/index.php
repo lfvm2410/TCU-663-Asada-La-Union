@@ -1,36 +1,16 @@
 <?php
 
-	require_once("config.php");
+	require_once "config.php";
 
-	$url = (isset($_GET['url'])) ? $_GET['url']: "indexController/index";
+	$url = (isset($_GET['url'])) ? $_GET['url']: "index/index";
 
 	$url = explode("/",$url);
 
-	if (isset($url[0])) {
+	$controlador = (isset($url[0])) ? $url[0]."Controller" : "IndexController";
 
-	    $controlador = $url[0];
+	$metodo = (isset($url[1]) && $url[1] != null) ? $url[1] : "index";
 
-	}
-
-	if (isset($url[1])) {
-
-		if ($url[1] != '') {
-
-			$metodo = $url[1];
-
-		}
-  
-	}
-
-	if (isset($url[2])) {
-
-		if ($url[2] != '') {
-
-			$parametros = $url[2];
-
-		}
-	    
-	}
+	$parametros = (isset($url[2]) && $url[2] != null) ? $url[2] : null;
 
 	/*
     //Funcion de autocarga de clases para no utilizar includes
@@ -41,33 +21,34 @@
       if (file_exists(LIBS.$class.".php")) {
 
       	 require_once LIBS.$class.".php";
-      }
-
-      if (file_exists(DOMAIN.$class.".php")) {
+      
+      }elseif (file_exists(DOMAIN.$class.".php")) {
 
       	 require_once DOMAIN.$class.".php";
+
+      }else{ 
+           
+         if (file_exists(MODELS.$class.".php")) {
+
+      	 	require_once MODELS.$class.".php";
+      		
+      	 }
+      
       }
-
-      if (file_exists(MODELS.$class.".php")) {
-
-      	 require_once MODELS.$class.".php";
-      }
-
+	
 	});
 
 	$path = './controllers/'.$controlador.'.php';
 
 	if (file_exists($path)) {
 
-		require_once $path;
+			require_once $path;
 
-		$controlador = new $controlador();
-
-		if (isset($metodo)) {
+			$controlador = new $controlador();
 
 		     if (method_exists($controlador,$metodo)) {
-		     	
-		     	if (isset($parametros)) {
+             	
+		     	if ($parametros != null) {
 
 		     		$controlador->{$metodo}($parametros);
 
@@ -77,17 +58,17 @@
 
 		     	}
 	    
-			}   
+			}else{
+
+				//Crear pagina de error para redireccionar hacia ahí
+
+		        echo "Error no existe método";
+			}
 	    
-		}else{
-
-			$controlador->index();
-		}
-
 	}else{
 
 		//Crear pagina de error para redireccionar hacia ahí
 
-		echo "Error";
+		echo "Error no existe controlador";
 	}
 ?>
