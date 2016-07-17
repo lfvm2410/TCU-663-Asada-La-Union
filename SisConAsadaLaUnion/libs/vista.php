@@ -1,8 +1,12 @@
 <?php
 
+    /*
+    // Clase base usada por todos las vistas, con el fin de implementar mvc
+    */
+
 	class vista{
 		
-		function render($controlador, $vista){
+		public function render($controlador, $vista){
 
 			$controlador = get_class($controlador);
 

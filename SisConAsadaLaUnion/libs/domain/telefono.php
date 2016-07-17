@@ -3,49 +3,50 @@
 ** Clase dominio de telefono
 */
 
-class telefono
-{
+class telefono{
+	
 	private $idTelefono;
 	private $tipo;
 	private $numero;
 	
-	function __construct($idTelefono,$tipo,$numero){
+	public function __construct($idTelefono,$tipo,$numero){
 
 		$this->idTelefono = $idTelefono;
 		$this->tipo = $tipo;
 		$this->numero = $numero;
 	}
 
-	function setIdTelefono($idTelefono){
+	public function setIdTelefono($idTelefono){
 
      $this->idTelefono = $idTelefono;
 
 	}
 
-	function setTipo($tipo){
+	public function setTipo($tipo){
 
      $this->tipo = $tipo;
 
 	}
-	function setNumero($numero){
+
+	public function setNumero($numero){
 
      $this->numero = $numero;
 
 	}
 
-	function getIdTelefono(){
+	public function getIdTelefono(){
      
     return $this->idTelefono;
 
 	}
 
-	function getTipo(){
+	public function getTipo(){
      
     return $this->tipo;
 
 	}
 
-	function getNumero(){
+	public function getNumero(){
      
     return $this->numero;
 

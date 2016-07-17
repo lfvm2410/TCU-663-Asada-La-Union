@@ -8,7 +8,7 @@
     		
         private $listaTelefonos;
 
-    	function __construct(){
+    	public function __construct(){
 
             parent::__construct();
             
@@ -20,7 +20,7 @@
         ** Metodo encargado de agregar un telefono a una lista de telefonos, con el fin de asociarlos a una persona
         */
 
-        function setTelefonoALista($telefono){
+        public function setTelefonoALista(telefono $telefono){
 
             $this->listaTelefonos[] = $telefono;
 
@@ -30,7 +30,7 @@
         ** Metodo encargado de obtener la lista de telefonos
         */
 
-        function getListaTelefonos(){
+        public function getListaTelefonos(){
 
             return $this->listaTelefonos;
          
@@ -40,30 +40,31 @@
         ** Metodo encargado de comprobar si un teléfono existe dentro de la base de datos
         */
         
-        function comprobarExistenciaTelefono($numeroTelefono){
+        public function comprobarExistenciaTelefono($numeroTelefono){
 
-        $conexionBD = $this->getConexionInstance()->getConexion();
+            $conexionBD = $this->getConexionInstance()->getConexion();
 
-        mysql_set_charset('utf8');
+            mysql_set_charset('utf8');
 
-        $consultaTelefonoExistente = mysql_query("call SP_comprobarExistenciaTelefono('$numeroTelefono')",$conexionBD) or die("Error al tratar de verificar el número de teléfono ingresado en la base de datos");
+            $consultaTelefonoExistente = mysql_query("call SP_comprobarExistenciaTelefono('$numeroTelefono')",$conexionBD) or die("Error al tratar de verificar el número de teléfono ingresado en la base de datos");
 
-        $telefonoExistente = false;
+            $telefonoExistente = false;
 
-        if ($consultaTelefonoExistente) {
-            
-            if (mysql_num_rows($consultaTelefonoExistente) > 0) {
+            if ($consultaTelefonoExistente) {
+                
+                if (mysql_num_rows($consultaTelefonoExistente) > 0) {
 
-                $telefonoExistente = true;
+                    $telefonoExistente = true;
 
+                }
             }
-        }
 
-        mysql_close($conexionBD);
+            mysql_close($conexionBD);
 
-        return $telefonoExistente;
+            return $telefonoExistente;
 
         }
 
     }
+    
 ?>

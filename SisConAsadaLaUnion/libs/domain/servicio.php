@@ -4,15 +4,14 @@
 ** Clase dominio de servicio
 */
 
-class servicio
-{
+class servicio{
 	
 	private $idServicio;
 	private $numeroNIS;
 	private $estado;
 	private $fechaModificacion;
 
-	function __construct($idServicio, $numeroNIS, $estado, $fechaModificacion){
+	public function __construct($idServicio, $numeroNIS, $estado, $fechaModificacion){
 
 		$this->idServicio = $idServicio;
 		$this->numeroNIS = $numeroNIS;
@@ -20,42 +19,42 @@ class servicio
 		$this->fechaModificacion = $fechaModificacion;
 	}
 
-	function setIdServicio($idServicio){
+	public function setIdServicio($idServicio){
 
 		$this->idServicio = $idServicio;
 	}
 
-	function setNumeroNIS($numeroNIS){
+	public function setNumeroNIS($numeroNIS){
 
 		$this->numeroNIS = $numeroNIS;
 	}
 
-	function setEstado($estado){
+	public function setEstado($estado){
 
 		$this->estado = $estado;
 	}
 
-	function setFechaModificacion($fechaModificacion){
+	public function setFechaModificacion($fechaModificacion){
 
 	 	$this->fechaModificacion = $fechaModificacion;
 	}
 
-	function getIdServicio(){
+	public function getIdServicio(){
 
 		return $this->idServicio;
 	}
 
-	function getNumeroNIS(){
+	public function getNumeroNIS(){
 
 		return $this->numeroNIS;
 	}
 
-	function getEstado(){
+	public function getEstado(){
 
 		return $this->estado;
 	}
 
-	function getFechaModificacion(){
+	public function getFechaModificacion(){
 
 		return $this->fechaModificacion;
 	}

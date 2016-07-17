@@ -4,13 +4,13 @@
 
   $(document).on("ready", function () {
 
-  var idForm = $("#idRegistrarClienteForm");
+    var idForm = $("#idRegistrarClienteForm");
 
-  var idCedula = $("#idCedulaCliente");
+    var idCedula = $("#idCedulaCliente");
 
-  blurCampos(idCedula,"verificarCedulaExistente","de la cédula ingresada");
+    blurCampos(idCedula,"verificarCedulaExistente","de la cédula ingresada");
 
-  activarEnvioDatos(idForm);
+    activarEnvioDatos(idForm);
 
   });
 
@@ -28,30 +28,30 @@
       data: datosFormulario,
       success: function(respuesta){
 
-      if (respuesta == "true") {
-      	
-      	  alertify.success("Cliente registrado con éxito");
+          if (respuesta == "true") {
+          	
+          	  alertify.success("Cliente registrado con éxito");
 
-          $(".alertify-logs").css("top", scrollY+"px");
+              $(".alertify-logs").css("top", scrollY+"px");
 
-      	  limpiarCamposForm(idForm);
+          	  limpiarCamposForm(idForm);
 
-          $('#mensajeVerificacionCedula').html("");
+              $('#mensajeVerificacionCedula').html("");
 
-      }else{
-      	
-          alertify.error("Ha ocurrido un error al tratar de registrar el cliente, inténtelo de nuevo");
+          }else{
+          	
+              alertify.error("Ha ocurrido un error al tratar de registrar el cliente, inténtelo de nuevo");
 
-          $(".alertify-logs").css("top", scrollY+"px");
+              $(".alertify-logs").css("top", scrollY+"px");
 
       }
 
       },
       error: function(error){
 
-      alertify.error("Error de conexión al tratar de registrar el cliente, inténtelo de nuevo");
+          alertify.error("Error de conexión al tratar de registrar el cliente, inténtelo de nuevo");
 
-      $(".alertify-logs").css("top", scrollY+"px");
+          $(".alertify-logs").css("top", scrollY+"px");
 
       }
     });
@@ -64,7 +64,7 @@
 
   function confirmarTransaccion(mensaje) {
 
-  return confirm(mensaje);
+   return confirm(mensaje);
 
   }
 
@@ -74,11 +74,11 @@
 
   function limpiarCamposForm(idForm){
 
-  idForm.each (function(){
-    
-    this.reset();
+    idForm.each (function(){
+      
+      this.reset();
 
-  });
+    });
 
   }
 
@@ -95,11 +95,11 @@
     	if (confirmarTransaccion('¿Está seguro de proceder con el registro del cliente?')) 
     		{
     			
-  		var url = "/SisConAsadaLaUnion/cliente/registrarCliente";
+      		var url = "/SisConAsadaLaUnion/cliente/registrarCliente";
 
-  		var datosFormulario = idForm.serialize();
+      		var datosFormulario = idForm.serialize();
 
-  		enviarFormularioCliente(idForm,url,datosFormulario);
+      		enviarFormularioCliente(idForm,url,datosFormulario);
 
     		}
   });
@@ -118,13 +118,13 @@
 
       if (datosEnvio!="") {
           
-      verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError);
+        verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError);
 
-      }else{
+        }else{
 
-       $('#mensajeVerificacionCedula').html("");
+         $('#mensajeVerificacionCedula').html("");
 
-      }
+        }
 
       });
   }
@@ -142,14 +142,14 @@
           data: "valor="+datosEnvio,
           success: function(respuesta) {
 
-          $('#mensajeVerificacionCedula').fadeIn(1000).html(respuesta);
+            $('#mensajeVerificacionCedula').fadeIn(1000).html(respuesta);
           
           },
           error: function(error){
 
-          alertify.error("Error de conexión al tratar de verificar la disponibilidad "+mensajeError);
+            alertify.error("Error de conexión al tratar de verificar la disponibilidad "+mensajeError);
 
-          $(".alertify-logs").css("top", scrollY+"px");
+            $(".alertify-logs").css("top", scrollY+"px");
 
           }
 

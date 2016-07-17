@@ -26,12 +26,15 @@
 
       	 require_once DOMAIN.$class.".php";
 
-      }else{ 
-           
-         if (file_exists(MODELS.$class.".php")) {
+      }elseif (file_exists(MODELS.$class.".php")) {
 
       	 	require_once MODELS.$class.".php";
       		
+      	 }else{
+	
+		 	if (file_exists(LOGIC.$class.".php")) {
+
+      	 	require_once LOGIC.$class.".php";
       	 }
       
       }
@@ -71,4 +74,5 @@
 
 		echo "Error no existe controlador";
 	}
+	
 ?>

@@ -4,12 +4,12 @@
 ** Clase dominio de cliente
 */
 
-class cliente extends persona
-{
+class cliente extends persona{
+	
 	private $idCliente;
 	private $numeroPlano;
 
-	function __construct($idPersona,$cedula,$nombre,$apellidos,$correoElectronico,
+	public function __construct($idPersona,$cedula,$nombre,$apellidos,$correoElectronico,
 		                 $direccion,$idCliente,$numeroPlano)
 	{
 		parent::__construct($idPersona,$cedula,$nombre,$apellidos,$correoElectronico,$direccion);
@@ -19,25 +19,25 @@ class cliente extends persona
 		
 	}
 
-	function setIdCliente($idCliente){
+	public function setIdCliente($idCliente){
 
      $this->idCliente = $idCliente;
 
 	}
 
-	function setNumeroPlano($numeroPlano){
+	public function setNumeroPlano($numeroPlano){
 
      $this->numeroPlano = $numeroPlano;
 
 	}
 
-	function getIdCliente(){
+	public function getIdCliente(){
      
     return $this->idCliente;
 
 	}
 
-	function getNumeroPlano(){
+	public function getNumeroPlano(){
      
     return $this->numeroPlano;
 

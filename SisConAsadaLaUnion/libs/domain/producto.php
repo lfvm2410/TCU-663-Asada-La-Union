@@ -4,8 +4,7 @@
 ** Clase dominio de producto
 */
 
-class producto
-{
+class producto{
 
 	private $idProducto;
 	private $nombre;
@@ -13,7 +12,7 @@ class producto
 	private $cantidad;
 	private $fechaModificacionCantidad;
 
-	function __construct($idProducto, $nombre, $descripcion, $cantidad, $fechaModificacionCantidad){
+	public function __construct($idProducto, $nombre, $descripcion, $cantidad, $fechaModificacionCantidad){
 
 		$this->idProducto = $idProducto;
 		$this->nombre = $nombre;
@@ -22,54 +21,55 @@ class producto
 		$this->fechaModificacionCantidad = $fechaModificacionCantidad;
 	}
 
-	function setIdProducto($idProducto){
+	public function setIdProducto($idProducto){
 
 		$this->idProducto = $idProducto;
 	}
 
-	function setNombre($nombre){
+	public function setNombre($nombre){
 
 		$this->nombre = $nombre;
 	}
 
-	function setDescripcion($descripcion){
+	public function setDescripcion($descripcion){
 
 		$this->descripcion = $descripcion;
 	}
 
-	function setCantidad($cantidad){
+	public function setCantidad($cantidad){
 
 		$this->cantidad = $cantidad;
 	}
 
-	function setFechaModificacionCantidad($fechaModificacionCantidad){
+	public function setFechaModificacionCantidad($fechaModificacionCantidad){
 
 		$this->fechaModificacionCantidad = $fechaModificacionCantidad;
 	}
 
-	function getIdProducto(){
+	public function getIdProducto(){
 
 		return $this->idProducto;
 	}
 
-	function getNombre(){
+	public function getNombre(){
 
 		return $this->nombre;
 	}
 
-	function getDescripcion(){
+	public function getDescripcion(){
 
 		return $this->descripcion;
 	}
 
-	function getCantidad(){
+	public function getCantidad(){
 
 		return $this->cantidad;
 	}
 
-	function getFechaModificacionCantidad(){
+	public function getFechaModificacionCantidad(){
 
 		return $this->fechaModificacionCantidad;
 	}
 }
+
 ?>

@@ -4,8 +4,8 @@
 ** Clase dominio de tarifa
 */
 
-class tarifa
-{
+class tarifa{
+	
 	private $idTarifa;
 	private $nombre;
 	private $tipoServicio;
@@ -13,7 +13,7 @@ class tarifa
 	private $fechaModificacion;
 	private $idAbonadoAsada;
 
-	function __construct($idTarifa, $nombre, $tipoServicio, $monto, $fechaModificacion, $idAbonadoAsada){
+	public function __construct($idTarifa, $nombre, $tipoServicio, $monto, $fechaModificacion, $idAbonadoAsada){
 
 		$this->idTarifa = $idTarifa;
 		$this->nombre = $nombre;
@@ -23,62 +23,62 @@ class tarifa
 		$this->idAbonadoAsada = $idAbonadoAsada;		
 	}
 
-	function setIdTarifa($idTarifa){
+	public function setIdTarifa($idTarifa){
 
 		$this->idTarifa = $idTarifa;
 	}
 
-	function setNombre($nombre){
+	public function setNombre($nombre){
 
 		$this->nombre = $nombre;
 	}
 
-	function setTipoServicio($tipoServicio){
+	public function setTipoServicio($tipoServicio){
 
 		$this->tipoServicio = $tipoServicio;
 	}
 
-	function setMonto ($monto){
+	public function setMonto ($monto){
 
 		$this->monto = $monto;
 	}
 
-	function setFechaModificacion($fechaModificacion){
+	public function setFechaModificacion($fechaModificacion){
 
 		$this->fechaModificacion = $fechaModificacion;
 	}
 
-	function setIdAbonadoAsada($idAbonadoAsada){
+	public function setIdAbonadoAsada($idAbonadoAsada){
 
 		$this->idAbonadoAsada = $idAbonadoAsada;
 	}
 
-	function getIdTarifa(){
+	public function getIdTarifa(){
 
 		return $this->idTarifa;
 	}
 
-	function getNombre(){
+	public function getNombre(){
 
 		return $this->nombre;
 	}
 
-	function getTipoServicio(){
+	public function getTipoServicio(){
 
 		return $this->tipoServicio;
 	}
 
-	function getMonto(){
+	public function getMonto(){
 
 		return $this->monto;
 	}
 
-	function getFechaModificacion(){
+	public function getFechaModificacion(){
 
 		return $this->fechaModificacion;
 	}
 
-	function getIdAbonadoAsada(){
+	public function getIdAbonadoAsada(){
 
 		return $this->idAbonadoAsada;
 	}
