@@ -3,8 +3,8 @@
 ** Clase dominio de facturaEncabezado
 */
 
-class facturaEncabezado
-{
+class facturaEncabezado{
+
 	private $idFacturaEncabezado;
 	private $codigo;
 	private $estado;
@@ -17,7 +17,7 @@ class facturaEncabezado
 	private $tipoPago;
 	private $pagoTotal;
 
-	function __construct($idFacturaEncabezado, $codigo, $estado, $lecturaAnterior, $vencimiento, $mesAlCobro, $fechaDesde, $fechaHasta, $fechaPago, $tipoPago, $pagoTotal){
+	public function __construct($idFacturaEncabezado, $codigo, $estado, $lecturaAnterior, $vencimiento, $mesAlCobro, $fechaDesde, $fechaHasta, $fechaPago, $tipoPago, $pagoTotal){
 
 		$this->idFacturaEncabezado = $idFacturaEncabezado;
 		$this->codigo = $codigo;
@@ -32,111 +32,112 @@ class facturaEncabezado
 		$this->pagoTotal = $pagoTotal;
 	}
 
-	function setIdFacturaEncabezado($idFacturaEncabezado){
+	public function setIdFacturaEncabezado($idFacturaEncabezado){
 
 		$this->idFacturaEncabezado = $idFacturaEncabezado;
 	}
 
-	function setCodigo($codigo){
+	public function setCodigo($codigo){
 
 		$this->codigo = $codigo;
 	}
-	function setEstado($estado){
+
+	public function setEstado($estado){
 
 		$this->estado = $estado;
 	}
 
-	function setLecturaAnterior($lecturaAnterior){
+	public function setLecturaAnterior($lecturaAnterior){
 
 		$this->lecturaAnterior = $lecturaAnterior;
 	}
 
-	function setVencimiento($vencimiento){
+	public function setVencimiento($vencimiento){
 
 		$this->vencimiento = $vencimiento;
 	}
 
-	function setMesAlCobro($mesAlCobro){
+	public function setMesAlCobro($mesAlCobro){
 
 		$this->mesAlCobro = $mesAlCobro;
 	}
 
-	function setFechaDesde($fechaDesde){
+	public function setFechaDesde($fechaDesde){
 
 		$this->fechaDesde = $fechaDesde;
 	}
 
-	function setFechaHasta($fechaHasta){
+	public function setFechaHasta($fechaHasta){
 
 		$this->fechaHasta = $fechaHasta;
 	}
 
-	function setFechaPago($fechaPago){
+	public function setFechaPago($fechaPago){
 
 		$this->fechaPago = $fechaPago;
 	}
 	
-	function setTipoPago($tipoPago){
+	public function setTipoPago($tipoPago){
 
 		$this->tipoPago = $tipoPago;
 	}
 	
-	function setPagoTotal($pagoTotal){
+	public function setPagoTotal($pagoTotal){
 
 		$this->pagoTotal = $pagoTotal;
 	}
 
-	function getIdFacturaEncabezado(){
+	public function getIdFacturaEncabezado(){
 
 		return $this->idFacturaEncabezado;
 	}
 
-	function getCodigo(){
+	public function getCodigo(){
 
 		return $this->codigo;
 	}
 
-	function getEstado(){
+	public function getEstado(){
 
 		return $this->estado;
 	}
 
-	function getLecturaAnterior(){
+	public function getLecturaAnterior(){
 
 		return $this->lecturaAnterior;
 	}
 
-	function getVencimiento(){
+	public function getVencimiento(){
 
 		return $this->vencimiento;
 	}
 
-	function getMesAlCobro(){
+	public function getMesAlCobro(){
 
 		return $this->mesAlCobro;
 	}
 
-	function getFechaDesde(){
+	public function getFechaDesde(){
 
 		return $this->fechaDesde;
 	}
 
-	function getFechaHasta(){
+	public function getFechaHasta(){
 
 		return $this->fechaHasta;
 	}
 
-	function getFechaPago(){
+	public function getFechaPago(){
 
 		return $this->fechaPago;
 	}
 
-	function getTipoPago(){
+	public function getTipoPago(){
 
 		return $this->tipoPago;
 	}
 
-	function getPagoTotal(){
+	public function getPagoTotal(){
 
 		return $this->pagoTotal
 	}

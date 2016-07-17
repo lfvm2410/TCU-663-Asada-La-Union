@@ -10,38 +10,39 @@ class detalleFactura{
 	private $desglosePago;
 	private $monto;
 
-	function __construct($idDetalle, $desglosePago, $monto){
+	public function __construct($idDetalle, $desglosePago, $monto){
 
 		$this->idDetalle = $idDetalle;
 		$this->desglosePago = $desglosePago;
 		$this->monto = $monto;
 	}
 
-	function setIdDetalle($idDetalle){
+	public function setIdDetalle($idDetalle){
 
 		$this->idDetalle = $idDetalle;
 	}
 
-	function setDesglosePago($desglosePago){
+	public function setDesglosePago($desglosePago){
 
 		$this->desglosePago = $desglosePago;
 	}
 
-	function setMonto($monto){
+	public function setMonto($monto){
 
 		$this->monto = $monto;
 	}
 	
-	function getIdDetalle(){
+	public function getIdDetalle(){
 
 		return $this->idDetalle;
 	}
 
-	function getDesglosePago(){
+	public function getDesglosePago(){
 
 		return $this->desglosePago;
 	}
-	function getMonto(){
+	
+	public function getMonto(){
 
 		return $this->monto;
 	}

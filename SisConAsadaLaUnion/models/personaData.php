@@ -6,7 +6,7 @@
 
     class personaData extends modelo{
 
-    	function __construct(){
+    	public function __construct(){
     	
     		parent::__construct();
     	}
@@ -15,28 +15,28 @@
         ** Metodo encargado de comprobar si una cédula existe dentro de la base de datos
         */
         
-        function comprobarExistenciaCedula($cedula){
+        public function comprobarExistenciaCedula($cedula){
 
-        $conexionBD = $this->getConexionInstance()->getConexion();
+            $conexionBD = $this->getConexionInstance()->getConexion();
 
-        mysql_set_charset('utf8');
+            mysql_set_charset('utf8');
 
-        $consultaCedulaExistente = mysql_query("call SP_comprobarExistenciaCedula('$cedula')",$conexionBD) or die("Error al tratar de verificar la cédula ingresada en la base de datos");
+            $consultaCedulaExistente = mysql_query("call SP_comprobarExistenciaCedula('$cedula')",$conexionBD) or die("Error al tratar de verificar la cédula ingresada en la base de datos");
 
-        $cedulaExistente = false;
+            $cedulaExistente = false;
 
-        if ($consultaCedulaExistente) {
-            
-            if (mysql_num_rows($consultaCedulaExistente) > 0) {
+            if ($consultaCedulaExistente) {
+                
+                if (mysql_num_rows($consultaCedulaExistente) > 0) {
 
-                $cedulaExistente = true;
+                    $cedulaExistente = true;
 
+                }
             }
-        }
 
-        mysql_close($conexionBD);
+            mysql_close($conexionBD);
 
-        return $cedulaExistente;
+            return $cedulaExistente;
 
         }
 
@@ -44,30 +44,31 @@
         ** Metodo encargado de comprobar si un correo electrónico existe dentro de la base de datos
         */
         
-        function comprobarExistenciaCorreoElectronico($correoElectronico){
+        public function comprobarExistenciaCorreoElectronico($correoElectronico){
 
-        $conexionBD = $this->getConexionInstance()->getConexion();
+            $conexionBD = $this->getConexionInstance()->getConexion();
 
-        mysql_set_charset('utf8');
+            mysql_set_charset('utf8');
 
-        $consultaCorreoElectronico = mysql_query("call SP_comprobarExistenciaCorreoElectronico('$correoElectronico')",$conexionBD) or die("Error al tratar de verificar el correo electrónico ingresado en la base de datos");
+            $consultaCorreoElectronico = mysql_query("call SP_comprobarExistenciaCorreoElectronico('$correoElectronico')",$conexionBD) or die("Error al tratar de verificar el correo electrónico ingresado en la base de datos");
 
-        $correoElectronicoExistente = false;
+            $correoElectronicoExistente = false;
 
-        if ($consultaCorreoElectronico) {
-            
-            if (mysql_num_rows($consultaCorreoElectronico) > 0) {
+            if ($consultaCorreoElectronico) {
+                
+                if (mysql_num_rows($consultaCorreoElectronico) > 0) {
 
-                $correoElectronicoExistente = true;
+                    $correoElectronicoExistente = true;
 
+                }
             }
-        }
 
-        mysql_close($conexionBD);
+            mysql_close($conexionBD);
 
-        return $correoElectronicoExistente;
+            return $correoElectronicoExistente;
 
         }
 
     }
+    
 ?>

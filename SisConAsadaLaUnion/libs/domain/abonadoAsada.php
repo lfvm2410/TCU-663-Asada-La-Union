@@ -4,45 +4,45 @@
 ** Clase dominio de AbonadoAsada
 */
 
-class abonadoAsada
-{
+class abonadoAsada{
+	
 	private $idAbonadoAsada;
 	private $rango;
 	private $fechaModificacion;
 
-	function __construct($idAbonadoAsada, $rango, $fechaModificacion){
+	public function __construct($idAbonadoAsada, $rango, $fechaModificacion){
 
 		$this->idAbonadoAsada = $idAbonadoAsada;
 		$this->rango = $rango;
 		$this->fechaModificacion = $fechaModificacion;
 	}
 
-	function setIdAbonadoAsada($idAbonadoAsada){
+	public function setIdAbonadoAsada($idAbonadoAsada){
 
 		$this->idAbonadoAsada = $idAbonadoAsada;
 	}
 
-	function setRango($rango){
+	public function setRango($rango){
 
 		$this->rango = $rango;
 	}
 
-	function setFechaModificacion($fechaModificacion){
+	public function setFechaModificacion($fechaModificacion){
 
 	 	$this->fechaModificacion = $fechaModificacion;
 	}
 
-	function getIdAbonadoAsada(){
+	public function getIdAbonadoAsada(){
 
 		return $this->idAbonadoAsada
 	}
 
-	function getRango(){
+	public function getRango(){
 
 		return $this->rango;
 	}
 
-	function getFechaModificacion(){
+	public function getFechaModificacion(){
 
 		return $this->fechaModificacion;
 	}

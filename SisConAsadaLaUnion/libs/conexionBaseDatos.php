@@ -1,82 +1,87 @@
 <?php
 
-class conexionBaseDatos{
+    /*
+    //Clase encargada de gestionar la conexion a la base de datos
+    */
 
-private $host;
-private $user; 
-private $pass;
-private $base;
+	class conexionBaseDatos{
 
-function __construct($host,$user,$pass,$baseDatos){
+		private $host;
+		private $user; 
+		private $pass;
+		private $base;
+
+		public function __construct($host,$user,$pass,$baseDatos){
 		
-		$this->host = $host;
-		$this->user = $user;
-		$this->pass = $pass;
-		$this->base = $baseDatos;
+			$this->host = $host;
+			$this->user = $user;
+			$this->pass = $pass;
+			$this->base = $baseDatos;
+
+		}
+
+		public function setHost($host){
+
+			$this->host = $host;
+
+		}
+
+		public function setUser($user){
+
+			$this->user = $user;
+
+		}
+
+		public function setPass($pass){
+
+			$this->pass = $pass;
+
+		}
+
+		public function setBase($base){
+
+			$this->base = $base;
+
+		}
+	
+		public function getHost(){
+
+			return $this->host;
+	
+		}
+
+		public function getUser(){
+
+			return $this->user;
+	
+		}
+
+		public function getPass(){
+
+			return $this->pass;
+		
+		}
+
+		public function getBase(){
+
+			return $this->base;
+	
+		}
+
+		/*
+		// Metodo que realiza la conexion con la base de datos y la retorna
+		*/
+
+		public function getConexion(){
+
+  		  	$conexion = mysql_connect($this->getHost(),$this->getUser(),$this->getPass()) or die("Problemas al conectar.");
+
+  		 	 mysql_select_db($this->getBase(), $conexion) or die("Problemas al conectar con la base de datos.");
+
+    		 return $conexion;
+
+		}
 
 	}
-
-function setHost($host){
-
-	$this->host = $host;
-
-}
-
-function setUser($user){
-
-	$this->user = $user;
-
-}
-
-function setPass($pass){
-
-	$this->pass = $pass;
-
-}
-
-function setBase($base){
-
-	$this->base = $base;
-
-}
-
-function getHost(){
-
-	return $this->host;
-	
-}
-
-function getUser(){
-
-	return $this->user;
-	
-}
-
-function getPass(){
-
-	return $this->pass;
-	
-}
-
-function getBase(){
-
-	return $this->base;
-	
-}
-
-/*
-// Metodo que realiza la conexion con la base de datos y la retorna
-*/
-
-function getConexion(){
-
-    $conexion = mysql_connect($this->getHost(),$this->getUser(),$this->getPass()) or die("Problemas al conectar.");
-
-    mysql_select_db($this->getBase(), $conexion) or die("Problemas al conectar con la base de datos.");
-
-    return $conexion;
-}
-
-}
 
 ?>

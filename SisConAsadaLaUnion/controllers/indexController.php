@@ -1,15 +1,23 @@
 <?php
 
+    /*
+    // Clase para controladora de las operaciones sobre la página principal del sitio web
+    */
+
 	class indexController extends controlador{
 
-		function __construct(){
+		public function __construct(){
 
 			parent::__construct();
 		}
 
-		function index(){ 
+		/*
+        // Metodo(s) encargado(s) de gestionar las posibles vistas de la página principal del sitio web
+		*/
+
+		public function index(){ 
 	
-		$this->vista->render($this,'index');
+			$this->vista->render($this,'index');
 
 		}
 
