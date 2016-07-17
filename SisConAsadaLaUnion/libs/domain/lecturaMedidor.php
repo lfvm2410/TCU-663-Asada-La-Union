@@ -4,14 +4,14 @@
 ** Clase dominio de LecturaMedidor
 */
 
-class lecturaMedidor
-{
+class lecturaMedidor{
+
 	private $idLectura;
 	private $cantidadMetrosCubicos;
 	private $fecha;
 	private $idServicio;
 
-	function __construct($idLectura, $cantidadMetrosCubicos, $fecha, $idServicio){
+	public function __construct($idLectura, $cantidadMetrosCubicos, $fecha, $idServicio){
 
 		$this->idLectura = $idLectura;
 		$this->cantidadMetrosCubicos = $cantidadMetrosCubicos;
@@ -19,42 +19,42 @@ class lecturaMedidor
 		$this->idServicio = $idServicio;
 	}
 
-	function setIdLectura($idLectura){
+	public function setIdLectura($idLectura){
 
 		$this->idLectura = $idLectura;
 	}
 
-	function setCantidadMetrosCubicos($cantidadMetrosCubicos){
+	public function setCantidadMetrosCubicos($cantidadMetrosCubicos){
 
 		$this->cantidadMetrosCubicos = $cantidadMetrosCubicos;
 	}
 
-	function setFecha($fecha){
+	public function setFecha($fecha){
 
 		$this->fecha = $fecha;
 	}
 
-	function setIdServicio($idServicio){
+	public function setIdServicio($idServicio){
 
 		$this->idServicio = $idServicio;
 	}
 
-	function getIdLectura(){
+	public function getIdLectura(){
 
 		return $this->idLectura;
 	}
 
-	function getCantidadMetrosCubicos(){
+	public function getCantidadMetrosCubicos(){
 
 		return $this->cantidadMetrosCubicos;
 	}
 
-	function getFecha(){
+	public function getFecha(){
 
 		return $this->fecha;
 	}
 
-	function getIdServicio(){
+	public function getIdServicio(){
 
 		return $this->idServicio;
 	}

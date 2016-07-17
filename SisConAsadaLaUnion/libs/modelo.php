@@ -1,10 +1,14 @@
 <?php
 
+    /*
+    // Clase base usada por todos los modelos, con el fin de implementar mvc
+    */
+
 	class modelo{
 
 		private static $baseDatos;
 		
-		function __construct(){
+		public function __construct(){
 
 			self::setConexionInstance();
 			

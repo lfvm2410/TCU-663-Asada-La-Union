@@ -1,26 +1,30 @@
 <?php
 
+    /*
+    // Clase base usada por todos los controladores, con el fin de implementar mvc
+    */
+
 	class controlador{
 
-		function __construct(){
+		public function __construct(){
 
 			$this->vista = new vista();
 			
-			$this->cargarModelo();
+			$this->cargarLogica();
 
 		}
 
-		function cargarModelo(){
+		private function cargarLogica(){
 
-			$modelo = str_replace("Controller", "Data", get_class($this));
+			$logica = str_replace("Controller", "Logic", get_class($this));
 			
-			$path = "models/".$modelo.".php";
+			$path = LOGIC.$logica.".php";
 
 			if (file_exists($path)) {
 
 				require_once $path;
 				
-				$this->modelo = new $modelo();
+				$this->logica = new $logica();
 			
 			}
 

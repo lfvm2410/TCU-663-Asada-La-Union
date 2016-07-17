@@ -3,8 +3,7 @@
 ** Clase dominio de usuarioSistema
 */
 
-class usuarioSistema
-{
+class usuarioSistema{
 
 	private $idUsuarioSistema;
 	private $nombre;
@@ -14,7 +13,7 @@ class usuarioSistema
 	private $descripcionPuesto;
 	private $contrasenia;
 
-	function __construct($idUsuarioSistema, $nombre, $tipoUsuario, $fechaNacimiento, $puesto, $descripcionPuesto, $contrasenia){
+	public function __construct($idUsuarioSistema, $nombre, $tipoUsuario, $fechaNacimiento, $puesto, $descripcionPuesto, $contrasenia){
 
 		$this->idUsuarioSistema = $idUsuarioSistema;
 		$this->nombre = $nombre;
@@ -25,72 +24,72 @@ class usuarioSistema
 		$this->contrasenia = $contrasenia;
 	}
 
-	function setIdUsuarioSistema($idUsuarioSistema){
+	public function setIdUsuarioSistema($idUsuarioSistema){
 
 		$this->idUsuarioSistema = $idUsuarioSistema;
 	}
 
-	function setNombre($nombre){
+	public function setNombre($nombre){
 
 		$this->nombre = $nombre;
 	}
 
-	function setTipoUsuario($tipoUsuario){
+	public function setTipoUsuario($tipoUsuario){
 
 		$this->tipoUsuario = $tipoUsuario;
 	}
 
-	function setFechaNacimiento($fechaNacimiento){
+	public function setFechaNacimiento($fechaNacimiento){
 
 		$this->fechaNacimiento = $fechaNacimiento;
 	}
 
-	function setPuesto($puesto){
+	public function setPuesto($puesto){
 
 		$this->puesto = $puesto;
 	}
 
-	function setDescripcionPuesto($descripcionPuesto){
+	public function setDescripcionPuesto($descripcionPuesto){
 
 		$this->descripcionPuesto = $descripcionPuesto;
 	}
 
-	function setContrasenia($contrasenia){
+	public function setContrasenia($contrasenia){
 
 		$this->contrasenia = $contrasenia;
 	}
 
-	function getIdUsuarioSistema(){
+	public function getIdUsuarioSistema(){
 
 		return $this->idUsuarioSistema;
 	}
 
-	function getNombre(){
+	public function getNombre(){
 
 		return $this->nombre;
 	}
 
-	function getTipoUsuario(){
+	public function getTipoUsuario(){
 
 		return $this->tipoUsuario;
 	}
 
-	function getFechaNacimiento(){
+	public function getFechaNacimiento(){
 
 		return $this->fechaNacimiento;
 	}
 
-	function getPuesto(){
+	public function getPuesto(){
 
 		return $this->puesto;
 	}
 
-	function getDescripcionPuesto(){
+	public function getDescripcionPuesto(){
 
 		return $this->descripcionPuesto;
 	}
 
-	function getContrasenia(){
+	public function getContrasenia(){
 
 		return $this->contrasenia;
 	}

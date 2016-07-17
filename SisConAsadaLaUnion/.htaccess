@@ -1,3 +1,16 @@
+Options All -Indexes
+
+ErrorDocument 400 /SisConAsadaLaUnion/error/badRequest
+ErrorDocument 401 /SisConAsadaLaUnion/error/unauthorized
+ErrorDocument 403 /SisConAsadaLaUnion/error/forbidden
+ErrorDocument 404 /SisConAsadaLaUnion/error/notFound
+ErrorDocument 500 /SisConAsadaLaUnion/error/internalServerError
+
+<Files config.php>
+	Order allow,deny
+	Deny from al
+</Files>
+
 RewriteEngine On
 
 RewriteCond %{REQUEST_FILENAME} !-d
