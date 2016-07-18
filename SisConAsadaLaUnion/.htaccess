@@ -13,6 +13,9 @@ ErrorDocument 500 /SisConAsadaLaUnion/error/internalServerError
 
 RewriteEngine On
 
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*) https://%{SERVER_NAME}/SisConAsadaLaUnion/$1 [R,L]
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-l
