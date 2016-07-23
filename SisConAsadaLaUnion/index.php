@@ -63,16 +63,17 @@
 	    
 			}else{
 
-				//Crear pagina de error para redireccionar hacia ahí
+				header('Location: '.URL.'error/notFound');
 
-		        echo "Error no existe método";
+        		exit;
 			}
 	    
 	}else{
 
-		//Crear pagina de error para redireccionar hacia ahí
+		header('Location: '.URL.'error/notFound');
 
-		echo "Error no existe controlador";
+        exit;
+        
 	}
 	
 ?>

@@ -17,7 +17,7 @@
 
 		public function index(){ 
 	
-			$this->vista->render($this,'index');
+			$this->vista->render($this,'index','ASADA La Unión');
 
 		}
 

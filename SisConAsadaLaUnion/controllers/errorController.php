@@ -27,31 +27,31 @@
 
 		public function badRequest(){ 
 	
-			$this->vista->render($this,'400');
+			$this->vista->render($this,'400','Bad request');
 
 		}
 
 		public function unauthorized(){ 
 	
-			$this->vista->render($this,'401');
+			$this->vista->render($this,'401','Unauthorized');
 
 		}
 
 		public function forbidden(){ 
 	
-			$this->vista->render($this,'403');
+			$this->vista->render($this,'403','Forbidden');
 
 		}
 
 		public function notFound(){ 
 	
-			$this->vista->render($this,'404');
+			$this->vista->render($this,'404','Not found');
 
 		}
 
 		public function internalServerError(){ 
 	
-			$this->vista->render($this,'500');
+			$this->vista->render($this,'500','Internal server error');
 
 		}
 
