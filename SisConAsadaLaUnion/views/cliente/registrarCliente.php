@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE-edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Cliente</title>
-    <script src="<?php print URL;?>public/js/jquery-1.12.0.js"?> type="text/javascript"></script>
-    <script src="<?php print URL;?>public/css/bootstrap-3.3.6-dist/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="<?php print URL;?>public/js/alertify.js-0.3.11/lib/alertify.js"></script>
-    <script src="<?php print URL;?>public/js/alertify.js-0.3.11/lib/alertify.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="<?php print URL;?>public/css/bootstrap-3.3.6-dist/css/bootstrap.min.css">
-    <link href="<?php print URL;?>public/js/alertify.js-0.3.11/themes/alertify.bootstrap.css" rel="stylesheet" />
-    <link href="<?php print URL;?>public/js/alertify.js-0.3.11/themes/alertify.core.css" rel="stylesheet" />
-    <link href="<?php print URL;?>public/js/alertify.js-0.3.11/themes/alertify.default.css" rel="stylesheet" />
+<?php include COMPONENTS.'header.php';?>
     <script src="<?php print URL;?>public/js/registrarClienteOperaciones.js" type="text/javascript"></script>
 </head>
 <body>
@@ -71,7 +57,7 @@
         placeholder="Ingrese el número de plano de la propiedad del cliente"/>
      </div>
      <div class="form-group">
-        <input type="submit" class="btn btn-primary" id="idBtnRegistrarCliente" value="Registrar"/>
+        <input type="submit" class="btn btn-primary center-block" id="idBtnRegistrarCliente" value="Registrar"/>
      </div>
  </form>
 </div>

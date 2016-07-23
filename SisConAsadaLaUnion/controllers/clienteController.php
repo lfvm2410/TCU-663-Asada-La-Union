@@ -29,7 +29,7 @@
 
       public function registrarClienteForm(){
   
-          $this->vista->render($this,'registrarCliente');
+          $this->vista->render($this,'registrarCliente','Registrar cliente');
 
       }
     
