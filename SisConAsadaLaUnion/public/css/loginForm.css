@@ -1,0 +1,32 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body{
+    margin-bottom: 325px !important;
+}
+
+.footer {
+  position: absolute;
+  margin-bottom: 0;
+  bottom: 0;
+  width: 100%;
+  /* Altura de footer */
+  height: 195px;
+  /*Imagen de fondo*/
+  background-image: url('/SisConAsadaLaUnion/public/assets/templates/FooterLogin.jpg'); 
+}
+
+@media only screen and (max-width: 991px) {
+
+    body{
+        margin-bottom: 395px !important;
+    }
+
+    .footer {
+    	  background:none;
+        background-color: #79CBFE;
+        height:auto;
+    }
+}
