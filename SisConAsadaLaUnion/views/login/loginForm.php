@@ -27,12 +27,13 @@
  	</form>
  	<a href="#"><h5 class="text-center" style="margin-top:5.6%;">¡Olvide mi contraseña!</h5></a> 
 </div>
-<footer class="container" style="margin-top:9%;">
-	<div class="row jumbotron" style="color:#FFFFFF; height:195px; width:100%; background-image:url('<?php print URL;?>public/assets/templates/FooterLogin.jpg')">
+<footer class="footer">
+	<div class="container" style="color:#FFFFFF; margin-top:1%;">
 		<div class="col-md-4">
 		    <h4>ASADA La Unión, Guápiles</h4>
 		    <hr>
 			<a href="#"><h5 style="color:#FFFFFF;">Quiénes somos</h5></a>
+			<h5 style="color:#FFFFFF;">&copy Copyright 2016. Todos los derechos reservados.</h5>
 		</div>
 		<div class="col-md-4">
 			<h4>Redes sociales y contacto</h4>
