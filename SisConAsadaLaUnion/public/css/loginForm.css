@@ -21,12 +21,18 @@ body{
 @media only screen and (max-width: 991px) {
 
     body{
-        margin-bottom: 395px !important;
+        margin-bottom: 408px !important;
     }
 
     .footer {
     	  background:none;
         background-color: #79CBFE;
         height:auto;
+    }
+
+    .footer img{
+        display: inline !important;
+        width: 59px !important;
+        height: 29px !important;
     }
 }
