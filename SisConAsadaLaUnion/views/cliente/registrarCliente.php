@@ -2,6 +2,7 @@
     <script src="<?php print URL;?>public/js/registrarClienteOperaciones.js" type="text/javascript"></script>
 </head>
 <body>
+<?php include COMPONENTS.'encabezado.php';?>
 <div class="container" style="margin-top:2%; width:30%;">
   <form class="form-horizontal" action="" method="post" name="registrarClienteForm" id="idRegistrarClienteForm">
      <div class="form-group">
