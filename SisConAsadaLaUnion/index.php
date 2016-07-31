@@ -26,6 +26,10 @@
 
       	 require_once DOMAIN.$class.".php";
 
+      }elseif (file_exists(VALIDATION.$class.".php")) {
+
+      	 require_once VALIDATION.$class.".php";
+
       }elseif (file_exists(MODELS.$class.".php")) {
 
       	 	require_once MODELS.$class.".php";

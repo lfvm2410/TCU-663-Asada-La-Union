@@ -43,7 +43,7 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Clientes<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar cliente</a></li>
+					<li><a href="<?php print URL;?>cliente/registrarClienteForm">Registrar cliente</a></li>
 					<li><a href="#">Actualizar cliente</a></li>
 					<li><a href="#">Consultar información de clientes</a></li>	
 					<li><a href="#">Deshabilitar cliente</a></li>		
