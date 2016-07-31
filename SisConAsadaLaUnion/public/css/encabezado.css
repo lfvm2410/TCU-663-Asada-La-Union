@@ -51,7 +51,7 @@ a{
 #presentacionEncabezado{
 	min-height:135px; 
 	width: 100%;
-	background-image: url('/SisConAsadaLaUnion/public/assets/templates/Header-Sistema.jpg');
+	background-image: url('/SisConAsadaLaUnion/public/assets/templates/Header-Sistema.png');
 	background-size: 100% 100%;
 	display: inline-block;
 }
