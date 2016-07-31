@@ -7,8 +7,8 @@
   <form class="form-horizontal" action="" method="post" name="registrarClienteForm" id="idRegistrarClienteForm">
      <div class="form-group">
         <label  id="idLblCedCli" for="idCedulaCliente">Cédula:</label> 
-        <input type="number" class="form-control" name="cedulaCliente" id="idCedulaCliente" maxlength="16" 
-        placeholder="Ingrese la cédula del cliente" required/>
+        <input type="text" class="form-control" name="cedulaCliente" id="idCedulaCliente" maxlength="16"
+        pattern="^[0-9]*$" placeholder="Ingrese la cédula del cliente" required/>
      </div>
      <div class="row" id="mensajeVerificacionCedula"></div>
      <div class="form-group">
@@ -27,6 +27,7 @@
         pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" maxlength="30" 
         placeholder="Ingrese el correo electrónico del cliente" required/> 
      </div>
+     <div class="row" id="mensajeVerificacionCorreo"></div>
      <div class="form-group">
         <label id="idLblTel1Cli" for="idTipoTel1Cliente">Teléfono 1:</label>
         <select class="form-control" name="tipoTel1Cliente" id="idTipoTel1Cliente" required>
@@ -34,8 +35,8 @@
              <option value="Fijo">Fijo</option>
              <option value="Móvil">Móvil</option>
         </select>
-        <input type="number" class="form-control" name="numTel1Cliente" id="idNumTel1Cliente" minlength="8" maxlength="8"
-        placeholder="Ingrese un número de teléfono" required/> 
+        <input type="text" class="form-control" name="numTel1Cliente" id="idNumTel1Cliente" minlength="8" maxlength="8" 
+        pattern="^[0-9]{8}$" placeholder="Ingrese un número de teléfono" required/> 
      </div>
      <div class="form-group">
         <label id="idLblTel2Cli" for="idTipoTel2Cliente" for="idNumTel2Cliente">Teléfono 2 (Opcional):</label>
@@ -44,8 +45,8 @@
              <option value="Fijo">Fijo</option>
              <option value="Móvil">Móvil</option>
         </select>
-        <input type="number" class="form-control" name="numTel2Cliente" id="idNumTel2Cliente" minlength="8" maxlength="8"
-        placeholder="Ingrese un número de teléfono"/>
+        <input type="text" class="form-control" name="numTel2Cliente" id="idNumTel2Cliente" minlength="8" maxlength="8"
+        pattern="^[0-9]{8}$" placeholder="Ingrese un número de teléfono"/>
      </div>
      <div class="form-group">
         <label id="idLblDirCli" for="idDireccionCliente">Dirección:</label> 
@@ -53,14 +54,16 @@
         placeholder="Ingrese la dirección del cliente" required></textarea>
      </div>
      <div class="form-group">
-        <label id="idLblNumPlanoCli" for="idNumPlanoCliente">Número de plano:</label> 
+        <label id="idLblNumPlanoCli" for="idNumPlanoCliente">Número de plano (Opcional):</label> 
         <input type="text" class="form-control" name="numPlanoCliente" id="idNumPlanoCliente" maxlength="16" 
         placeholder="Ingrese el número de plano de la propiedad del cliente"/>
      </div>
+     <div class="row" id="mensajeVerificacionPlano"></div>
      <div class="form-group">
         <input type="submit" class="btn btn-primary center-block" id="idBtnRegistrarCliente" value="Registrar"/>
      </div>
  </form>
 </div>
+<?php include COMPONENTS.'pie.php';?>
 </body>
 </html>

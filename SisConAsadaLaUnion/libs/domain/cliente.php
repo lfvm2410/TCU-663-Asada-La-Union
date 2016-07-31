@@ -8,38 +8,52 @@ class cliente extends persona{
 	
 	private $idCliente;
 	private $numeroPlano;
+	private $activo;
 
 	public function __construct($idPersona,$cedula,$nombre,$apellidos,$correoElectronico,
-		                 $direccion,$idCliente,$numeroPlano)
+		                 $direccion,$idCliente,$numeroPlano,$activo)
 	{
 		parent::__construct($idPersona,$cedula,$nombre,$apellidos,$correoElectronico,$direccion);
 
 		$this->idCliente = $idCliente;
 		$this->numeroPlano = $numeroPlano;
+		$this->activo = $activo;
 		
 	}
 
 	public function setIdCliente($idCliente){
 
-     $this->idCliente = $idCliente;
+     	$this->idCliente = $idCliente;
 
 	}
 
 	public function setNumeroPlano($numeroPlano){
 
-     $this->numeroPlano = $numeroPlano;
+     	$this->numeroPlano = $numeroPlano;
+
+	}
+
+	public function setActivo($activo){
+
+     	$this->activo = $activo;
 
 	}
 
 	public function getIdCliente(){
      
-    return $this->idCliente;
+    	return $this->idCliente;
 
 	}
 
 	public function getNumeroPlano(){
      
-    return $this->numeroPlano;
+    	return $this->numeroPlano;
+
+	}
+
+	public function getActivo(){
+     
+    	return $this->activo;
 
 	}
 

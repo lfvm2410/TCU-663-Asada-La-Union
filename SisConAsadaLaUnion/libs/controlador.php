@@ -30,5 +30,17 @@
 
 		}
 
+		/*
+        //Método encargado de redirigir a página de error a solicitudes no autorizadas por la url
+		*/
+
+		public function redireccionActividadNoAutorizada(){
+
+			header('Location: '.URL.'error/forbidden');
+
+        	exit;
+        	
+		}
+
 	}
 ?>

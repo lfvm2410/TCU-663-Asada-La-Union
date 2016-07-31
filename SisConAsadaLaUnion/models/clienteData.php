@@ -28,6 +28,7 @@
             $correoElectronico = $cliente->getCorreoElectronico();
             $direccion = $cliente->getDireccion();
             $numeroPlano = $cliente->getNumeroPlano(); 
+            $activo = $cliente->getActivo();
 
             $estadoTransaccion = false;
             $contadorTransaccionesTel = 0;
@@ -53,7 +54,7 @@
 
             // Se registra un cliente en la base de datos
 
-            $resultadoRegistroCliente = mysql_query("call SP_registrarCliente('$numeroPlano','$idPersona')", $conexionBD);
+            $resultadoRegistroCliente = mysql_query("call SP_registrarCliente($numeroPlano,'$activo','$idPersona')", $conexionBD);
 
             // Se recorre la lista de telefonos para insertar en la base de datos
 

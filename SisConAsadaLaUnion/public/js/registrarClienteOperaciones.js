@@ -8,8 +8,20 @@
 
     var idCedula = $("#idCedulaCliente");
 
-    blurCampos(idCedula,"verificarCedulaExistente","de la cédula ingresada");
+    var idCorreoElectronico = $("#idCorreoCliente");
 
+    var idNumeroPlano = $("#idNumPlanoCliente");
+
+    blurCampos(idCedula,"verificarCedulaExistente","de la cédula ingresada",$('#mensajeVerificacionCedula'));
+
+    blurCampos(idCorreoElectronico,"verificarCorreoElectronicoExistente","del correo electrónico ingresado",$('#mensajeVerificacionCorreo'));
+
+    validarTelefonoNoRequeridoCombo();
+
+    validarTelefonoNoRequeridoInput();
+
+    blurCampos(idNumeroPlano,"verificarNumeroPlanoExistente","del número de plano ingresado",$('#mensajeVerificacionPlano'));
+    
     activarEnvioDatos(idForm);
 
   });
@@ -37,6 +49,10 @@
           	  limpiarCamposForm(idForm);
 
               $('#mensajeVerificacionCedula').html("");
+
+              $('#mensajeVerificacionCorreo').html("");
+
+              $('#mensajeVerificacionPlano').html("");
 
           }else{
           	
@@ -92,17 +108,28 @@
 
       e.preventDefault(); 
 
-    	if (confirmarTransaccion('¿Está seguro de proceder con el registro del cliente?')) 
-    		{
-    			
-      		var url = "/SisConAsadaLaUnion/cliente/registrarCliente";
+      var verificarCedula = $("#msjCedula").attr("data-cedula");
 
-      		var datosFormulario = idForm.serialize();
+      var verificarCorreo = $("#msjCorreo").attr("data-correo");
 
-      		enviarFormularioCliente(idForm,url,datosFormulario);
+      var verificarNumPlano = $("#msjPlano").attr("data-plano");
 
-    		}
-  });
+      if (verificarCedula == "true" && verificarCorreo == "true" && verificarNumPlano  != "false") {
+
+      	if (confirmarTransaccion('¿Está seguro de proceder con el registro del cliente?')) 
+      		{
+      			
+        		var url = "/SisConAsadaLaUnion/cliente/registrarCliente";
+
+        		var datosFormulario = idForm.serialize();
+
+        		enviarFormularioCliente(idForm,url,datosFormulario);
+
+      		}
+
+      }
+
+    });
 
   }
 
@@ -110,19 +137,56 @@
   //Metodo para activar evento blur en el campo que se necesite
   */
 
-  function blurCampos(idCampo,metodoNombre,mensajeError){
+  function blurCampos(idCampo,metodoNombre,mensajeError,idDivMensaje){
 
       idCampo.blur(function(){
 
-      var datosEnvio = idCampo.val();
+      var datosEnvio = idCampo.val().trim();
 
       if (datosEnvio!="") {
-          
-        verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError);
+
+        if (metodoNombre == "verificarCedulaExistente") {
+
+            if (!datosEnvio.match("^[0-9]*$")) {
+
+              idDivMensaje.html("<div class='alert alert-danger'>"+
+                        "<strong><span class='glyphicon glyphicon-remove'></span></strong>"+
+                        " El contenido del campo correspondiente a cédula solo puede admitir números</div>");
+
+            }else{
+
+              verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError,idDivMensaje);
+            
+            }
+        
+        }else{
+
+                if (metodoNombre == "verificarCorreoElectronicoExistente") {
+
+                    if (!datosEnvio.match("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$")) {
+
+                      idDivMensaje.html("<div class='alert alert-danger'>"+
+                                "<strong><span class='glyphicon glyphicon-remove'></span></strong>"+
+                                " El contenido del campo correspondiente a correo electrónico no cuenta con el formato correcto"+
+                                "<br>Formato: ejemplo@gmail.com</div>");
+
+                    }else{
+
+                      verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError,idDivMensaje);
+                    
+                    }
+                
+                  }else{
+
+                      verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError,idDivMensaje);
+                
+                    }
+
+              }
 
         }else{
 
-         $('#mensajeVerificacionCedula').html("");
+         idDivMensaje.html("");
 
         }
 
@@ -133,16 +197,22 @@
   //Metodo ajax que permite verificar la existencia de varios campos del formulario en la base de datos
   */
 
-  function verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError){
-        //$("#infoVerificacionCedula").html("<img src='loader.gif'/>").fadeOut(1000);
+  function verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError,idDivMensaje){
+
+        var scrollY = window.pageYOffset;
 
         $.ajax({
-          url: "/SisConAsadaLaUnion/cliente/verificarCedulaExistente",
+          url: "/SisConAsadaLaUnion/cliente/"+metodoNombre,
           type: "POST",
           data: "valor="+datosEnvio,
-          success: function(respuesta) {
+          beforeSend: function(){
 
-            $('#mensajeVerificacionCedula').fadeIn(1000).html(respuesta);
+            idDivMensaje.fadeIn(1000).html('<img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/>');
+
+          },
+          success: function(respuesta){
+
+            idDivMensaje.fadeIn(1000).html(respuesta);
           
           },
           error: function(error){
@@ -154,5 +224,69 @@
           }
 
         });
-  
+
+  }
+
+  /*
+  //Validaciones del formulario registrar cliente 
+  */
+
+  /*
+  //Metodo para la validación del teléfono #2 desde el combobox 
+  */
+
+  function validarTelefonoNoRequeridoCombo(){
+
+    var idTelefono = $("#idTipoTel2Cliente");
+
+    idTelefono.change(function() {
+      
+      if (idTelefono.val() == "Fijo" || idTelefono.val() == "Móvil"){
+
+        idTelefono.attr("required","");
+
+        $("#idNumTel2Cliente").attr("required","");
+      
+      }else{
+
+        idTelefono.removeAttr("required");
+
+        $("#idNumTel2Cliente").removeAttr("required");
+
+        $("#idNumTel2Cliente").val("");
+
+      }
+    
+    });
+
+  }
+
+  /*
+  //Metodo para la validación del teléfono #2 desde el input 
+  */
+
+  function validarTelefonoNoRequeridoInput(){
+
+    var idNumTelefono = $("#idNumTel2Cliente");
+
+    idNumTelefono.keyup(function() {
+      
+      if (idNumTelefono.val() != ""){
+
+        idNumTelefono.attr("required","");
+
+        $("#idTipoTel2Cliente").attr("required","");
+      
+      }else{
+
+        idNumTelefono.removeAttr("required");
+
+        $("#idTipoTel2Cliente").removeAttr("required");
+
+        $("#idTipoTel2Cliente").val("").change();
+
+      }
+    
+  });
+
   }

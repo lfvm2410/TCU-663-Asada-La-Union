@@ -3,6 +3,7 @@
 	define('URL', '/SisConAsadaLaUnion/');
 	define('LIBS', 'libs/');
 	define('DOMAIN', 'libs/domain/');
+	define('VALIDATION', 'libs/validation/');
 	define('LOGIC', 'logic/');
 	define('MODELS', 'models/');
 	define('COMPONENTS', 'views/components/');

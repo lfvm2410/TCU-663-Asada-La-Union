@@ -35,36 +35,7 @@
             return $this->listaTelefonos;
          
         }
-
-        /*
-        ** Metodo encargado de comprobar si un teléfono existe dentro de la base de datos
-        */
         
-        public function comprobarExistenciaTelefono($numeroTelefono){
-
-            $conexionBD = $this->getConexionInstance()->getConexion();
-
-            mysql_set_charset('utf8');
-
-            $consultaTelefonoExistente = mysql_query("call SP_comprobarExistenciaTelefono('$numeroTelefono')",$conexionBD) or die("Error al tratar de verificar el número de teléfono ingresado en la base de datos");
-
-            $telefonoExistente = false;
-
-            if ($consultaTelefonoExistente) {
-                
-                if (mysql_num_rows($consultaTelefonoExistente) > 0) {
-
-                    $telefonoExistente = true;
-
-                }
-            }
-
-            mysql_close($conexionBD);
-
-            return $telefonoExistente;
-
-        }
-
     }
     
 ?>

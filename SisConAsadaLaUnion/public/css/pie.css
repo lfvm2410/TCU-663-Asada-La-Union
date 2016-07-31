@@ -15,21 +15,21 @@ body{
   /* Altura de footer */
   min-height: 195px;
   /*Imagen de fondo*/
-  background-image: url('/SisConAsadaLaUnion/public/assets/templates/FooterLogin.jpg');
-  background-size: 100% 100%; 
+  background-image: url('/SisConAsadaLaUnion/public/assets/templates/Footer-Sistema.png'); 
+  background-size: 100% 100%;
 }
 
 /*Color de letra en pie*/
 
 .container.pie{
-  margin-top:1%;
-  color:#FFFFFF;
-  text-shadow: 2px 0 0 #0174DF, -2px 0 0 #0174DF, 0 2px 0 #0174DF, 0 -2px 0 #0174DF, 1px 1px #0174DF, -1px -1px 0 #0174DF, 1px -1px 0 #0174DF, -1px 1px 0 #0174DF;
+	margin-top:1%;
+	color:#FFFFFF;
+	text-shadow: 2px 0 0 #0174DF, -2px 0 0 #0174DF, 0 2px 0 #0174DF, 0 -2px 0 #0174DF, 1px 1px #0174DF, -1px -1px 0 #0174DF, 1px -1px 0 #0174DF, -1px 1px 0 #0174DF;
 }
 
 .col-md-4.pieCol h5{
-  color:#FFFFFF;
-  text-shadow: 2px 0 0 #0174DF, -2px 0 0 #0174DF, 0 2px 0 #0174DF, 0 -2px 0 #0174DF, 1px 1px #0174DF, -1px -1px 0 #0174DF, 1px -1px 0 #0174DF, -1px 1px 0 #0174DF;
+	color:#FFFFFF;
+	text-shadow: 2px 0 0 #0174DF, -2px 0 0 #0174DF, 0 2px 0 #0174DF, 0 -2px 0 #0174DF, 1px 1px #0174DF, -1px -1px 0 #0174DF, 1px -1px 0 #0174DF, -1px 1px 0 #0174DF;
 }
 
 /*Media queries*/
@@ -39,7 +39,7 @@ body{
     body{
         margin-bottom: 408px !important;
     }
-
+    
     .footer img{
         display: inline !important;
         width: 59px !important;
