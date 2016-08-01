@@ -23,7 +23,7 @@
 
 		public function comprobarExistenciaCedula($cedula){
 
-      if ($this->personaValidation->validarCedulaAjax($cedula)) {
+      if ($this->personaValidation->validarCamposTexto($cedula,16)) {
 
          	if ($this->personaData->comprobarExistenciaCedula($cedula)) {
 
@@ -59,7 +59,9 @@
 
     public function comprobarExistenciaCorreoElectronico($correoElectronico){
 
-      if ($this->personaValidation->validarCorreoElectronicoAjax($correoElectronico)) {
+      $patternCorreoElectronico = "/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/";
+
+      if ($this->personaValidation->validarCamposTextoRegex($correoElectronico,30,$patternCorreoElectronico)) {
 
           if ($this->personaData->comprobarExistenciaCorreoElectronico($correoElectronico)) {
 

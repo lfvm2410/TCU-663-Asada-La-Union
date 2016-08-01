@@ -32,8 +32,6 @@
 
   function enviarFormularioCliente(idForm,url,datosFormulario){
 
-    var scrollY = window.pageYOffset;
-
     $.ajax({
       url:  url,
       type: "POST",
@@ -43,8 +41,6 @@
           if (respuesta == "true") {
           	
           	  alertify.success("Cliente registrado con éxito");
-
-              $(".alertify-logs").css("top", scrollY+"px");
 
           	  limpiarCamposForm(idForm);
 
@@ -58,8 +54,6 @@
           	
               alertify.error("Ha ocurrido un error al tratar de registrar el cliente, inténtelo de nuevo");
 
-              $(".alertify-logs").css("top", scrollY+"px");
-
       }
 
       },
@@ -67,9 +61,8 @@
 
           alertify.error("Error de conexión al tratar de registrar el cliente, inténtelo de nuevo");
 
-          $(".alertify-logs").css("top", scrollY+"px");
-
       }
+
     });
 
   }
@@ -199,8 +192,6 @@
 
   function verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError,idDivMensaje){
 
-        var scrollY = window.pageYOffset;
-
         $.ajax({
           url: "/SisConAsadaLaUnion/cliente/"+metodoNombre,
           type: "POST",
@@ -218,8 +209,6 @@
           error: function(error){
 
             alertify.error("Error de conexión al tratar de verificar la disponibilidad "+mensajeError);
-
-            $(".alertify-logs").css("top", scrollY+"px");
 
           }
 
