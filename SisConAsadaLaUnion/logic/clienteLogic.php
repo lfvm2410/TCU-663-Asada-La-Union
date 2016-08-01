@@ -8,17 +8,19 @@
 	class clienteLogic{
 
 		private $clienteData;
+    private $personaData;
+    private $clienteValidation;
     private $personaValidation;
     private $telefonoValidation;
-    private $clienteValidation;
-
+    
 		public function __construct(){
 
 			$this->clienteData = new clienteData();
+      $this->personaData = new personaData();
+      $this->clienteValidation = new clienteValidation();
       $this->personaValidation = new personaValidation();
       $this->telefonoValidation = new telefonoValidation();
-      $this->clienteValidation = new clienteValidation();
-			
+
 		}
 
 		/*
@@ -27,32 +29,35 @@
 
 		public function registrarCliente(cliente $cliente, telefono $telefono1, telefono $telefono2){
 
-          if ($this->personaValidation->validarCedula($cliente->getCedula()) &&
-              $this->personaValidation->validarNombreApellidos($cliente->getNombre()) &&
-              $this->personaValidation->validarNombreApellidos($cliente->getApellidos()) &&
-              $this->personaValidation->validarCorreoElectronico($cliente->getCorreoElectronico()) &&
-              $this->telefonoValidation->validarTipoTelefonoRequerido($telefono1) &&
-              $this->telefonoValidation->validarNumTelefonoRequerido($telefono1) &&
-              $this->personaValidation->validarDireccion($cliente->getDireccion())) {
+          $patternTelefono = "/^[0-9]{8}$/";
+
+          if ($this->personaValidation->validarCedula($cliente->getCedula(),$this->personaData) &&
+              $this->clienteValidation->validarCamposTexto($cliente->getNombre(),30) &&
+              $this->clienteValidation->validarCamposTexto($cliente->getApellidos(),30) &&
+              $this->personaValidation->validarCorreoElectronico($cliente->getCorreoElectronico(),$this->personaData) &&
+              $this->telefonoValidation->validarTipoTelefonoRequerido($telefono1->getTipo()) &&
+              $this->telefonoValidation->validarCamposTextoRegex($telefono1->getNumero(),8,$patternTelefono) &&
+              $this->clienteValidation->validarCamposTexto($cliente->getDireccion(),300) &&
+              $this->clienteValidation->validarNumPlano($cliente->getNumeroPlano(),$this->clienteData)) {
 
               $telefonoLogic = new telefonoLogic();
 
               $telefonoLogic->setTelefonoALista($telefono1);
 
-              if ($this->telefonoValidation->validarTipoTelefonoRequerido($telefono2) &&
-                  $this->telefonoValidation->validarNumTelefonoRequerido($telefono2)) {
+              if ($this->telefonoValidation->validarTipoTelefonoRequerido($telefono2->getTipo()) &&
+                  $this->telefonoValidation->validarCamposTextoRegex($telefono2->getNumero(),8,$patternTelefono)) {
 
                   $telefonoLogic->setTelefonoALista($telefono2);
                 
               }
 
-              if (!$this->clienteValidation->validarNumPlano($cliente->getNumeroPlano(),$this->clienteData)) {
+              if ($this->clienteValidation->validarCamposTexto($cliente->getNumeroPlano(),16)) {
                 
-                  $cliente->setNumeroPlano('NULL');
+                  $cliente->setNumeroPlano("'".$cliente->getNumeroPlano()."'");
 
               }else{
 
-                  $cliente->setNumeroPlano("'".$cliente->getNumeroPlano()."'");
+                  $cliente->setNumeroPlano('NULL');
                   
               }
 
@@ -81,7 +86,7 @@
 
 		public function comprobarExistenciaNumeroPlano($numeroPlano){
 
-      if ($this->clienteValidation->validarNumPlanoAjax($numeroPlano)) {
+      if ($this->clienteValidation->validarCamposTexto($numeroPlano,16)) {
 
          	if ($this->clienteData->comprobarExistenciaNumeroPlano($numeroPlano)) {
 
