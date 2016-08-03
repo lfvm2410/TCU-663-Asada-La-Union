@@ -7,12 +7,14 @@
     class clienteController extends controlador{
 
       private $personaLogic;
+      private $telefonoLogic;
       
       public function __construct(){
 
         parent::__construct();
 
         $this->personaLogic = new personaLogic();
+        $this->telefonoLogic = new telefonoLogic();
 
       }
 
@@ -33,6 +35,12 @@
       public function registrarClienteForm(){
   
           $this->vista->render($this,'registrarCliente','Registrar cliente');
+
+      }
+
+      public function consultarInformacionClientes(){
+  
+          $this->vista->render($this,'consultarInformacionClientes','Consultar información de clientes');
 
       }
     
@@ -128,6 +136,46 @@
         }
 
       }
+
+    /*
+    // Metodo encargado de consultar los clientes activos en el sistema
+    */
+
+      public function consultarClientesActivos(){
+
+        if (isset($_POST['paginaActual'])) {
+
+          $paginaActual = $_POST['paginaActual'];
+
+          $this->logica->paginacionFormatoConsultarClientes($paginaActual,10,"Si");
+        
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+
+      }
+
+    /*
+    // Metodo encargado de traer los telefonos de una persona por su cedula y redireccionarlos a la vista
+    */
+
+    public function consultarTelefonosClientePorCedula(){
+
+        if (isset($_POST['cedulaCliente'])) {
+
+          $cedulaCliente = $_POST['cedulaCliente'];
+
+          $this->telefonoLogic->formatearTelefonosDePersona($cedulaCliente);
+          
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+    
+    }
 
   }
 
