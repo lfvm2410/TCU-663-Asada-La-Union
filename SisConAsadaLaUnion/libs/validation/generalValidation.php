@@ -42,6 +42,24 @@
 			return $estadoCampo;
 		}
 
+		/*
+        //Metodo encargado de validar si un array esta vacio
+		*/
+
+		public function validarArray($array){
+
+			$estadoArray = false;
+
+			if (!empty($array) && !is_null($array)) {
+				
+				$estadoArray = true;
+			
+			}
+
+			return $estadoArray;
+
+		}
+
 	}
 
 ?>

@@ -23,7 +23,9 @@
 
 		public function comprobarExistenciaCedula($cedula){
 
-      if ($this->personaValidation->validarCamposTexto($cedula,16)) {
+      $patternCedula = "/^[0-9]*$/";
+
+      if ($this->personaValidation->validarCamposTextoRegex($cedula,16,$patternCedula)) {
 
          	if ($this->personaData->comprobarExistenciaCedula($cedula)) {
 

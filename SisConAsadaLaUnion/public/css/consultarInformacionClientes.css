@@ -1,0 +1,51 @@
+/*Hover de table*/
+
+.table-hover>tbody>tr:hover {
+    background-color: #00ABFF;
+    color: #FFFFFF;
+}
+
+/*Tr header style*/
+
+.info th{
+	background-color: #00ABFF !important;
+    color: #FFFFFF; 
+}
+
+/*Pagination active style*/
+
+.active a{
+	background-color: #00ABFF !important;
+    color: #FFFFFF !important; 
+}
+
+/*Pagination non-active style*/
+
+.pagination li a{
+	background-color: #66D3FE;
+	color: #000000 !important;
+}
+
+/*Pagination non-active style on hover*/
+
+.pagination li a:hover{
+	background-color: #00ABFF !important;
+    color: #FFFFFF !important; 
+}
+
+/*JQuery dialog style*/
+
+.ui-widget-header{
+	background: none;
+	background-color: #00ABFF;
+	color: #FFFFFF !important;
+
+}
+
+/*JQuery dialog button style*/
+
+.ui-dialog-titlebar-close{
+	background-image: url("/SisConAsadaLaUnion/public/assets/images/cerrar.png");
+	background-size: 100% 100%;
+	background-color: #FFFFFF;
+}
