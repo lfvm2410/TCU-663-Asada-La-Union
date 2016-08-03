@@ -45,7 +45,7 @@
 				<ul class="dropdown-menu">
 					<li><a href="<?php print URL;?>cliente/registrarClienteForm">Registrar cliente</a></li>
 					<li><a href="#">Actualizar cliente</a></li>
-					<li><a href="#">Consultar información de clientes</a></li>	
+					<li><a href="<?php print URL;?>cliente/consultarInformacionClientes">Consultar información de clientes</a></li>	
 					<li><a href="#">Deshabilitar cliente</a></li>		
 				</ul>
 			</li>
