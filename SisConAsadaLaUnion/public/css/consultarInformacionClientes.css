@@ -1,3 +1,9 @@
+/*#buscarCliente width*/
+
+#buscarCliente{
+	width: 24%;
+}
+
 /*Hover de table*/
 
 .table-hover>tbody>tr:hover {

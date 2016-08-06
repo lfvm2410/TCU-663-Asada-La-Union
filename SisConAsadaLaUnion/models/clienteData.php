@@ -233,6 +233,79 @@
             return $totalClientes;
         }
 
+        /*
+        // Método encargado de obtener los clientes a mostrar de acuerdo a la cédula o el nombre
+        */
+
+        public function obtenerClientesCedulaNombre($cedula,$nombre,$clienteActual,$limiteClientes,$clientesActivos){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $consultaClientesCedulaNombre = mysql_query("call SP_obtenerClientesCedulaNombre('$cedula','$nombre',$clienteActual,$limiteClientes,'$clientesActivos')",$conexionBD) or die("Error al tratar de obtener los clientes en la base de datos");
+
+            $listaClientes = array();
+
+            if ($consultaClientesCedulaNombre) {
+                
+                if (mysql_num_rows($consultaClientesCedulaNombre) > 0) {
+
+                    while ($cli = mysql_fetch_array($consultaClientesCedulaNombre)) {
+
+                    $cedula = $cli['cedula_Persona'];
+                    $nombre = $cli['nombre_Persona'];
+                    $apellidos = $cli['apellidos_Persona'];
+                    $correoElectronico = $cli['correoElectronico_Persona'];
+                    $direccion = $cli['direccion_Persona'];
+                    $numeroPlano = $cli['numeroPlano_Cliente'];
+            
+                    $listaClientes[] = array('cedula'=>$cedula, 'nombre'=>$nombre, 'apellidos'=>$apellidos, 
+                        'correoElectronico'=>$correoElectronico,'direccion'=>$direccion, 'numeroPlano'=>$numeroPlano);
+
+                    }
+
+                }
+
+            }
+
+            mysql_close($conexionBD);
+
+            return $listaClientes;
+
+        }
+
+        /*
+        // Método encargado de obtener el total de clientes de acuerdo a su cédula o nombre registrados en la base de datos
+        */
+
+        public function obtenerTotalClientesCedulaNombre($cedula,$nombre,$clientesActivos){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $consultaTotalClientesCedulaNombre = mysql_query("call SP_obtenerTotalClientesCedulaNombre('$cedula','$nombre','$clientesActivos')",$conexionBD) or die("Error al tratar de obtener la cantidad total de clientes en la base de datos");
+
+            $totalClientesCedulaNombre = 0;
+
+            if ($consultaTotalClientesCedulaNombre) {
+                
+                if (mysql_num_rows($consultaTotalClientesCedulaNombre) > 0) {
+
+                    $cliTotal = mysql_fetch_array($consultaTotalClientesCedulaNombre,MYSQL_NUM);
+
+                    $totalClientesCedulaNombre = $cliTotal[0];
+
+                }
+
+            }
+
+            mysql_close($conexionBD);
+
+            return $totalClientesCedulaNombre;
+        }
+
     }
     
 ?>
