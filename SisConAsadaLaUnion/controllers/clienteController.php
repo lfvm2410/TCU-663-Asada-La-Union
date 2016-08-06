@@ -138,16 +138,48 @@
       }
 
     /*
+    // Metodo encargado de consultar la totalidad de páginas de clientes activos en el sistema
+    */
+
+      public function consultarTotalidadPaginasClientesActivos(){
+
+        header("Content-Type: application/json");
+
+        if (isset($_POST['permisoConsultaTotalPaginas']) && isset($_POST['metodo']) && isset($_POST['busqueda'])) {
+
+          $permisoConsultaTotalPaginas = trim($_POST['permisoConsultaTotalPaginas']);
+
+          $metodo = trim($_POST['metodo']);
+
+          $busqueda = trim($_POST['busqueda']);
+
+          $this->logica->totalidadPaginasClientes($permisoConsultaTotalPaginas,$metodo,$busqueda,10,"Si");
+        
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+
+      }
+
+    /*
     // Metodo encargado de consultar los clientes activos en el sistema
     */
 
       public function consultarClientesActivos(){
 
-        if (isset($_POST['paginaActual'])) {
+        header("Content-Type: application/json");
 
-          $paginaActual = $_POST['paginaActual'];
+        if (isset($_POST['paginaActual']) && isset($_POST['metodo']) && isset($_POST['busqueda'])) {
 
-          $this->logica->paginacionFormatoConsultarClientes($paginaActual,10,"Si");
+          $paginaActual = trim($_POST['paginaActual']);
+
+          $metodo = trim($_POST['metodo']);
+
+          $busqueda = trim($_POST['busqueda']);
+
+          $this->logica->formatoConsultarClientes($paginaActual,$metodo,$busqueda,10,"Si");
         
         }else{
 
@@ -163,9 +195,11 @@
 
     public function consultarTelefonosClientePorCedula(){
 
+        header("Content-Type: application/json");
+
         if (isset($_POST['cedulaCliente'])) {
 
-          $cedulaCliente = $_POST['cedulaCliente'];
+          $cedulaCliente = trim($_POST['cedulaCliente']);
 
           $this->telefonoLogic->formatearTelefonosDePersona($cedulaCliente);
           

@@ -1,9 +1,16 @@
 <?php include COMPONENTS.'header.php';?>
 	<link href="<?php print URL;?>public/css/consultarInformacionClientes.css" rel="stylesheet"/>
+    <script src="<?php print URL;?>public/js/esimakin-twbs-pagination-4a2f5ff/jquery.twbsPagination.min.js" type="text/javascript"></script>
     <script src="<?php print URL;?>public/js/consultarInfoClientesOperaciones.js" type="text/javascript"></script>
 </head>
 <body>
 <?php include COMPONENTS.'encabezado.php';?>
+<div class="container">
+    <div class="form-inline form-group">
+      <label id="idLblBuscarCliente" for="buscarCliente">Buscar:</label>
+      <input type="text" class="form-control" id="buscarCliente" placeholder="Introduzca una cédula o un nombre" maxlength="30"/>
+    </div>
+</div>
 <div class="container table-responsive">
   <table id="tablaClientes" class="table table-striped table-condensed table-bordered table-hover">
     <thead>
@@ -21,7 +28,7 @@
 </table>
 </div>
 <center>
-    <ul class="pagination" id="paginacion"></ul>
+    <ul id="paginacion" class="pagination"></ul>
 </center>
 <div id="verNumsTel" class="container table-responsive" title="Números de teléfono"></div>
 <?php include COMPONENTS.'pie.php';?>
