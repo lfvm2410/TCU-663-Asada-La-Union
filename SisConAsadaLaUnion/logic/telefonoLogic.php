@@ -43,8 +43,6 @@
 
         public function formatearTelefonosDePersona($cedula){
 
-        	header("Content-Type: application/json");
-
         	$patternCedula = "/^[0-9]*$/";
         	
         	if ($this->generalValidation->validarCamposTextoRegex($cedula,16,$patternCedula)) {

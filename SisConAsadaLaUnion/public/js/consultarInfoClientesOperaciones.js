@@ -4,9 +4,11 @@
 
   $(document).on("ready", function () {
 
-    cargarListaClientes(1);
+    crearListaPaginasPaginacion(1,"obtenerClientes","false");
 
     crearDialogTelefonos();
+
+    buscarClientesCedulaNombre();
 
     levantarVentanaModalTelefonos($("#verNumsTel"));
 
@@ -16,12 +18,13 @@
   //Metodo encargado de gestionar la carga de la lista de clientes con el servidor
   */
 
-  function cargarListaClientes(paginaActual){
+  function cargarListaClientes(paginaActualCli,nombreMetodo,cedulaNombre){
 
         $.ajax({
           url: "/SisConAsadaLaUnion/cliente/consultarClientesActivos",
           type: "POST",
-          data: "paginaActual="+paginaActual,
+          data: { paginaActual : paginaActualCli , metodo : nombreMetodo , busqueda: cedulaNombre },
+          dataType: "json",
           beforeSend: function(){
 
             $("#cuerpoTablaClientes").html('<tr><td colspan="7"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
@@ -36,8 +39,6 @@
               var informacionClientes = eval(respuesta);
       
               $("#cuerpoTablaClientes").html(informacionClientes["tablaClientes"]);
-            
-              $("#paginacion").html(informacionClientes["listaPaginas"]);
 
             }else{
 
@@ -52,6 +53,96 @@
 
             alertify.error("Error de conexión al tratar de cargar la información sobre los clientes en la tabla");
 
+          }
+
+        });
+
+  }
+
+  /*
+  //Metodo encargado de hacer la paginación de la consulta sobre la información de clientes
+  */
+
+  function listaPaginasConsultaClientes(totalPaginas,paginasVisibles,paginaInicio,nombreMetodo,cedulaNombre){
+
+    if (totalPaginas != 0) {
+
+      var ejecucionOnLoad = true;
+           
+      $("#paginacion").twbsPagination({
+        totalPages: totalPaginas,
+        visiblePages: paginasVisibles,
+        startPage: paginaInicio,
+        first: 'Primero',
+        prev: '&laquo; Anterior',
+        next: 'Siguiente &raquo;',
+        last: 'Último',
+        onPageClick: function (event, page) {
+          if (ejecucionOnLoad) {
+            ejecucionOnLoad = false;
+          }else{
+            $("#paginacion").twbsPagination('destroy'); 
+            crearListaPaginasPaginacion(page,nombreMetodo,cedulaNombre);
+          }
+          cargarListaClientes(page,nombreMetodo,cedulaNombre);
+        }
+      });
+
+    }else{
+
+      $("#cuerpoTablaClientes").html("<tr><td colspan='7' style='text-align:center;'>No se encontraron resultados</td></tr>");
+
+    }
+    
+  }
+
+  /*
+  //Metodo encargado de crear la lista de páginas que va tener la paginación
+  */
+
+  function crearListaPaginasPaginacion(paginaInicio,nombreMetodo,cedulaNombre){
+
+        $.ajax({
+          url: "/SisConAsadaLaUnion/cliente/consultarTotalidadPaginasClientesActivos",
+          type: "POST",
+          data: { permisoConsultaTotalPaginas : "true", metodo : nombreMetodo, busqueda : cedulaNombre },
+          dataType: "json",
+          beforeSend: function(){
+
+            $("#cuerpoTablaClientes").html('<tr><td colspan="7"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
+
+          },
+          success: function(respuesta){
+
+            if (respuesta["totalPaginas"] != "false") { 
+
+              var totalidadDePaginas = respuesta["totalPaginas"];
+
+              //calcular paginas visibles
+
+              if (totalidadDePaginas <= 10) {
+
+                listaPaginasConsultaClientes(totalidadDePaginas,totalidadDePaginas,paginaInicio,nombreMetodo,cedulaNombre);
+
+              }else{
+
+                listaPaginasConsultaClientes(totalidadDePaginas,10,paginaInicio,nombreMetodo,cedulaNombre);
+
+              }
+
+            }else{
+
+              alertify.error("Error al tratar de obtener la totalidad de clientes que se encuentran alojados en la base de datos, la función esperaba alguna cédula o nombre como entrada");
+
+            }
+          
+          },
+          error: function(error){
+
+            $("#cuerpoTablaClientes").empty();
+
+            alertify.error("Error de conexión al tratar de obtener la totalidad de clientes que se encuentran alojados en la base de datos");
+           
           }
 
         });
@@ -87,15 +178,56 @@
  }
 
   /*
+  //Metodo encargado de gestionar la busqueda de clientes por su cedula o nombre
+  */
+
+  function buscarClientesCedulaNombre(){
+
+    var timeout = null;
+
+    $("#buscarCliente").on('keyup', function() {
+
+    $("#cuerpoTablaClientes").html('<tr><td colspan="7"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
+
+    var cedulaNombre = $(this).val().trim();
+    
+    clearTimeout(timeout);
+    
+    timeout = setTimeout(function() {
+
+          if ($("#paginacion").html().length > 0) {
+
+            $("#paginacion").twbsPagination('destroy');
+              
+          }
+
+          if (cedulaNombre != "") {
+
+            crearListaPaginasPaginacion(1,"obtenerClientesCedulaNombre",cedulaNombre);
+
+          }else{
+
+            crearListaPaginasPaginacion(1,"obtenerClientes","false");        
+
+          }
+
+    }, 500)
+    
+    })
+  
+  }
+
+  /*
   //Metodo encargado de gestionar la carga de los telefonos de un cliente con el servidor
   */
 
-  function cargarTelefonosCliente(cedulaCliente,idVentanaNumsTel){
+  function cargarTelefonosCliente(cedulaClienteActual,idVentanaNumsTel){
 
         $.ajax({
           url: "/SisConAsadaLaUnion/cliente/consultarTelefonosClientePorCedula",
           type: "POST",
-          data: "cedulaCliente="+cedulaCliente,
+          data: { cedulaCliente : cedulaClienteActual },
+          dataType: "json",
           beforeSend: function(){
 
             idVentanaNumsTel.html('<img style="position:absolute; top:50%; left:46.5%; transform:translateY(-50%);" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/>');

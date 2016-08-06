@@ -117,47 +117,66 @@
 		}
 
     /*
-    // Método encargado de construir la paginación y el formato que tendrán los registros sobre los clientes
+    // Método encargado de calcular la totalidad de páginas de acuerdo a la cantidad de clientes habidos en el sistema
+    */
+    
+    public function totalidadPaginasClientes($permisoConsultaTotalPaginas,$metodo,$busqueda,$cantidadClientesAMostrar,$clientesActivos){
+
+      if (strcmp($permisoConsultaTotalPaginas,"true") == 0 && $this->clienteValidation->validarMetodoBusquedaClientes($metodo) &&
+          $this->clienteValidation->validarCamposTexto($busqueda,30)) { //Validando parametros de entrada
+
+        if (strcmp($metodo, "obtenerClientes") == 0) { //Determina a cual lista de clientes se le va a sacar la cantidad total de sus registros
+
+          $cantidadTotalClientes = $this->clienteData->obtenerTotalClientes($clientesActivos);
+          
+        }else{
+
+          $patternCedula = "/^[0-9]*$/";
+
+          //Determina si la cedula cumple con lo necesario para ser tomada en cuenta
+
+          if ($this->clienteValidation->validarCamposTextoRegex($busqueda,16,$patternCedula)) {
+
+            $cedula = $busqueda;
+            
+          }else{
+
+            $cedula = "false";
+          
+          }
+
+          $nombre = $busqueda; // Al haber pasado el primer filtro (if validacion entrada), entonces siempre será igual a la busqueda
+
+          $cantidadTotalClientes = $this->clienteData->obtenerTotalClientesCedulaNombre($cedula,$nombre,$clientesActivos);
+
+        }
+
+        $totalPaginas = ceil($cantidadTotalClientes/$cantidadClientesAMostrar); //Con la totalidad de clientes habidos en X lista, se saca la totalidad de páginas
+
+        $paginasClientes = array("totalPaginas" => $totalPaginas);
+
+        print_r(json_encode($paginasClientes));
+        
+      }else{
+
+        $paginasClientes = array("totalPaginas" => "false");
+
+        print_r(json_encode($paginasClientes));
+
+      }
+
+    }
+
+    /*
+    // Método encargado de construir el formato que tendrán los registros sobre los clientes
     */
 
-    public function paginacionFormatoConsultarClientes($paginaActual,$cantidadClientesAMostrar,$clientesActivos){
+    public function formatoConsultarClientes($paginaActual,$metodo,$busqueda,$cantidadClientesAMostrar,$clientesActivos){
 
-      header("Content-Type: application/json");
-
-      if (intval($paginaActual) != 0) { //Validando si la pagina entrante es un número entero
+      if (intval($paginaActual) != 0 && $this->clienteValidation->validarMetodoBusquedaClientes($metodo) &&
+          $this->clienteValidation->validarCamposTexto($busqueda,30)) { //Validando parametros de entrada
         
-          $cantidadTotalClientes = $this->clienteData->obtenerTotalClientes($clientesActivos);
-          $totalPaginas = ceil($cantidadTotalClientes/$cantidadClientesAMostrar);
-          $listaPaginas = "";
           $tablaClientes = "";
-
-          //Construcción de la paginación
-
-          if ($paginaActual > 1) { //Boton de anterior
-              
-              $listaPaginas = '<li><a href="javascript:cargarListaClientes('.($paginaActual-1).');">Anterior</a></li>';
-
-          }
-
-          for($i=1; $i<=$totalPaginas; $i++){ //las paginas como elementos de una lista, activando la actual
-            
-              if($i == $paginaActual){
-              
-                $listaPaginas = $listaPaginas.'<li class="active"><a href="javascript:cargarListaClientes('.$i.');">'.$i.'</a></li>';
-              
-              }else{
-              
-                $listaPaginas = $listaPaginas.'<li><a href="javascript:cargarListaClientes('.$i.');">'.$i.'</a></li>';
-              
-              }
-
-          }
-
-          if($paginaActual < $totalPaginas){ //Boton de siguiente
-               
-              $listaPaginas = $listaPaginas.'<li><a href="javascript:cargarListaClientes('.($paginaActual+1).');">Siguiente</a></li>';
-            
-          }
 
           if($paginaActual <= 1){ //sacando el cliente actual, donde se toma referencia para mostrar los demás registros
             
@@ -169,9 +188,33 @@
             
           }
 
-          //Formateo de registros para redireccionar al controlador, que posteriormente lo enviará a la vista que lo solicite
+          if (strcmp($metodo, "obtenerClientes") == 0) { //Determina a cual lista de clientes llama
 
           $listaClientes = $this->clienteData->obtenerClientes($clienteActual,$cantidadClientesAMostrar,$clientesActivos);
+          
+          }else{
+
+            $patternCedula = "/^[0-9]*$/";
+
+            //Determina si la cédula cumple con lo necesario para ser tomada en cuenta
+
+            if ($this->clienteValidation->validarCamposTextoRegex($busqueda,16,$patternCedula)) {
+
+              $cedula = $busqueda;
+              
+            }else{
+
+              $cedula = "false";
+            
+            }
+
+            $nombre = $busqueda; // Al haber pasado el primer filtro (if validacion entrada), entonces siempre será igual a la busqueda
+
+            $listaClientes = $this->clienteData->obtenerClientesCedulaNombre($cedula,$nombre,$clienteActual,$cantidadClientesAMostrar,$clientesActivos);
+
+          }
+
+          //Formateo de registros para redireccionar al controlador, que posteriormente lo enviará a la vista que lo solicite
 
           //Validando si la lista viene con o sin registros
 
@@ -181,26 +224,26 @@
 
                 foreach ($listaClientes as $cliente) {
 
-                 $tablaClientes = $tablaClientes."<tr>";
+                    $tablaClientes = $tablaClientes."<tr>";
 
-                foreach ($cliente as $atributoCliente => $valorAtributo) {
+                    foreach ($cliente as $atributoCliente => $valorAtributo) {
 
-                   if ($atributoCliente == "cedula") {
-                      
-                      $dataCedula = $valorAtributo; 
+                       if ($atributoCliente == "cedula") {
+                          
+                          $dataCedula = $valorAtributo; 
 
-                   }
+                       }
 
-                   $tablaClientes = $tablaClientes.
-                                    "<td>".$valorAtributo."</td>";
+                       $tablaClientes = $tablaClientes.
+                                        "<td>".$valorAtributo."</td>";
 
-                }
+                    }
 
-                $tablaClientes = $tablaClientes.
-                                   "<td>
-                                      <a href='#'><img class='img-telefono img-responsive center-block' data-cedula='".$dataCedula."' src='".URL."/public/assets/images/TelefonoLogo.png' width='32px'/></a>
-                                    </td>
-                                  </tr>";
+                    $tablaClientes = $tablaClientes.
+                                       "<td>
+                                          <a href='#'><img class='img-telefono img-responsive center-block' data-cedula='".$dataCedula."' src='".URL."/public/assets/images/TelefonoLogo.png' width='32px'/></a>
+                                        </td>
+                                      </tr>";
                 }                 
         
           }else{
@@ -208,13 +251,13 @@
               $tablaClientes = "<tr><td colspan='7' style='text-align:center;'>No se encontraron resultados</td></tr>";
           }
 
-          $informacionClientes = array("tablaClientes" => $tablaClientes, "listaPaginas" => $listaPaginas);
+          $informacionClientes = array("tablaClientes" => $tablaClientes);
 
           print_r(json_encode($informacionClientes));
 
       }else{
 
-        $informacionClientes = array("tablaClientes" => "false", "listaPaginas" => "");
+        $informacionClientes = array("tablaClientes" => "false");
 
         print_r(json_encode($informacionClientes));
       

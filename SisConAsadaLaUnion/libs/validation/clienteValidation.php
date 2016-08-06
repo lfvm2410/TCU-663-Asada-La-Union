@@ -42,6 +42,24 @@
 
 		}
 
+		/*
+		//Metodo encargado de validar el metodo de busqueda de clientes a consultar
+		*/
+
+		public function validarMetodoBusquedaClientes($metodo){
+
+			$estadoMetodo = false;
+
+			if (strcmp($metodo, "obtenerClientes") == 0 || strcmp($metodo, "obtenerClientesCedulaNombre") == 0) {
+
+				$estadoMetodo = true;
+				
+			}
+
+			return $estadoMetodo;
+
+		}
+
 	}
 
 ?>
