@@ -26,7 +26,6 @@
             <input type="button" class="btn btn-primary" id="idBtnBuscarCliente" value="Buscar Cliente"/>
         </div>
     </form>
-
 </div>
 </body>
 </html>
