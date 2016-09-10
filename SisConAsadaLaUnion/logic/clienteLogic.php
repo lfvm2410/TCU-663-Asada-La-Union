@@ -229,9 +229,13 @@
                     foreach ($cliente as $atributoCliente => $valorAtributo) {
 
                        if ($atributoCliente == "cedula") {
-                          
-                          $dataCedula = $valorAtributo; 
 
+                         $dataCedula = $valorAtributo;
+
+                         $tablaClientes = $tablaClientes."<td><select><option value=''>Seleccionar</option>
+                                                                     <option value='".$dataCedula."'>Editar</option>
+                                                                     <option value='".$dataCedula."''>Anular</option>
+                                                             </select></td>";
                        }
 
                        $tablaClientes = $tablaClientes.

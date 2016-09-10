@@ -15,6 +15,7 @@
   <table id="tablaClientes" class="table table-striped table-condensed table-bordered table-hover">
     <thead>
         <tr class="info">
+            <th>Acciones</th>
             <th>Cédula</th>
             <th>Nombre</th>
             <th>Apellidos</th>
