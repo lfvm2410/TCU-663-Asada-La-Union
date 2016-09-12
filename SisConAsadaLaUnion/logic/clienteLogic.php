@@ -232,9 +232,10 @@
 
                          $dataCedula = $valorAtributo;
 
-                         $tablaClientes = $tablaClientes."<td><select><option value=''>Seleccionar</option>
-                                                                     <option value='".$dataCedula."'>Editar</option>
-                                                                     <option value='".$dataCedula."''>Anular</option>
+                         $tablaClientes = $tablaClientes."<td><select class='form-control acciones' data-cedula='".$dataCedula."'>
+                                                                     <option value=''>Elegir</option>
+                                                                     <option value='Editar'>Editar</option>
+                                                                     <option value='Anular'>Anular</option>
                                                              </select></td>";
                        }
 
@@ -252,7 +253,7 @@
         
           }else{
 
-              $tablaClientes = "<tr><td colspan='7' style='text-align:center;'>No se encontraron resultados</td></tr>";
+              $tablaClientes = "<tr><td colspan='8' style='text-align:center;'>No se encontraron resultados</td></tr>";
           }
 
           $informacionClientes = array("tablaClientes" => $tablaClientes);
@@ -265,6 +266,32 @@
 
         print_r(json_encode($informacionClientes));
       
+      }
+
+    }
+
+    /*
+    // Metodo encargado de gestionar la activacion o anulacion de un cliente
+    */
+
+    public function actualizarEstadoCliente($cedulaCliente,$activoCliente){
+
+      if ($this->personaValidation->validarCedulaExistente($cedulaCliente,$this->personaData)) {
+
+        if ($this->clienteData->actualizarActivoCliente($cedulaCliente,$activoCliente)) {
+          
+          echo "true";
+
+        }else{
+
+          echo "false";
+
+        }
+
+      }else{
+
+        echo "false";
+
       }
 
     }

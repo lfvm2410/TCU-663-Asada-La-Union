@@ -59,6 +59,30 @@
 			return $estadoCorreoElectronico;
 		}
 
+		/*
+        // Metodo encargado de validar el atributo cédula cuando se necesite activar o anular
+		*/
+
+		// A tomar en cuenta: Máximo de 16 caracteres, solo números enteros, no nulo y unique
+
+		public function validarCedulaExistente($cedula, personaData $personaData){
+
+			$estadoCedula = false;
+
+			$patternCedula = "/^[0-9]*$/";
+
+			if ($this->validarCamposTextoRegex($cedula,16,$patternCedula)) {
+				
+				if ($personaData->comprobarExistenciaCedula($cedula)) {
+
+					$estadoCedula = true;
+				}
+
+			}
+
+			return $estadoCedula;
+		}
+
 	}
 
 ?>

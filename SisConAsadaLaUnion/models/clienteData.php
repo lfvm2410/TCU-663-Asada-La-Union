@@ -306,6 +306,31 @@
             return $totalClientesCedulaNombre;
         }
 
+        /*
+        // Método encargado de activar o desactivar un cliente en la base de datos
+        */
+
+        public function actualizarActivoCliente($cedulaCliente,$activoCliente){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $estadoTransaccion = false;
+
+            $activarAnularCliente = mysql_query("call SP_setActivoCliente('$cedulaCliente','$activoCliente')",$conexionBD) or die("Error al tratar de activar o anular el cliente en la base de datos");
+            
+            if ($activarAnularCliente) {
+                
+                $estadoTransaccion = true;
+
+            }
+
+            mysql_close($conexionBD);
+
+            return $estadoTransaccion;
+        }
+
     }
     
 ?>

@@ -12,6 +12,8 @@
 
     levantarVentanaModalTelefonos($("#verNumsTel"));
 
+    ejecutarAccionSeleccionada();
+
   });
 
   /*
@@ -27,7 +29,7 @@
           dataType: "json",
           beforeSend: function(){
 
-            $("#cuerpoTablaClientes").html('<tr><td colspan="7"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
+            $("#cuerpoTablaClientes").html('<tr><td colspan="8"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
 
           },
           success: function(respuesta){
@@ -90,7 +92,7 @@
 
     }else{
 
-      $("#cuerpoTablaClientes").html("<tr><td colspan='7' style='text-align:center;'>No se encontraron resultados</td></tr>");
+      $("#cuerpoTablaClientes").html("<tr><td colspan='8' style='text-align:center;'>No se encontraron resultados</td></tr>");
 
     }
     
@@ -109,7 +111,7 @@
           dataType: "json",
           beforeSend: function(){
 
-            $("#cuerpoTablaClientes").html('<tr><td colspan="7"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
+            $("#cuerpoTablaClientes").html('<tr><td colspan="8"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
 
           },
           success: function(respuesta){
@@ -187,7 +189,7 @@
 
     $("#buscarCliente").on('keyup', function() {
 
-    $("#cuerpoTablaClientes").html('<tr><td colspan="7"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
+    $("#cuerpoTablaClientes").html('<tr><td colspan="8"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
 
     var cedulaNombre = $(this).val().trim();
     
@@ -275,6 +277,89 @@
         var cedulaCliente = $(this).attr("data-cedula");
 
         cargarTelefonosCliente(cedulaCliente,idVentanaNumsTel);
+
+      });
+
+  }
+
+  /*
+  // Metodo para que el usuario confirme una transaccion
+  */
+
+  function confirmarTransaccion(mensaje) {
+
+   return confirm(mensaje);
+
+  }
+
+  /*
+  // Metodo ajax para anular un cliente
+  */
+
+  function anularCliente(cedulaClienteSeleccionado,tablaClientes){
+
+    $.ajax({
+          url: "/SisConAsadaLaUnion/cliente/anularCliente",
+          type: "POST",
+          data: "cedulaCliente="+cedulaClienteSeleccionado,
+          success: function(respuesta){
+
+           if (respuesta == "true") {
+
+            tablaClientes.closest('tr').remove();
+
+            alertify.success("Cliente anulado con éxito");
+
+           }else{
+
+            tablaClientes.closest('select').val("");
+
+            alertify.error("Ha ocurrido un error al tratar de anular el cliente seleccionado");            
+
+           }
+          
+          },
+          error: function(error){
+
+            tablaClientes.closest('select').val("");
+
+            alertify.error("Error de conexión al tratar de anular el cliente seleccionado");
+
+          }
+
+        });
+
+  }
+
+  /*
+  // Metodo encargado de ejecutar una accion seleccionada por el usuario en el combobox de Acciones
+  */
+
+  function ejecutarAccionSeleccionada() {
+
+     $("#tablaClientes").on("change", ".form-control.acciones", function(e){
+        
+        var accion = $(this).val();
+
+        if (accion == "Editar") {
+
+        }
+
+        if (accion == "Anular") {
+
+          if (confirmarTransaccion("¿Desea continuar con la exclusión del cliente seleccionado?")) {
+      
+              var cedulaCliente = $(this).attr("data-cedula");
+
+              anularCliente(cedulaCliente,$(this));
+
+            }else{
+
+              $(this).closest('select').val("");
+            
+            }
+
+        }
 
       });
 

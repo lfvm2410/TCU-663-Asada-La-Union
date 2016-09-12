@@ -211,6 +211,26 @@
     
     }
 
+    /*
+    // Metodo encargado de anular un cliente
+    */
+
+    public function anularCliente(){
+
+        if (isset($_POST['cedulaCliente'])) {
+
+          $cedulaCliente = trim($_POST['cedulaCliente']);
+          
+          $this->logica->actualizarEstadoCliente($cedulaCliente,"No");
+          
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+    
+    }
+
   }
 
 ?>
