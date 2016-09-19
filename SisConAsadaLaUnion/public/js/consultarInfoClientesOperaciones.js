@@ -8,6 +8,8 @@
 
     crearDialogTelefonos();
 
+    crearDialogEditarCliente();
+
     buscarClientesCedulaNombre();
 
     levantarVentanaModalTelefonos($("#verNumsTel"));
@@ -179,6 +181,31 @@
       },
       close: function(ev,ui){
         idVentanaNumsTel.empty();
+      }
+    });
+
+ }
+
+  /*
+  //Metodo encargado de crear el dialog correspondiente para mostrar la pagina para editar un cliente
+  */
+
+ function crearDialogEditarCliente(){
+
+  var idVentanaEditarCliente = $("#editarCliente");
+
+  idVentanaEditarCliente.dialog({
+      autoOpen: false,
+      modal: true,
+      width: 600,
+      height: 600,
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
       }
     });
 
@@ -371,6 +398,8 @@
         var accion = $(this).val();
 
         if (accion == "Editar") {
+
+          $("#editarCliente").dialog("open");
 
         }
 

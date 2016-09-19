@@ -43,7 +43,7 @@
           $this->vista->render($this,'consultarInformacionClientes','Consultar información de clientes');
 
       }
-    
+
     /*
     ** Metodo para registrar un cliente
     */
