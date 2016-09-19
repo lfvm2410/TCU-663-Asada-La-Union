@@ -16,6 +16,10 @@
 
   });
 
+  //Variable global que contiene el numero de la pagina actual de la paginacion
+
+  var paginaActualGlb = 0;
+
   /*
   //Metodo encargado de gestionar la carga de la lista de clientes con el servidor
   */
@@ -79,11 +83,12 @@
         prev: '&laquo; Anterior',
         next: 'Siguiente &raquo;',
         last: 'Último',
-        onPageClick: function (event, page) {
+        onPageClick: function (event, page) { 
+          paginaActualGlb = page;
           if (ejecucionOnLoad) {
             ejecucionOnLoad = false;
           }else{
-            $("#paginacion").twbsPagination('destroy'); 
+            $("#paginacion").twbsPagination('destroy');
             crearListaPaginasPaginacion(page,nombreMetodo,cedulaNombre);
           }
           cargarListaClientes(page,nombreMetodo,cedulaNombre);
@@ -306,7 +311,31 @@
 
            if (respuesta == "true") {
 
-            tablaClientes.closest('tr').remove();
+            if ($("#paginacion").html().length > 0) {
+
+               $("#paginacion").twbsPagination('destroy');
+              
+            }
+
+            var cantidadFilasTabla = $('#tablaClientes tr').length-2;
+
+            var cedulaNombre = $("#buscarCliente").val().trim();
+
+            if(cantidadFilasTabla == 0 && paginaActualGlb > 1){
+
+              paginaActualGlb--;
+
+            }
+
+            if (cedulaNombre != "") {
+
+              crearListaPaginasPaginacion(paginaActualGlb,"obtenerClientesCedulaNombre",cedulaNombre);
+
+            }else{
+
+              crearListaPaginasPaginacion(paginaActualGlb,"obtenerClientes","false");
+
+            }
 
             alertify.success("Cliente anulado con éxito");
 

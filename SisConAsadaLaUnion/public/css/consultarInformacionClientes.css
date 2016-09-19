@@ -18,6 +18,12 @@
     color: #FFFFFF; 
 }
 
+/*Combobox of table auto-width */
+
+.form-control.acciones{
+	width: auto !important;
+}
+
 /*Pagination active style*/
 
 .active a{
