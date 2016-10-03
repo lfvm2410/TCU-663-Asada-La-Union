@@ -98,7 +98,28 @@
       }
 
     /*
-    // Metodo para verificar si una cédula existe
+    // Metodo para verificar si una cédula (en edición) existe
+    */
+
+      public function verificarCedulaExistenteEditar(){
+
+        if (isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
+
+          $cedulaActual = trim($_POST['valorActual']);
+          $cedulaNueva = trim($_POST['valorNuevo']);
+
+          $this->personaLogic->comprobarExistenciaCedulaEnEdicion($cedulaActual,$cedulaNueva);
+
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+    
+      }
+
+    /*
+    // Metodo para verificar si un correo electrónico existe
     */
 
       public function verificarCorreoElectronicoExistente(){
@@ -108,6 +129,27 @@
           $correoElectronico = trim($_POST['valor']);
 
           $this->personaLogic->comprobarExistenciaCorreoElectronico($correoElectronico);
+
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+
+      }
+
+      /*
+    // Metodo para verificar si un correo electrónico (en edición) existe
+    */
+
+      public function verificarCorreoElectronicoExistenteEditar(){
+
+         if (isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
+
+          $correoElectronicoActual = trim($_POST['valorActual']);
+          $correoElectronicoNuevo = trim($_POST['valorNuevo']);
+
+          $this->personaLogic->comprobarExistenciaCorreoElectronicoEnEdicion($correoElectronicoActual,$correoElectronicoNuevo);
 
         }else{
 
@@ -128,6 +170,27 @@
           $numeroPlano = trim($_POST['valor']);
 
           $this->logica->comprobarExistenciaNumeroPlano($numeroPlano);
+          
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+
+      }
+
+    /*
+    // Metodo para verificar si un número de plano (en edición) existe
+    */
+
+      public function verificarNumeroPlanoExistenteEditar(){
+
+      if (isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
+          
+          $numeroPlanoActual = trim($_POST['valorActual']);
+          $numeroPlanoNuevo = trim($_POST['valorNuevo']);
+
+          $this->logica->comprobarExistenciaNumeroPlanoEnEdicion($numeroPlanoActual,$numeroPlanoNuevo);
           
         }else{
 
@@ -222,6 +285,28 @@
           $cedulaCliente = trim($_POST['cedulaCliente']);
           
           $this->logica->actualizarEstadoCliente($cedulaCliente,"No");
+          
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+    
+    }
+
+    /*
+    // Metodo encargado de obtener un cliente por su numero de cedula
+    */
+
+    public function obtenerClientePorCedula(){
+
+        header("Content-Type: application/json");
+
+        if (isset($_POST['cedulaCliente'])) {
+
+          $cedulaCliente = trim($_POST['cedulaCliente']);
+          
+          $this->logica->obtenerClientePorCedula($cedulaCliente);
           
         }else{
 

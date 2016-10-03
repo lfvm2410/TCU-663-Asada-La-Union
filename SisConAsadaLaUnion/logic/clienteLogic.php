@@ -9,6 +9,7 @@
 
 		private $clienteData;
     private $personaData;
+    private $telefonoData;
     private $clienteValidation;
     private $personaValidation;
     private $telefonoValidation;
@@ -17,6 +18,7 @@
 
 			$this->clienteData = new clienteData();
       $this->personaData = new personaData();
+      $this->telefonoData = new telefonoData();
       $this->clienteValidation = new clienteValidation();
       $this->personaValidation = new personaValidation();
       $this->telefonoValidation = new telefonoValidation();
@@ -296,6 +298,74 @@
 
     }
 
-	}
+    /*
+    // Método encargado de gestionar la comprobación de un número de plano (en edición) existente en la base de datos, mediando entre controlador y data
+    */
+
+    public function comprobarExistenciaNumeroPlanoEnEdicion($numeroPlanoActual,$numeroPlanoNuevo){
+
+      if ($this->clienteValidation->validarCamposTexto($numeroPlanoActual,16) &&
+          $this->clienteValidation->validarCamposTexto($numeroPlanoNuevo,16)) {
+
+          if ($this->clienteData->comprobarExistenciaCampoEnEdicion("tbCliente","numeroPlano_Cliente",$numeroPlanoActual,$numeroPlanoNuevo)) {
+
+            echo "<div id='msjPlano' class='alert alert-danger' data-plano='false'>
+                        <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                        El número de plano digitado ya existe, debe cambiarlo
+                 </div>";
+
+
+          }else{
+
+             echo "<div id='msjPlano' class='alert alert-success' data-plano='true'>
+                      <strong><span class='glyphicon glyphicon-ok'></span></strong> 
+                          Número de plano disponible para ser registrado
+                     </div>";
+
+          }
+
+      }else{
+
+        echo "<div id='msjPlano' class='alert alert-danger' data-plano='false'>
+                <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                Para verificar si un número de plano ya existe, es necesario que el contenido del campo correspondiente a él no este vacío y no se exceda de 16 caracteres
+              </div>";
+
+      }
+
+    }
+
+    /*
+    // Metodo encargado de obtener un cliente por su numero de cedula
+    */
+
+    public function obtenerClientePorCedula($cedulaCliente){
+
+      if ($this->personaValidation->validarCedulaExistente($cedulaCliente,$this->personaData)) {
+
+        $cliente = $this->clienteData->getClientePorCedula($cedulaCliente);
+        $telefonosCliente = $this->telefonoData->obtenerTelefonosPorCedulaPersona($cedulaCliente);
+
+        if ($this->clienteValidation->validarArray($cliente) && $this->clienteValidation->validarArray($telefonosCliente)) {
+
+              $clienteResultante = array('cliente' => $cliente, 'telefonosCliente' => $telefonosCliente);
+              
+              print_r(json_encode($clienteResultante));
+              
+            }else{
+
+              print_r(json_encode("false"));
+
+            }
+
+      }else{
+
+           print_r(json_encode("false"));
+
+      }
+
+	 }
+
+}
 
 ?>

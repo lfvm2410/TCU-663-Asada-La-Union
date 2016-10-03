@@ -14,8 +14,12 @@
 
     levantarVentanaModalTelefonos($("#verNumsTel"));
 
-    ejecutarAccionSeleccionada();
+    validarTelefonoNoRequeridoCombo();
 
+    validarTelefonoNoRequeridoInput();
+
+    ejecutarAccionSeleccionada();
+    
   });
 
   //Variable global que contiene el numero de la pagina actual de la paginacion
@@ -387,6 +391,98 @@
 
   }
 
+   /*
+  // Metodo ajax para cargar un cliente por su numero de cedula
+  */
+
+  function cargarClientePorCedula(cedulaClienteSeleccionado){
+
+    $.ajax({
+          url: "/SisConAsadaLaUnion/cliente/obtenerClientePorCedula",
+          type: "POST",
+          data: { cedulaCliente : cedulaClienteSeleccionado },
+          dataType: "json",
+          success: function(respuesta){
+
+           if (respuesta != "false") {
+
+            var cedulaActual = "";
+            var correoActual = "";
+            var numeroPlanoActual = "";
+
+             $(respuesta).each(function(indice, valor){
+
+                cedulaActual = valor.cliente.cedula;
+                correoActual = valor.cliente.correo;
+
+                $("#idCedulaCliente").val(valor.cliente.cedula);
+                $("#idNombreCliente").val(valor.cliente.nombre);
+                $("#idApellidosCliente").val(valor.cliente.apellidos);
+                $("#idCorreoCliente").val(valor.cliente.correo);
+                $("#idTipoTel1Cliente").val(valor.telefonosCliente[indice].tipo).change();
+                $("#idNumTel1Cliente").val(valor.telefonosCliente[indice].numero);
+                
+                if(valor.telefonosCliente.length > 1){
+                
+                  $("#idTipoTel2Cliente").val(valor.telefonosCliente[indice+1].tipo).change();
+                  $("#idNumTel2Cliente").val(valor.telefonosCliente[indice+1].numero);
+                
+                }else{
+                
+                  $("#idTipoTel2Cliente").val("").change();
+                  $("#idNumTel2Cliente").val("");
+                
+                }
+                
+                $("#idDireccionCliente").val(valor.cliente.direccion);
+
+                if (valor.cliente.numeroPlano != null) {
+
+                  numeroPlanoActual = valor.cliente.numeroPlano;
+                  $("#idNumPlanoCliente").val(valor.cliente.numeroPlano);
+
+                }else{
+
+                  valor.cliente.numeroPlano = "";
+                  $("#idNumPlanoCliente").val("");
+
+                }
+                  
+             });
+
+             var idCedula = $("#idCedulaCliente");
+             var idCorreoElectronico = $("#idCorreoCliente");
+             var idNumeroPlano = $("#idNumPlanoCliente");
+
+            //Desasociar eventos de componentes
+            idCedula.unbind("blur");
+            idCorreoElectronico.unbind("blur");
+            idNumeroPlano.unbind("blur");
+
+            //Validaciones para el form de actualizar cliente
+             blurCampos(idCedula,cedulaActual,"verificarCedulaExistenteEditar","de la cédula ingresada",$('#mensajeVerificacionCedula'));
+             blurCampos(idCorreoElectronico,correoActual,"verificarCorreoElectronicoExistenteEditar","del correo electrónico ingresado",$('#mensajeVerificacionCorreo'));
+             blurCampos(idNumeroPlano,numeroPlanoActual,"verificarNumeroPlanoExistenteEditar","del número de plano ingresado",$('#mensajeVerificacionPlano'));
+
+             $("#editarCliente").dialog("open");
+           
+           }else{
+
+            alertify.error("Ha ocurrido un error al tratar de cargar la información del cliente seleccionado");            
+
+           }
+          
+          },
+          error: function(error){
+
+            alertify.error("Error de conexión al tratar de cargar la información del cliente seleccionado");
+
+          }
+
+    });
+
+  }
+
   /*
   // Metodo encargado de ejecutar una accion seleccionada por el usuario en el combobox de Acciones
   */
@@ -399,7 +495,19 @@
 
         if (accion == "Editar") {
 
-          $("#editarCliente").dialog("open");
+          var idForm = $("#idEditarClienteForm");
+          var cedulaCliente = $(this).attr("data-cedula");
+
+          //Limpiar campos siempre antes de cargar form de edicion
+          limpiarCamposForm(idForm);
+          $('#mensajeVerificacionCedula').empty();
+          $('#mensajeVerificacionCorreo').empty();
+          $('#mensajeVerificacionPlano').empty();
+          
+          //Llamada al metodo ajax para cargar el form edicion con los datos del cliente seleccionado
+          cargarClientePorCedula(cedulaCliente);
+
+          $(this).closest('select').val("");
 
         }
 

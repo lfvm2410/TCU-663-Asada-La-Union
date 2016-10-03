@@ -144,13 +144,16 @@
                 $cli = mysql_fetch_array($consultaCliente);
                 
                 if(mysql_num_rows($consultaCliente) > 0){
-                    
-                    $numeroPlano = $cli['numeroPlano_Cliente'];
+
                     $cedula = $cli['cedula_Persona'];
                     $nombre = $cli['nombre_Persona'];
                     $apellidos = $cli['apellidos_Persona'];
+                    $correo = $cli['correoElectronico_Persona'];
+                    $direccion = $cli['direccion_Persona'];
+                    $numeroPlano = $cli['numeroPlano_Cliente'];
 
-                    $cliente = array('numeroPlano' => $numeroPlano, 'cedula' => $cedula, 'nombre' => $nombre, 'apellidos' => $apellidos);
+                    $cliente = array('cedula' => $cedula, 'nombre' => $nombre, 'apellidos' => $apellidos, 'correo' => $correo, 
+                                     'direccion' => $direccion, 'numeroPlano' => $numeroPlano);
 
                 }
             }

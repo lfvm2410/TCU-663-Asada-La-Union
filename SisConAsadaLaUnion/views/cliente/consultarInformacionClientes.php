@@ -2,6 +2,7 @@
 	<link href="<?php print URL;?>public/css/consultarInformacionClientes.css" rel="stylesheet"/>
     <script src="<?php print URL;?>public/js/esimakin-twbs-pagination-4a2f5ff/jquery.twbsPagination.min.js" type="text/javascript"></script>
     <script src="<?php print URL;?>public/js/consultarInfoClientesOperaciones.js" type="text/javascript"></script>
+    <script src="<?php print URL;?>public/js/editarClienteOperaciones.js" type="text/javascript"></script>
 </head>
 <body>
 <?php include COMPONENTS.'encabezado.php';?>
@@ -34,7 +35,7 @@
 <div id="verNumsTel" class="container table-responsive" title="Números de teléfono"></div>
 <div id="editarCliente" title="Editar cliente" style="display:none;">
     <div class="container" style="margin-top:2%; width:80%;">
-      <form class="form-horizontal" action="" method="post" name="registrarClienteForm" id="idRegistrarClienteForm">
+      <form class="form-horizontal" action="" method="post" name="editarClienteForm" id="idEditarClienteForm">
          <div class="form-group">
             <label  id="idLblCedCli" for="idCedulaCliente">Cédula:</label> 
             <input type="text" class="form-control" name="cedulaCliente" id="idCedulaCliente" maxlength="16"
