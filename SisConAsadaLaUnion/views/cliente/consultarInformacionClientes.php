@@ -3,6 +3,7 @@
     <script src="<?php print URL;?>public/js/esimakin-twbs-pagination-4a2f5ff/jquery.twbsPagination.min.js" type="text/javascript"></script>
     <script src="<?php print URL;?>public/js/consultarInfoClientesOperaciones.js" type="text/javascript"></script>
     <script src="<?php print URL;?>public/js/editarClienteOperaciones.js" type="text/javascript"></script>
+    <script src="<?php print URL;?>public/js/anularClienteOperaciones.js" type="text/javascript"></script>
 </head>
 <body>
 <?php include COMPONENTS.'encabezado.php';?>

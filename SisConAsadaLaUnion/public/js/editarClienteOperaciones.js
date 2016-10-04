@@ -1,79 +1,167 @@
   /*
-  //Metodo principal (llamado de todas las funciones hechas en este .js)
+  //Archivo .js encargado de contener las validaciones y operaciones sobre el formulario de editar cliente
   */
-
-  $(document).on("ready", function () {
-
-    /*var idForm = $("#idRegistrarClienteForm");
-
-    var idCedula = $("#idCedulaCliente");
-
-    var idCorreoElectronico = $("#idCorreoCliente");
-
-    var idNumeroPlano = $("#idNumPlanoCliente");
-
-    blurCampos(idCedula,"verificarCedulaExistenteEditar","de la cédula ingresada",$('#mensajeVerificacionCedula'));
-
-    blurCampos(idCorreoElectronico,"verificarCorreoElectronicoExistenteEditar","del correo electrónico ingresado",$('#mensajeVerificacionCorreo'));
-
-    validarTelefonoNoRequeridoCombo();
-
-    validarTelefonoNoRequeridoInput();
-
-    blurCampos(idNumeroPlano,"verificarNumeroPlanoExistenteEditar","del número de plano ingresado",$('#mensajeVerificacionPlano'));
-    
-    activarEnvioDatos(idForm);*/
-
-  });
 
   /*
-  //Metodo para enviar el formulario de cliente, usa ajax para la comunicacion del servidor
+  // Metodo ajax para cargar un cliente por su numero de cedula
   */
 
-  function enviarFormularioCliente(idForm,url,datosFormulario){
+  function cargarClientePorCedula(cedulaClienteSeleccionado){
 
     $.ajax({
-      url:  url,
-      type: "POST",
-      data: datosFormulario,
-      success: function(respuesta){
+          url: "/SisConAsadaLaUnion/cliente/obtenerClientePorCedula",
+          type: "POST",
+          data: { cedulaCliente : cedulaClienteSeleccionado },
+          dataType: "json",
+          success: function(respuesta){
 
-          if (respuesta == "true") {
-          	
-          	  alertify.success("Cliente editado con éxito");
+           if (respuesta != "false") {
 
-          	  limpiarCamposForm(idForm);
+            var cedulaActual = "";
+            var correoActual = "";
+            var numeroPlanoActual = "";
 
-              $('#mensajeVerificacionCedula').empty();
+             $(respuesta).each(function(indice, valor){
 
-              $('#mensajeVerificacionCorreo').empty();
+                cedulaActual = valor.cliente.cedula;
+                correoActual = valor.cliente.correo;
 
-              $('#mensajeVerificacionPlano').empty();
+                $("#idCedulaCliente").val(valor.cliente.cedula);
+                $("#idNombreCliente").val(valor.cliente.nombre);
+                $("#idApellidosCliente").val(valor.cliente.apellidos);
+                $("#idCorreoCliente").val(valor.cliente.correo);
+                $("#idTipoTel1Cliente").val(valor.telefonosCliente[indice].tipo).change();
+                $("#idNumTel1Cliente").val(valor.telefonosCliente[indice].numero);
+                
+                if(valor.telefonosCliente.length > 1){
+                
+                  $("#idTipoTel2Cliente").val(valor.telefonosCliente[indice+1].tipo).change();
+                  $("#idNumTel2Cliente").val(valor.telefonosCliente[indice+1].numero);
+                
+                }else{
+                
+                  $("#idTipoTel2Cliente").val("").change();
+                  $("#idNumTel2Cliente").val("");
+                
+                }
+                
+                $("#idDireccionCliente").val(valor.cliente.direccion);
 
-          }else{
-          	
-              alertify.error("Ha ocurrido un error al tratar de editar la información del cliente, inténtelo de nuevo");
+                if (valor.cliente.numeroPlano != null) {
 
-      }
+                  numeroPlanoActual = valor.cliente.numeroPlano;
+                  $("#idNumPlanoCliente").val(valor.cliente.numeroPlano);
 
-      },
-      error: function(error){
+                }else{
 
-          alertify.error("Error de conexión al tratar de registrar el cliente, inténtelo de nuevo");
+                  numeroPlanoActual = "";
+                  $("#idNumPlanoCliente").val("");
 
-      }
+                }
+                  
+             });
+
+             var idForm = $("#idEditarClienteForm");
+             var idCedula = $("#idCedulaCliente");
+             var idCorreoElectronico = $("#idCorreoCliente");
+             var idNumeroPlano = $("#idNumPlanoCliente");
+
+            //Desasociar eventos de componentes
+            idForm.unbind("submit");
+            idCedula.unbind("blur");
+            idCorreoElectronico.unbind("blur");
+            idNumeroPlano.unbind("blur");
+
+            //Validaciones para el form de actualizar cliente
+             blurCampos(idCedula,cedulaActual,"verificarCedulaExistenteEditar","de la cédula ingresada",$('#mensajeVerificacionCedula'));
+             blurCampos(idCorreoElectronico,correoActual,"verificarCorreoElectronicoExistenteEditar","del correo electrónico ingresado",$('#mensajeVerificacionCorreo'));
+             blurCampos(idNumeroPlano,numeroPlanoActual,"verificarNumeroPlanoExistenteEditar","del número de plano ingresado",$('#mensajeVerificacionPlano'));
+
+            //Activar .submit del formulario
+            activarEnvioDatos(idForm,cedulaActual,correoActual,numeroPlanoActual);
+             
+             $("#editarCliente").dialog("open");
+           
+           }else{
+
+            alertify.error("Ha ocurrido un error al tratar de cargar la información del cliente seleccionado");            
+
+           }
+          
+          },
+          error: function(error){
+
+            alertify.error("Error de conexión al tratar de cargar la información del cliente seleccionado");
+
+          }
 
     });
 
   }
 
   /*
-  //Metodo para que el usuario confirme la transaccion
+  //Metodo para enviar el formulario de cliente, usa ajax para la comunicacion del servidor
   */
 
-  function confirmarTransaccion(mensaje) {
+  function enviarFormularioCliente(idForm,url,cedulaAct,correoElectronicoAct,numeroPlanoAct,datosFormulario){
 
-   return confirm(mensaje);
+    $.ajax({
+      url:  url,
+      type: "POST",
+      data: "cedulaActual="+cedulaAct+"&correoElectronicoActual="+correoElectronicoAct+"&numeroPlanoActual="+numeroPlanoAct+"&"+datosFormulario,
+      success: function(respuesta){
+
+          if (respuesta == "true") {
+          	
+          	  alertify.success("La información del cliente seleccionado se ha editado satisfactoriamente");
+              $("#editarCliente").dialog("close");
+
+              //Se limpia el formulario de editar
+              limpiarCamposForm(idForm);
+              $('#mensajeVerificacionCedula').empty();
+              $('#mensajeVerificacionCorreo').empty();
+              $('#mensajeVerificacionPlano').empty();
+
+              //Se recarga la tabla de clientes
+              if ($("#paginacion").html().length > 0) {
+
+               $("#paginacion").twbsPagination('destroy');
+              
+                }
+
+                var cantidadFilasTabla = $('#tablaClientes tr').length-2;
+                var cedulaNombre = $("#buscarCliente").val().trim();
+
+                if(cantidadFilasTabla == 0 && paginaActualGlb > 1){
+
+                  paginaActualGlb--;
+
+                }
+
+                if (cedulaNombre != "") {
+
+                  crearListaPaginasPaginacion(paginaActualGlb,"obtenerClientesCedulaNombre",cedulaNombre);
+
+                }else{
+
+                  crearListaPaginasPaginacion(paginaActualGlb,"obtenerClientes","false");
+
+                }
+
+          }else{
+          	
+              alertify.error("Ha ocurrido un error al tratar de editar la información del cliente seleccionado, inténtelo de nuevo");
+
+      }
+
+      },
+      error: function(error){
+
+          alertify.error("Error de conexión al tratar de editar la información del cliente seleccionado, inténtelo de nuevo");
+
+      }
+
+    });
 
   }
 
@@ -92,10 +180,10 @@
   }
 
   /*
-  //Metodo para enviar el formulario de registro de cliente
+  //Metodo para enviar el formulario de edición de cliente
   */
 
-  function activarEnvioDatos(idForm){
+  function activarEnvioDatos(idForm,cedulaActual,correoElectronicoActual,numeroPlanoActual){
 
     idForm.on('submit', function(e){
 
@@ -107,16 +195,16 @@
 
       var verificarNumPlano = $("#msjPlano").attr("data-plano");
 
-      if (verificarCedula == "true" && verificarCorreo == "true" && verificarNumPlano  != "false") {
+      if (verificarCedula != "false" && verificarCorreo != "false" && verificarNumPlano  != "false") {
 
-      	if (confirmarTransaccion('¿Está seguro de proceder con el registro del cliente?')) 
+      	if (confirmarTransaccion('¿Desea proceder con la edición de información del cliente seleccionado?')) 
       		{
       			
-        		var url = "/SisConAsadaLaUnion/cliente/registrarCliente";
+        		var url = "/SisConAsadaLaUnion/cliente/editarCliente";
 
         		var datosFormulario = idForm.serialize();
 
-        		enviarFormularioCliente(idForm,url,datosFormulario);
+        		enviarFormularioCliente(idForm,url,cedulaActual,correoElectronicoActual,numeroPlanoActual,datosFormulario);
 
       		}
 
@@ -136,7 +224,7 @@
 
       var valorNuevo = idCampo.val().trim();
 
-      if (valorNuevo!="" && valorActual!="") {
+      if (valorNuevo!="") {
 
         if (metodoNombre == "verificarCedulaExistenteEditar") {
 

@@ -304,8 +304,7 @@
 
     public function comprobarExistenciaNumeroPlanoEnEdicion($numeroPlanoActual,$numeroPlanoNuevo){
 
-      if ($this->clienteValidation->validarCamposTexto($numeroPlanoActual,16) &&
-          $this->clienteValidation->validarCamposTexto($numeroPlanoNuevo,16)) {
+      if ($this->clienteValidation->validarCamposTexto($numeroPlanoNuevo,16)) {
 
           if ($this->clienteData->comprobarExistenciaCampoEnEdicion("tbCliente","numeroPlano_Cliente",$numeroPlanoActual,$numeroPlanoNuevo)) {
 
@@ -365,6 +364,63 @@
       }
 
 	 }
+
+   /*
+    // Método encargado de gestionar la edicion de información del cliente, mediando entre controlador y data
+    */
+
+    public function editarCliente($cedulaActual, $correoElectronicoActual, $numeroPlanoActual, cliente $cliente, telefono $telefono1, telefono $telefono2){
+
+          $patternTelefono = "/^[0-9]{8}$/";
+
+          if ($this->personaValidation->validarCedulaEnEdicion($cedulaActual,$cliente->getCedula(),$this->personaData) &&
+              $this->clienteValidation->validarCamposTexto($cliente->getNombre(),30) &&
+              $this->clienteValidation->validarCamposTexto($cliente->getApellidos(),30) &&
+              $this->personaValidation->validarCorreoElectronicoEnEdicion($correoElectronicoActual,$cliente->getCorreoElectronico(),$this->personaData) &&
+              $this->telefonoValidation->validarTipoTelefonoRequerido($telefono1->getTipo()) &&
+              $this->telefonoValidation->validarCamposTextoRegex($telefono1->getNumero(),8,$patternTelefono) &&
+              $this->clienteValidation->validarCamposTexto($cliente->getDireccion(),300) &&
+              $this->clienteValidation->validarNumPlanoEnEdicion($numeroPlanoActual,$cliente->getNumeroPlano(),$this->clienteData)) {
+
+              $telefonoLogic = new telefonoLogic();
+
+              $telefonoLogic->setTelefonoALista($telefono1);
+
+              if ($this->telefonoValidation->validarTipoTelefonoRequerido($telefono2->getTipo()) &&
+                  $this->telefonoValidation->validarCamposTextoRegex($telefono2->getNumero(),8,$patternTelefono)) {
+
+                  $telefonoLogic->setTelefonoALista($telefono2);
+                
+              }
+
+              if ($this->clienteValidation->validarCamposTexto($cliente->getNumeroPlano(),16)) {
+                
+                  $cliente->setNumeroPlano("'".$cliente->getNumeroPlano()."'");
+
+              }else{
+
+                  $cliente->setNumeroPlano('NULL');
+                  
+              }
+
+              $listaTelefonos = $telefonoLogic->getListaTelefonos(); 
+
+              if($this->clienteData->editarCliente($cedulaActual,$cliente,$listaTelefonos)){
+
+                echo "true";
+                
+              }else{
+
+                echo "false";
+              }
+                
+          }else{
+
+            echo "false";
+
+          }
+
+    }
 
 }
 

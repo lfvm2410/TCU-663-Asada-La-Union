@@ -78,6 +78,43 @@
        }
 
     /*
+    ** Metodo para editar un cliente
+    */
+
+      public function editarCliente(){
+
+         if (isset($_POST['cedulaActual']) && isset($_POST['correoElectronicoActual']) && isset($_POST['numeroPlanoActual']) && 
+             isset($_POST['cedulaCliente']) && isset($_POST['nombreCliente']) && 
+             isset($_POST['apellidosCliente']) && isset($_POST['correoCliente']) && isset($_POST['tipoTel1Cliente']) && 
+             isset($_POST['numTel1Cliente']) && isset($_POST['tipoTel2Cliente']) && isset($_POST['numTel2Cliente']) && 
+             isset($_POST['direccionCliente']) && isset($_POST['numPlanoCliente'])) {
+
+            $cedulaActual = trim($_POST['cedulaActual']); 
+            $correoElectronicoActual = trim($_POST['correoElectronicoActual']);
+            $numeroPlanoActual = trim($_POST['numeroPlanoActual']);
+            $cedula = trim($_POST['cedulaCliente']);
+            $nombre = trim($_POST['nombreCliente']);
+            $apellidos = trim($_POST['apellidosCliente']);
+            $correoElectronico = trim($_POST['correoCliente']);
+            $telefono1 = new telefono(0,trim($_POST['tipoTel1Cliente']),trim($_POST['numTel1Cliente']));
+            $telefono2 = new telefono(0,trim($_POST['tipoTel2Cliente']),trim($_POST['numTel2Cliente']));
+            $direccion = trim($_POST['direccionCliente']);
+            $numeroPlano = trim($_POST['numPlanoCliente']); 
+
+            $cliente = new cliente(0,$cedula,$nombre,$apellidos,$correoElectronico,$direccion,
+                               0,$numeroPlano,"Si");
+
+            $this->logica->editarCliente($cedulaActual,$correoElectronicoActual,$numeroPlanoActual,$cliente,$telefono1,$telefono2);
+
+         }else{
+
+            $this->redireccionActividadNoAutorizada();
+         
+         }
+
+       }
+
+    /*
     // Metodo para verificar si una cédula existe
     */
 

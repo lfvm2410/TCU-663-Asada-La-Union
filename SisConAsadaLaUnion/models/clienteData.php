@@ -54,7 +54,7 @@
 
             // Se registra un cliente en la base de datos
 
-            $resultadoRegistroCliente = mysql_query("call SP_registrarCliente($numeroPlano,'$activo','$idPersona')", $conexionBD);
+            $resultadoRegistroCliente = mysql_query("call SP_registrarCliente($numeroPlano,'$activo',$idPersona)", $conexionBD);
 
             // Se recorre la lista de telefonos para insertar en la base de datos
 
@@ -86,9 +86,9 @@
                      
                 }else{
                   
-                        mysql_query("ROLLBACK",$conexionBD);
+                mysql_query("ROLLBACK",$conexionBD);
 
-                    }
+                }
                
             mysql_close($conexionBD);     
 
@@ -332,6 +332,94 @@
             mysql_close($conexionBD);
 
             return $estadoTransaccion;
+        }
+
+        /*
+        ** Metodo encargado de editar un cliente en la base de datos
+        */
+        
+        public function editarCliente($cedulaActual, cliente $cliente, $listaTelefonos){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $cedulaNueva = $cliente->getCedula();
+            $nombre = $cliente->getNombre();
+            $apellidos = $cliente->getApellidos();
+            $correoElectronico = $cliente->getCorreoElectronico();
+            $direccion = $cliente->getDireccion();
+            $numeroPlano = $cliente->getNumeroPlano(); 
+            $activo = $cliente->getActivo();
+
+            $estadoTransaccion = false;
+            $contadorTransaccionesTel = 0;
+
+            mysql_query("SET AUTOCOMMIT=0",$conexionBD);  
+
+            mysql_query("START TRANSACTION",$conexionBD);
+
+            // Se edita una persona en la base de datos
+
+            $resultadoEdicionPersona = mysql_query("call SP_editarPersona('$cedulaActual','$cedulaNueva','$nombre'
+                    ,'$apellidos','$correoElectronico','$direccion',@idPersona)",$conexionBD);
+
+            // Se toma la persona que fue editada
+
+            $consultaPersona = mysql_query("select @idPersona",$conexionBD);
+            
+            $retornoEdicionPersona = mysql_fetch_array($consultaPersona);
+
+            // Se captura la persona que se ha consultado
+            
+            $idPersona = $retornoEdicionPersona['@idPersona'];
+
+            // Se edita el cliente en la base de datos
+
+            $resultadoEdicionCliente = mysql_query("call SP_editarCliente($numeroPlano,$idPersona)", $conexionBD);
+
+            //Se eliminan los telefonos asociados a la persona para registrarlos nuevamente
+
+            $resultadoEliminacionTelefonos = mysql_query("call SP_eliminarTelefono($idPersona)", $conexionBD);
+
+            // Se recorre la lista de telefonos para ingresarlos en la base de datos
+
+            foreach ($listaTelefonos as $telefono) { 
+
+                 $tipo = $telefono->getTipo();
+
+                 $numero = $telefono->getNumero();
+
+                 // Se registra cada telefono perteneciente a la persona
+
+                 $registroTelefono = mysql_query("call SP_registrarTelefono('$tipo','$numero',$idPersona)", $conexionBD);   
+
+                 if (!$registroTelefono) {
+
+                    // Contador para controlar que cada uno de las inserciones se esta efectuando o no
+
+                    $contadorTransaccionesTel++;
+                                     
+                  }
+     
+            }        
+
+            if ($resultadoEdicionPersona && $consultaPersona && $resultadoEdicionCliente && $resultadoEliminacionTelefonos && $contadorTransaccionesTel == 0) {  // determina el commit y rollback dependiendo del estado de las transacciones
+                   
+                mysql_query("COMMIT",$conexionBD);
+
+                $estadoTransaccion = true;
+                     
+                }else{
+                  
+                mysql_query("ROLLBACK",$conexionBD);
+
+                }
+               
+            mysql_close($conexionBD);     
+
+            return $estadoTransaccion;
+            
         }
 
     }
