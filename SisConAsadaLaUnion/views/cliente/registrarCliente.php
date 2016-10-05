@@ -3,6 +3,7 @@
 </head>
 <body>
 <?php include COMPONENTS.'encabezado.php';?>
+<h4 class="text-center"><strong>Registrar cliente</strong></h4>
 <div class="container" style="margin-top:2%; width:30%;">
   <form class="form-horizontal" action="" method="post" name="registrarClienteForm" id="idRegistrarClienteForm">
      <div class="form-group">

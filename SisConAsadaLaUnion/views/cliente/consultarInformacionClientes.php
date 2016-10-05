@@ -7,6 +7,7 @@
 </head>
 <body>
 <?php include COMPONENTS.'encabezado.php';?>
+<h4 class="text-center"><strong>Consultar información de clientes</strong></h4>
 <div class="container">
     <div class="form-inline form-group">
       <label id="idLblBuscarCliente" for="buscarCliente">Buscar:</label>

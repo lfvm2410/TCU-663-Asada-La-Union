@@ -422,6 +422,105 @@
 
     }
 
+    /*
+    // Método encargado de construir el formato que tendrán los registros sobre los clientes inactivos
+    */
+
+    public function formatoConsultarClientesInactivos($paginaActual,$metodo,$busqueda,$cantidadClientesAMostrar,$clientesActivos){
+
+      if (intval($paginaActual) != 0 && $this->clienteValidation->validarMetodoBusquedaClientes($metodo) &&
+          $this->clienteValidation->validarCamposTexto($busqueda,30)) { //Validando parametros de entrada
+        
+          $tablaClientes = "";
+
+          if($paginaActual <= 1){ //sacando el cliente actual, donde se toma referencia para mostrar los demás registros
+            
+               $clienteActual = 0;
+            
+          }else{
+            
+               $clienteActual = $cantidadClientesAMostrar*($paginaActual-1);
+            
+          }
+
+          if (strcmp($metodo, "obtenerClientes") == 0) { //Determina a cual lista de clientes llama
+
+          $listaClientes = $this->clienteData->obtenerClientes($clienteActual,$cantidadClientesAMostrar,$clientesActivos);
+          
+          }else{
+
+            $patternCedula = "/^[0-9]*$/";
+
+            //Determina si la cédula cumple con lo necesario para ser tomada en cuenta
+
+            if ($this->clienteValidation->validarCamposTextoRegex($busqueda,16,$patternCedula)) {
+
+              $cedula = $busqueda;
+              
+            }else{
+
+              $cedula = "false";
+            
+            }
+
+            $nombre = $busqueda; // Al haber pasado el primer filtro (if validacion entrada), entonces siempre será igual a la busqueda
+
+            $listaClientes = $this->clienteData->obtenerClientesCedulaNombre($cedula,$nombre,$clienteActual,$cantidadClientesAMostrar,$clientesActivos);
+
+          }
+
+          //Formateo de registros para redireccionar al controlador, que posteriormente lo enviará a la vista que lo solicite
+
+          //Validando si la lista viene con o sin registros
+
+          if ($this->clienteValidation->validarArray($listaClientes)) { //Formateando resultados para la vista (Si pasa el filtro)
+
+                $dataCedula = "";
+
+                foreach ($listaClientes as $cliente) {
+
+                    $tablaClientes = $tablaClientes."<tr>";
+
+                    foreach ($cliente as $atributoCliente => $valorAtributo) {
+
+                       if ($atributoCliente == "cedula") {
+
+                         $dataCedula = $valorAtributo;
+
+                         $tablaClientes = $tablaClientes."<td><input type='button' class='form-control acciones' value='Activar' data-cedula='".$dataCedula."'></td>";
+                       }
+
+                       $tablaClientes = $tablaClientes.
+                                        "<td>".$valorAtributo."</td>";
+
+                    }
+
+                    $tablaClientes = $tablaClientes.
+                                       "<td>
+                                          <a href='#'><img class='img-telefono img-responsive center-block' data-cedula='".$dataCedula."' src='".URL."/public/assets/images/TelefonoLogo.png' width='32px'/></a>
+                                        </td>
+                                      </tr>";
+                }                 
+        
+          }else{
+
+              $tablaClientes = "<tr><td colspan='8' style='text-align:center;'>No se encontraron resultados</td></tr>";
+          }
+
+          $informacionClientes = array("tablaClientes" => $tablaClientes);
+
+          print_r(json_encode($informacionClientes));
+
+      }else{
+
+        $informacionClientes = array("tablaClientes" => "false");
+
+        print_r(json_encode($informacionClientes));
+      
+      }
+
+    }
+    
 }
 
 ?>

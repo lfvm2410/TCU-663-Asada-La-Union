@@ -44,6 +44,12 @@
 
       }
 
+      public function activarClientes(){
+  
+          $this->vista->render($this,'activarClientes','Activar clientes');
+
+      }
+
     /*
     ** Metodo para registrar un cliente
     */
@@ -289,6 +295,58 @@
 
       }
 
+      /*
+    // Metodo encargado de consultar la totalidad de páginas de clientes inactivos en el sistema
+    */
+
+      public function consultarTotalidadPaginasClientesInactivos(){
+
+        header("Content-Type: application/json");
+
+        if (isset($_POST['permisoConsultaTotalPaginas']) && isset($_POST['metodo']) && isset($_POST['busqueda'])) {
+
+          $permisoConsultaTotalPaginas = trim($_POST['permisoConsultaTotalPaginas']);
+
+          $metodo = trim($_POST['metodo']);
+
+          $busqueda = trim($_POST['busqueda']);
+
+          $this->logica->totalidadPaginasClientes($permisoConsultaTotalPaginas,$metodo,$busqueda,10,"No");
+        
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+
+      }
+
+    /*
+    // Metodo encargado de consultar los clientes inactivos en el sistema
+    */
+
+      public function consultarClientesInactivos(){
+
+        header("Content-Type: application/json");
+
+        if (isset($_POST['paginaActual']) && isset($_POST['metodo']) && isset($_POST['busqueda'])) {
+
+          $paginaActual = trim($_POST['paginaActual']);
+
+          $metodo = trim($_POST['metodo']);
+
+          $busqueda = trim($_POST['busqueda']);
+
+          $this->logica->formatoConsultarClientesInactivos($paginaActual,$metodo,$busqueda,10,"No");
+        
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+
+      }
+
     /*
     // Metodo encargado de traer los telefonos de una persona por su cedula y redireccionarlos a la vista
     */
@@ -322,6 +380,26 @@
           $cedulaCliente = trim($_POST['cedulaCliente']);
           
           $this->logica->actualizarEstadoCliente($cedulaCliente,"No");
+          
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+    
+    }
+
+    /*
+    // Metodo encargado de activar un cliente
+    */
+
+    public function activarCliente(){
+
+        if (isset($_POST['cedulaCliente'])) {
+
+          $cedulaCliente = trim($_POST['cedulaCliente']);
+          
+          $this->logica->actualizarEstadoCliente($cedulaCliente,"Si");
           
         }else{
 
