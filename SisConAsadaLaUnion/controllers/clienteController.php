@@ -1,7 +1,7 @@
 <?php
 
 /*
-// Clase para controladora de las operaciones sobre el cliente
+// Clase controladora de las operaciones sobre el cliente
 */
 
     class clienteController extends controlador{

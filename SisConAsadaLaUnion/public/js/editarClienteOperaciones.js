@@ -129,7 +129,7 @@
               
                 }
 
-                var cantidadFilasTabla = $('#tablaClientes tr').length-2;
+                var cantidadFilasTabla = $('#tablaClientes tr').length-1;
                 var cedulaNombre = $("#buscarCliente").val().trim();
 
                 if(cantidadFilasTabla == 0 && paginaActualGlb > 1){

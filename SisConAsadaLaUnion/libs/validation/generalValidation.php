@@ -60,6 +60,22 @@
 
 		}
 
+		/*
+        //Metodo encargado de validar campos numericos (numericos enteros) de acuerdo a las condiciones: Máximo de 2147483647, no nulo
+		*/
+
+		public function validarCamposNumericosEnteros($numero){
+
+			$estadoCampo = false;
+
+			if (intval($numero) > 0 && $numero <= 2147483647 && !is_null($numero) && !empty($numero)) {
+				
+				$estadoCampo = true;
+			}
+			
+			return $estadoCampo;
+		}
+
 	}
 
 ?>

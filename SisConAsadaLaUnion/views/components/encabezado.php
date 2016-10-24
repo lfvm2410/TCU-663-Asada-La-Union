@@ -83,10 +83,8 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Productos<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar producto</a></li>
-					<li><a href="#">Actualizar producto</a></li>
-					<li><a href="#">Consultar información sobre los productos</a></li>
-					<li><a href="#">Eliminar producto</a></li>			
+					<li><a href="<?php print URL;?>producto/registrarProductoForm">Registrar producto</a></li>
+					<li><a href="<?php print URL;?>producto/consultarInformacionProductos">Consultar información sobre los productos</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">
