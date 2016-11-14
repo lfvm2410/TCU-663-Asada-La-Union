@@ -76,6 +76,33 @@
 			return $estadoCampo;
 		}
 
+		/*
+		//Metodo encargado de validar si una fecha es correcta
+		*/
+
+		public function validarFecha($fecha){
+
+			$estadoFecha = false;
+
+			if (!is_null($fecha) && !empty($fecha)) {
+
+                $fechaDividida = explode ("/", $fecha);
+
+                $dia=$fechaDividida[0]; 
+                $mes=$fechaDividida[1]; 
+                $anio=$fechaDividida[2];
+
+                if(checkdate($mes,$dia,$anio)){ 
+                
+                	$estadoFecha = true;
+
+                }
+				
+			}
+			
+			return $estadoFecha;
+		}
+
 	}
 
 ?>

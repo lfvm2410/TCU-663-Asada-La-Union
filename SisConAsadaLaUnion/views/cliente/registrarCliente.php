@@ -40,7 +40,7 @@
         pattern="^[0-9]{8}$" placeholder="Ingrese un número de teléfono" required/> 
      </div>
      <div class="form-group">
-        <label id="idLblTel2Cli" for="idTipoTel2Cliente" for="idNumTel2Cliente">Teléfono 2 (Opcional):</label>
+        <label id="idLblTel2Cli" for="idTipoTel2Cliente">Teléfono 2 (Opcional):</label>
         <select class="form-control" name="tipoTel2Cliente" id="idTipoTel2Cliente">
              <option value="">Seleccione</option>
              <option value="Fijo">Fijo</option>

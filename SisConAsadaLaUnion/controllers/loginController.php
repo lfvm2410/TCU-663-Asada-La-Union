@@ -2,7 +2,7 @@
 
 
 /*
-// Clase para controladora de las operaciones sobre el login al sistema de control
+// Clase controladora de las operaciones sobre el login al sistema de control
 */
 
 	class loginController extends controlador{

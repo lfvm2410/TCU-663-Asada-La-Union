@@ -27,7 +27,7 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Usuarios<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar usuario</a></li>
+					<li><a href="<?php print URL;?>usuario/registrarUsuarioForm">Registrar usuario</a></li>
 					<li><a href="#">Consultar información de usuarios</a></li>			
 				</ul>
 			</li>
