@@ -50,6 +50,10 @@
 
               $('#mensajeVerificacionPlano').html("");
 
+              $("#idTipoTel2Cliente").removeAttr("required");
+
+              $("#idNumTel2Cliente").removeAttr("required");
+
           }else{
           	
               alertify.error("Ha ocurrido un error al tratar de registrar el cliente, inténtelo de nuevo");

@@ -121,6 +121,8 @@
               $('#mensajeVerificacionCedula').empty();
               $('#mensajeVerificacionCorreo').empty();
               $('#mensajeVerificacionPlano').empty();
+              $("#idTipoTel2Cliente").removeAttr("required");
+              $("#idNumTel2Cliente").removeAttr("required");
 
               //Se recarga la tabla de clientes
               if ($("#paginacion").html().length > 0) {

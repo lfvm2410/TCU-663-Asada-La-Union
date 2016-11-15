@@ -348,6 +348,8 @@
           $('#mensajeVerificacionCedula').empty();
           $('#mensajeVerificacionCorreo').empty();
           $('#mensajeVerificacionPlano').empty();
+          $("#idTipoTel2Cliente").removeAttr("required");
+          $("#idNumTel2Cliente").removeAttr("required");
           
           //Llamada al metodo ajax para cargar el form edicion con los datos del cliente seleccionado
           cargarClientePorCedula(cedulaCliente);

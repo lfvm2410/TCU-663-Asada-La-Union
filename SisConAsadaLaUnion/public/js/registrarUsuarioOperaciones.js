@@ -256,6 +256,10 @@
 
               $('#mensajeVerificacionContrasenias').html("");
 
+              $("#idTipoTel2Usuario").removeAttr("required");
+              
+              $("#idNumTel2Usuario").removeAttr("required");
+
           }else{
             
               alertify.error("Ha ocurrido un error al tratar de registrar el usuario, inténtelo de nuevo");
