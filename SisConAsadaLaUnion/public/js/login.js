@@ -36,7 +36,7 @@
   //Metodo para enviar el formulario de producto, usa ajax para la comunicacion del servidor
   */
 
-  function enviarFormularioProducto(idForm,url,datosFormulario){
+  function enviarDatosUsuario(idForm,url,datosUsuario){
 
     $.ajax({
       url:  url,
@@ -44,22 +44,16 @@
       data: datosFormulario,
       success: function(respuesta){
           alert(respuesta);
-      /*    if (respuesta == "true") {
-            
-              alertify.success("Producto registrado con éxito");
+          if (respuesta == "false") {
 
-              limpiarCamposForm(idForm);
+             alertify.error("Ha ocurrido un error al tratar de iniciar sesión, inténtelo de nuevo");
 
-          }else{
-            
-              alertify.error("Ha ocurrido un error al tratar de registrar el producto, inténtelo de nuevo");
-
-          }*/
+          }
 
       },
       error: function(error){
 
-          alertify.error("Error de conexión al tratar de registrar el producto, inténtelo de nuevo");
+          alertify.error("Error de conexión al tratar de iniciar sesión, inténtelo de nuevo");
 
       }
 
@@ -77,13 +71,11 @@
 
       e.preventDefault();
 
-      
-            
           var url = "/SisConAsadaLaUnion/login/validarLogin";
 
           var datosFormulario = idForm.serialize();
 
-          alert(datosFormulario);
+          //alert(datosFormulario);
           console.log(datosFormulario);
 
           enviarFormularioProducto(idForm,url,datosFormulario);

@@ -17,8 +17,9 @@
 		<div class="col-md-4 pieCol">
 			<h4>Desarrolladores</h4>
 			<hr>
-			<a href="#"><h5>Alexander Gamboa Salazar</h5></a>
-			<a href="#"><h5>Luis Fernando Vargas Ménendez</h5></a>
+			<a><h5>Danny Araya Moya</h5></a>
+			<a><h5>Alexander Gamboa Salazar</h5></a>
+			<a><h5>Luis Fernando Vargas Ménendez</h5></a>
 		</div>
 	</div>
 </footer>
