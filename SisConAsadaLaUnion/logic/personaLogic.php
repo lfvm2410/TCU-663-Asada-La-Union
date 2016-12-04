@@ -92,7 +92,86 @@
 
       }
 
-    }    
+    }
+
+    /*
+    // Método encargado de gestionar la comprobación de una cédula (en edición) existente en la base de datos, mediando entre controlador y data
+    */
+
+    public function comprobarExistenciaCedulaEnEdicion($cedulaActual,$cedulaNueva){
+
+      $patternCedula = "/^[0-9]*$/";
+
+      if ($this->personaValidation->validarCamposTextoRegex($cedulaActual,16,$patternCedula) &&
+          $this->personaValidation->validarCamposTextoRegex($cedulaNueva,16,$patternCedula)) {
+
+          if ($this->personaData->comprobarExistenciaCampoEnEdicion("tbPersona","cedula_Persona",$cedulaActual,$cedulaNueva)) {
+
+            echo "<div id='msjCedula' class='alert alert-danger' data-cedula='false'>
+                        <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                        La cédula digitada ya existe, debe cambiarla
+                 </div>";
+
+
+          }else{
+
+             echo "<div id='msjCedula' class='alert alert-success' data-cedula='true'>
+                      <strong><span class='glyphicon glyphicon-ok'></span></strong> 
+                      Cédula disponible para ser registrada
+                  </div>";
+
+          }
+
+      }else{
+
+        echo "<div id='msjCedula' class='alert alert-danger' data-cedula='false'>
+                <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                El contenido del campo correspondiente a cédula solo admite números (no más de 16) y no puede estar vacío
+              </div>";
+
+      }
+
+    }
+
+    /*
+    // Método encargado de gestionar la comprobación de un correo electrónico (en edición) existente en la base de datos, mediando entre controlador y data
+    */
+
+    public function comprobarExistenciaCorreoElectronicoEnEdicion($correoElectronicoActual,$correoElectronicoNuevo){
+
+      $patternCorreoElectronico = "/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/";
+
+      if ($this->personaValidation->validarCamposTextoRegex($correoElectronicoActual,30,$patternCorreoElectronico) &&
+          $this->personaValidation->validarCamposTextoRegex($correoElectronicoNuevo,30,$patternCorreoElectronico)) {
+
+          if ($this->personaData->comprobarExistenciaCampoEnEdicion("tbPersona","correoElectronico_Persona",$correoElectronicoActual,$correoElectronicoNuevo)) {
+
+            echo "<div id='msjCorreo' class='alert alert-danger' data-correo='false'>
+                        <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                        El correo electrónico digitado ya existe, debe cambiarlo
+                 </div>";
+
+
+          }else{
+
+             echo "<div id='msjCorreo' class='alert alert-success' data-correo='true'>
+                      <strong><span class='glyphicon glyphicon-ok'></span></strong> 
+                          Correo electrónico disponible para ser registrado
+                     </div>";
+
+          }
+
+      }else{
+
+        echo "<div id='msjCorreo' class='alert alert-danger' data-correo='false'>
+                <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                El contenido del campo correspondiente a correo electrónico no puede estar vacío y no puede execederse de 30 caracteres
+                <br>Formato: ejemplo@gmail.com
+              </div>";
+
+      }
+
+    }
 
 	}
 

@@ -3,6 +3,7 @@
 </head>
 <body>
 <?php include COMPONENTS.'encabezado.php';?>
+<h4 class="text-center"><strong>Registrar cliente</strong></h4>
 <div class="container" style="margin-top:2%; width:30%;">
   <form class="form-horizontal" action="" method="post" name="registrarClienteForm" id="idRegistrarClienteForm">
      <div class="form-group">
@@ -39,7 +40,7 @@
         pattern="^[0-9]{8}$" placeholder="Ingrese un número de teléfono" required/> 
      </div>
      <div class="form-group">
-        <label id="idLblTel2Cli" for="idTipoTel2Cliente" for="idNumTel2Cliente">Teléfono 2 (Opcional):</label>
+        <label id="idLblTel2Cli" for="idTipoTel2Cliente">Teléfono 2 (Opcional):</label>
         <select class="form-control" name="tipoTel2Cliente" id="idTipoTel2Cliente">
              <option value="">Seleccione</option>
              <option value="Fijo">Fijo</option>

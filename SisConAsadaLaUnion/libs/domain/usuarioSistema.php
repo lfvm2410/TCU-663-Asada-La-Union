@@ -3,25 +3,31 @@
 ** Clase dominio de usuarioSistema
 */
 
-class usuarioSistema{
+class usuarioSistema extends persona{
 
 	private $idUsuarioSistema;
-	private $nombre;
+	private $nombreUsuarioSistema;
 	private $tipoUsuario;
 	private $fechaNacimiento;
 	private $puesto;
 	private $descripcionPuesto;
 	private $contrasenia;
+	private $confirmarContrasenia;
 
-	public function __construct($idUsuarioSistema, $nombre, $tipoUsuario, $fechaNacimiento, $puesto, $descripcionPuesto, $contrasenia){
+	public function __construct($idPersona,$cedula,$nombre,$apellidos,$correoElectronico,
+		                 $direccion,$idUsuarioSistema, $nombreUsuarioSistema, $tipoUsuario, $fechaNacimiento, 
+		                 $puesto, $descripcionPuesto, $contrasenia, $confirmarContrasenia){
+
+		parent::__construct($idPersona,$cedula,$nombre,$apellidos,$correoElectronico,$direccion);
 
 		$this->idUsuarioSistema = $idUsuarioSistema;
-		$this->nombre = $nombre;
+		$this->nombreUsuarioSistema = $nombreUsuarioSistema;
 		$this->tipoUsuario = $tipoUsuario;
 		$this->fechaNacimiento = $fechaNacimiento;
 		$this->puesto = $puesto;
 		$this->descripcionPuesto = $descripcionPuesto;
 		$this->contrasenia = $contrasenia;
+		$this->confirmarContrasenia = $confirmarContrasenia;
 	}
 
 	public function setIdUsuarioSistema($idUsuarioSistema){
@@ -29,9 +35,9 @@ class usuarioSistema{
 		$this->idUsuarioSistema = $idUsuarioSistema;
 	}
 
-	public function setNombre($nombre){
+	public function setNombreUsuario($nombreUsuarioSistema){
 
-		$this->nombre = $nombre;
+		$this->nombreUsuarioSistema = $nombreUsuarioSistema;
 	}
 
 	public function setTipoUsuario($tipoUsuario){
@@ -59,14 +65,19 @@ class usuarioSistema{
 		$this->contrasenia = $contrasenia;
 	}
 
+	public function setConfirmarContrasenia($confirmarContrasenia){
+
+		$this->confirmarContrasenia = $confirmarContrasenia;
+	}
+
 	public function getIdUsuarioSistema(){
 
 		return $this->idUsuarioSistema;
 	}
 
-	public function getNombre(){
+	public function getNombreUsuario(){
 
-		return $this->nombre;
+		return $this->nombreUsuarioSistema;
 	}
 
 	public function getTipoUsuario(){
@@ -92,6 +103,11 @@ class usuarioSistema{
 	public function getContrasenia(){
 
 		return $this->contrasenia;
+	}
+
+	public function getConfirmarContrasenia(){
+
+		return $this->confirmarContrasenia;
 	}
 }
 

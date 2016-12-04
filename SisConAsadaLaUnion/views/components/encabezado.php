@@ -27,7 +27,7 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Usuarios<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar usuario</a></li>
+					<li><a href="<?php print URL;?>usuario/registrarUsuarioForm">Registrar usuario</a></li>
 					<li><a href="#">Consultar información de usuarios</a></li>			
 				</ul>
 			</li>
@@ -45,7 +45,7 @@
 				<ul class="dropdown-menu">
 					<li><a href="<?php print URL;?>cliente/registrarClienteForm">Registrar cliente</a></li>
 					<li><a href="<?php print URL;?>cliente/consultarInformacionClientes">Consultar información de clientes</a></li>	
-					<li><a href="#">Activar cliente</a></li>		
+					<li><a href="<?php print URL;?>cliente/activarClientes">Activar clientes</a></li>		
 				</ul>
 			</li>
 			<li class="dropdown">
@@ -83,10 +83,8 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Productos<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar producto</a></li>
-					<li><a href="#">Actualizar producto</a></li>
-					<li><a href="#">Consultar información sobre los productos</a></li>
-					<li><a href="#">Eliminar producto</a></li>			
+					<li><a href="<?php print URL;?>producto/registrarProductoForm">Registrar producto</a></li>
+					<li><a href="<?php print URL;?>producto/consultarInformacionProductos">Consultar información sobre los productos</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">

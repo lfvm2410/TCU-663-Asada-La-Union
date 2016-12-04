@@ -1,5 +1,6 @@
 <?php include COMPONENTS.'header.php';?>
 	<link href="<?php print URL;?>public/css/loginForm.css" type="text/css" rel="stylesheet"/>
+	<script src="<?php print URL;?>public/js/login.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="container" style="margin-top:6.3%; width:44%;">
@@ -10,7 +11,7 @@
 	</div>
 </div>
 <div class="container" style="margin-top:2%; width:44%;">
-	<form class="form-horizontal" action="" method="post" name="registrarClienteForm" id="idRegistrarClienteForm">
+	<form class="form-horizontal" action="" method="post" name="loginForm" id="idLoginForm">
 			<div class="form-group">
 			    <label  id="idLblNombreUsuario" for="idNombreUsuario">Usuario:</label> 
 			    <input type="text" class="form-control" name="nombreUsuario" id="idNombreUsuario" maxlength="15" 

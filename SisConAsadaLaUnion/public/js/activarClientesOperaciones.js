@@ -8,17 +8,11 @@
 
     crearDialogTelefonos();
 
-    crearDialogEditarCliente();
-
     buscarClientesCedulaNombre();
 
     levantarVentanaModalTelefonos($("#verNumsTel"));
 
-    validarTelefonoNoRequeridoCombo();
-
-    validarTelefonoNoRequeridoInput();
-
-    ejecutarAccionSeleccionada();
+    gestionarActivacionCliente();
 
   });
 
@@ -33,7 +27,7 @@
   function cargarListaClientes(paginaActualCli,nombreMetodo,cedulaNombre){
 
         $.ajax({
-          url: "/SisConAsadaLaUnion/cliente/consultarClientesActivos",
+          url: "/SisConAsadaLaUnion/cliente/consultarClientesInactivos",
           type: "POST",
           data: { paginaActual : paginaActualCli , metodo : nombreMetodo , busqueda: cedulaNombre },
           dataType: "json",
@@ -54,7 +48,7 @@
 
             }else{
 
-              alertify.error("Error al tratar de cargar la información sobre los clientes en la tabla, la función esperaba un parámetro entero como entrada");
+              alertify.error("Error al tratar de cargar la información sobre los clientes inactivos en la tabla, la función esperaba un parámetro entero como entrada");
 
             }
           
@@ -63,7 +57,7 @@
 
             $("#cuerpoTablaClientes").empty();
 
-            alertify.error("Error de conexión al tratar de cargar la información sobre los clientes en la tabla");
+            alertify.error("Error de conexión al tratar de cargar la información sobre los clientes inactivos en la tabla");
 
           }
 
@@ -116,7 +110,7 @@
   function crearListaPaginasPaginacion(paginaInicio,nombreMetodo,cedulaNombre){
 
         $.ajax({
-          url: "/SisConAsadaLaUnion/cliente/consultarTotalidadPaginasClientesActivos",
+          url: "/SisConAsadaLaUnion/cliente/consultarTotalidadPaginasClientesInactivos",
           type: "POST",
           data: { permisoConsultaTotalPaginas : "true", metodo : nombreMetodo, busqueda : cedulaNombre },
           dataType: "json",
@@ -145,7 +139,7 @@
 
             }else{
 
-              alertify.error("Error al tratar de obtener la totalidad de clientes que se encuentran alojados en la base de datos, la función esperaba alguna cédula o nombre como entrada");
+              alertify.error("Error al tratar de obtener la totalidad de clientes inactivos que se encuentran alojados en la base de datos, la función esperaba alguna cédula o nombre como entrada");
 
             }
           
@@ -154,7 +148,7 @@
 
             $("#cuerpoTablaClientes").empty();
 
-            alertify.error("Error de conexión al tratar de obtener la totalidad de clientes que se encuentran alojados en la base de datos");
+            alertify.error("Error de conexión al tratar de obtener la totalidad de clientes inactivos que se encuentran alojados en la base de datos");
            
           }
 
@@ -185,31 +179,6 @@
       },
       close: function(ev,ui){
         idVentanaNumsTel.empty();
-      }
-    });
-
- }
-
-  /*
-  //Metodo encargado de crear el dialog correspondiente para mostrar la pagina para editar un cliente
-  */
-
- function crearDialogEditarCliente(){
-
-  var idVentanaEditarCliente = $("#editarCliente");
-
-  idVentanaEditarCliente.dialog({
-      autoOpen: false,
-      modal: true,
-      width: 600,
-      height: 600,
-      show: {
-        effect: "blind",
-        duration: 1000
-      },
-      hide: {
-        effect: "explode",
-        duration: 1000
       }
     });
 
@@ -329,50 +298,85 @@
   }
 
   /*
-  // Metodo encargado de ejecutar una accion seleccionada por el usuario en el combobox de Acciones
+  // Metodo ajax para activar un cliente
   */
 
-  function ejecutarAccionSeleccionada() {
+  function activarCliente(cedulaClienteSeleccionado,tablaClientes){
 
-     $("#tablaClientes").on("change", ".form-control.acciones", function(e){
-        
-        var accion = $(this).val();
+    $.ajax({
+          url: "/SisConAsadaLaUnion/cliente/activarCliente",
+          type: "POST",
+          data: "cedulaCliente="+cedulaClienteSeleccionado,
+          success: function(respuesta){
 
-        if (accion == "Editar") {
+           if (respuesta == "true") {
 
-          var idForm = $("#idEditarClienteForm");
-          var cedulaCliente = $(this).attr("data-cedula");
+            //Recargar tabla de información sobre clientes inactivos
 
-          //Limpiar campos siempre antes de cargar form de edicion
-          limpiarCamposForm(idForm);
-          $('#mensajeVerificacionCedula').empty();
-          $('#mensajeVerificacionCorreo').empty();
-          $('#mensajeVerificacionPlano').empty();
-          $("#idTipoTel2Cliente").removeAttr("required");
-          $("#idNumTel2Cliente").removeAttr("required");
-          
-          //Llamada al metodo ajax para cargar el form edicion con los datos del cliente seleccionado
-          cargarClientePorCedula(cedulaCliente);
+            if ($("#paginacion").html().length > 0) {
 
-          $(this).closest('select').val("");
+               $("#paginacion").twbsPagination('destroy');
+              
+            }
 
-        }
+            var cantidadFilasTabla = $('#tablaClientes tr').length-2;
 
-        if (accion == "Anular") {
+            var cedulaNombre = $("#buscarCliente").val().trim();
 
-          if (confirmarTransaccion("¿Desea continuar con la exclusión del cliente seleccionado?")) {
-      
-              var cedulaCliente = $(this).attr("data-cedula");
+            if(cantidadFilasTabla == 0 && paginaActualGlb > 1){
 
-              anularCliente(cedulaCliente,$(this));
+              paginaActualGlb--;
+
+            }
+
+            if (cedulaNombre != "") {
+
+              crearListaPaginasPaginacion(paginaActualGlb,"obtenerClientesCedulaNombre",cedulaNombre);
 
             }else{
 
-              $(this).closest('select').val("");
-            
+              crearListaPaginasPaginacion(paginaActualGlb,"obtenerClientes","false");
+
             }
 
-        }
+            alertify.success("Cliente activado con éxito");
+
+           }else{
+
+            tablaClientes.closest('select').val("");
+
+            alertify.error("Ha ocurrido un error al tratar de activar el cliente seleccionado");            
+
+           }
+          
+          },
+          error: function(error){
+
+            tablaClientes.closest('select').val("");
+
+            alertify.error("Error de conexión al tratar de activar el cliente seleccionado");
+
+          }
+
+        });
+
+  }
+
+  /*
+  // Metodo encargado de administrar la activación del cliente seleccionado
+  */
+
+  function gestionarActivacionCliente() {
+
+     $("#tablaClientes").on("click", ".form-control.acciones", function(e){
+        
+        if (confirmarTransaccion("¿Desea continuar con la reincorporación del cliente seleccionado?")) {
+      
+            var cedulaCliente = $(this).attr("data-cedula");
+
+            activarCliente(cedulaCliente,$(this));
+
+            }
 
       });
 
