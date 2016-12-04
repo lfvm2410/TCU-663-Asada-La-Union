@@ -138,8 +138,8 @@
 
             mysql_set_charset('utf8');
 
-            $validarLogin = mysql_query("call SP_validarLogin('$user')",$conexionBD) or die("Error al validar los datos en la base de datos");
-
+            $validarLogin = mysql_query("call SP_obtenerContrasenia('$user')",$conexionBD) or die("Error al validar los datos en la base de datos");
+                
             $usuario = array();
 
             if($validarLogin != NULL){
