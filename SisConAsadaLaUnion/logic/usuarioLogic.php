@@ -111,6 +111,23 @@
 
 		}
 
+    public function validarLogin(usuarioSistema $usuario){
+
+      $usuario = $this->usuarioData->validarLogin($usuario->getNombreUsuario(),$usuario->getContrasenia());
+      
+      if(empty($usuario)){
+        if($this->usuarioValidation->validarUsuarioLogin($usuario, $user,$pass)){
+            echo "true";
+        }else{
+          echo "datos ingresados incorrectos(validados)";
+        }
+      }else{
+        echo "datos ingresados incorrectos";
+      }
+
+
+    }
+
   }
 
 ?>

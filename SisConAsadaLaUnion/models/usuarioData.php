@@ -132,6 +132,36 @@
 
         }
 
+        public function validarLogin($user,$pass){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $validarLogin = mysql_query("call SP_validarLogin('$user')",$conexionBD) or die("Error al validar los datos en la base de datos");
+
+            $usuario = array();
+
+            if($validarLogin != NULL){
+
+                $usua = mysql_fetch_array($validarLogin);
+                
+                if(mysql_num_rows($validarLogin) > 0){
+
+                    $user = $usua['nombre_UsuarioSistema'];
+                    $pass = $usua['contrasenia_UsuarioSistema'];
+ 
+                    $usuario = array('user' => $user, 'pass' => $pass);
+
+                }
+            }
+
+            mysql_close($conexionBD);
+
+            return $usuario;
+
+        }
+
     }
 
 ?>
