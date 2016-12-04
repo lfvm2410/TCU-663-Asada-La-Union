@@ -76,6 +76,18 @@
 
 		}
 
+		public function validarUsuarioLogin($usuario, $user,$pass){
+
+			$validacionDatos = false;
+
+			echo  $usuario['nombreUsuario'];
+
+			//$contrasenia = password_hash($pass, PASSWORD_DEFAULT);
+			if(strcmp($user, $usuario['nombreUsuario'] == 0 && password_verify($pass,$usuario['contrasenia']))) {
+				$validacionDatos = true;				
+			}
+		}
+
 	}
 
 ?>
