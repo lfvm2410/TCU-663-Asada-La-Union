@@ -8,9 +8,9 @@
 	define('MODELS', 'models/');
 	define('COMPONENTS', 'views/components/');
 	
-	define('DB_HOST', 'localhost');
+	define('DB_HOST', '186.32.204.128');
 	define('DB_USER', 'root');
-	define('DB_PASS', '1234');
+	define('DB_PASS', 'root');
 	define('DB_BASE', 'BDASADA_LaUnion');
 	
 ?>

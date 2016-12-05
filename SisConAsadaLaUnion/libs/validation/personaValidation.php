@@ -12,6 +12,81 @@
 		}
 
 		/*
+		//Metodo encargado de validar el tipo de usuario
+		*/
+
+		public function validarTipoUsuario($tipoUsuario){
+
+			$estadoTipoUsuario = false;
+
+			if (strcmp($tipoUsuario, "Administrador") == 0 || strcmp($tipoUsuario, "Colaborador") == 0) {
+
+				$estadoTipoUsuario = true;
+				
+			}
+
+			return $estadoTipoUsuario;
+
+		}
+
+		/*
+        //Metodo encargado de validar el atributo nombre de usuario
+		*/
+
+		public function validarNombreUsuario($tipoUsuario, $nombreUsuario, personaData $personaData){
+
+			$estadoNombreUsuario = false;
+
+			if (strcmp($tipoUsuario, "Colaborador") == 0) {
+
+				$estadoNombreUsuario = true;
+				
+			}elseif (strcmp($tipoUsuario, "Administrador") == 0 && 
+					 $this->validarCamposTexto($nombreUsuario,15)) {
+				
+				if (!$personaData->comprobarExistenciaNombreUsuario($nombreUsuario)) {
+
+				  	$estadoNombreUsuario = true;
+				
+				}
+
+			}
+			
+			return $estadoNombreUsuario;
+
+		}
+
+		/*
+        //Metodo encargado de validar que la contraseña y confirmar contraseña sean iguales
+		*/
+
+		//A tomar en cuenta: no nulo, maximo 15 caracteres
+
+		public function validarContrasenias($tipoUsuario, $contrasenia, $confirmarContrasenia){
+
+			$estadoContrasenias = false;
+
+			if (strcmp($tipoUsuario, "Colaborador") == 0) {
+
+				$estadoContrasenias = true;
+				
+			}elseif (strcmp($tipoUsuario, "Administrador") == 0 && 
+					 $this->validarCamposTexto($contrasenia,15) && 
+					 $this->validarCamposTexto($confirmarContrasenia,15)) {
+
+				if (strcmp($contrasenia, $confirmarContrasenia) == 0) {
+
+					$estadoContrasenias = true;
+				
+				}
+			
+			}
+			
+			return $estadoContrasenias;
+
+		}
+
+		/*
         // Metodo encargado de validar el atributo cédula
 		*/
 

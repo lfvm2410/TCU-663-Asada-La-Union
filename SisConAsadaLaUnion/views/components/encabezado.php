@@ -25,19 +25,10 @@
 				</ul>
 			</li>
 			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown">Usuarios<b class="caret"></b></a>
+				<a class="dropdown-toggle" data-toggle="dropdown">Personas<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="<?php print URL;?>usuario/registrarUsuarioForm">Registrar usuario</a></li>
-					<li><a href="#">Consultar información de usuarios</a></li>			
-				</ul>
-			</li>
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown">Colaboradores<b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="#">Registrar colaborador</a></li>
-					<li><a href="#">Actualizar colaborador</a></li>
-					<li><a href="#">Consultar información de colaboradores</a></li>
-					<li><a href="#">Eliminar colaborador</a></li>			
+					<li><a href="<?php print URL;?>persona/registrarPersonaForm">Registrar persona</a></li>
+					<li><a href="#">Consultar información de personas</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">
@@ -54,14 +45,6 @@
 					<li><a href="#">Registrar servicio a cliente</a></li>
 					<li><a href="#">Actualizar servicio de cliente</a></li>
 					<li><a href="#">Consultar información de los servicios de clientes</a></li>			
-				</ul>
-			</li>
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown">Lecturas<b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="#">Registrar lectura</a></li>
-					<li><a href="#">Actualizar lectura</a></li>
-					<li><a href="#">Consultar información de lecturas capturadas</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">
@@ -98,7 +81,7 @@
 			</li>
 			<li><a href="#">Configuración</a></li>
 			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Mi cuenta<b class="caret"></b></a>
+				<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Mi cuenta <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="#">Información personal</a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
