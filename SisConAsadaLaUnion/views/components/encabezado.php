@@ -28,7 +28,7 @@
 				<a class="dropdown-toggle" data-toggle="dropdown">Personas<b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="<?php print URL;?>persona/registrarPersonaForm">Registrar persona</a></li>
-					<li><a href="#">Consultar información de personas</a></li>			
+					<li><a href="<?php print URL;?>persona/consultarInformacionPersonas">Consultar información de personas</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">

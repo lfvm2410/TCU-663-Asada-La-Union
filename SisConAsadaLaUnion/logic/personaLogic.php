@@ -5,7 +5,7 @@
   // reglas de negocio y gestiona los llamados hacia la data
   */
 
-	class personaLogic{
+	class personaLogic extends logica{
 
 		private $personaData;
     private $personaValidation;

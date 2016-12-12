@@ -32,6 +32,13 @@
 
       	}
 
+        public function consultarInformacionPersonas(){
+
+          $this->vista->render($this,'consultarInformacionPersonas','Consultar información de personas');
+
+        }
+
+
       	/*
     	  // Metodo para verificar si una cédula existe
     	  */
@@ -133,6 +140,59 @@
           }
 
        	}
+
+        /*
+        // Metodo encargado de consultar la totalidad de páginas sobre las personas que son 'usuarios' en el sistema
+        */
+
+        public function consultarTotalidadPaginasPersonas(){
+
+        header("Content-Type: application/json");
+
+        if (isset($_POST['permisoConsultaTotalPaginas']) && isset($_POST['filtroBusqueda'])) {
+
+          $permisoConsultaTotalPaginas = trim($_POST['permisoConsultaTotalPaginas']);
+
+          $filtroBusqueda = trim($_POST['filtroBusqueda']);
+
+          $this->logica->obtenertotalidadPaginas(TOTAL_USUARIOS, $permisoConsultaTotalPaginas, $filtroBusqueda, LIMITE_REGISTROS, "Si");
+
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+
+      }
+
+      /*
+      // Metodo encargado de consultar las personas que son usuarios en el sistema
+      */
+
+      public function consultarPersonas(){
+
+        header("Content-Type: application/json");
+
+        if (isset($_POST['paginaActual']) && isset($_POST['filtroBusqueda'])) {
+
+          $paginaActual = trim($_POST['paginaActual']);
+
+          $filtroBusqueda = trim($_POST['filtroBusqueda']);
+
+          $cadenaAtributos = "id_Persona,cedula_Persona,nombre_Persona,apellidos_Persona,correoElectronico_Persona,direccion_Persona,puesto_UsuarioSistema,descripcionPuesto_UsuarioSistema";
+          
+          $cadenaAcciones = "Elegir,Editar,Anular";
+
+          $this->logica->elaborarPaginacionRegistros($cadenaAtributos, $cadenaAcciones, true, PAGINACION_USUARIOS, 
+                            $filtroBusqueda, $paginaActual, LIMITE_REGISTROS, "Si");
+        
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+
+      }
 
 	}
 
