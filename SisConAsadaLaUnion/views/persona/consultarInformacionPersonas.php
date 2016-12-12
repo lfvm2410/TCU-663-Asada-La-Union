@@ -9,7 +9,7 @@
 <div class="container">
     <div class="form-inline form-group">
       <label id="idLblBuscarPersona" for="buscar">Buscar:</label>
-      <input type="text" class="form-control" id="buscar" placeholder="Buscar por cédula, nombre o apellidos" maxlength="30"/>
+      <input type="text" class="form-control" id="buscar" placeholder="Buscar por cédula, nombre o apellidos" maxlength="1000"/>
     </div>
 </div>
 <div class="container table-responsive">
