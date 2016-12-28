@@ -117,21 +117,14 @@
       
       if(empty($usuario)){
         if($this->usuarioValidation->validarUsuarioLogin($usuario, $user,$pass)){
-
-            Session::init();
-
-            Session::set("usuarioSistema",$usuario);
-
-            header('Location: '.URL.'index/index');
-
-            echo("After header");
-
+            echo "true";
         }else{
-          echo "false";
+          echo "datos ingresados incorrectos(validados)";
         }
       }else{
-        echo "false";
+        echo "datos ingresados incorrectos";
       }
+
 
     }
 
