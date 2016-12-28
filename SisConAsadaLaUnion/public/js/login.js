@@ -41,7 +41,7 @@
     $.ajax({
       url:  url,
       type: "POST",
-      data: datosUsuario,
+      data: datosFormulario,
       success: function(respuesta){
           alert(respuesta);
           if (respuesta == "false") {
@@ -62,7 +62,7 @@
   }
 
   /*
-  //Metodo para enviar los datos para inicio de sesión
+  //Metodo para enviar el formulario de registro de producto
   */
 
   function activarEnvioDatos(idForm){
@@ -78,7 +78,7 @@
           //alert(datosFormulario);
           console.log(datosFormulario);
 
-          enviarDatosUsuario(idForm,url,datosFormulario);
+          enviarFormularioProducto(idForm,url,datosFormulario);
 
     });
 
