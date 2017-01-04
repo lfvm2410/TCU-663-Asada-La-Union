@@ -31,7 +31,7 @@
 <center>
     <ul id="paginacion" class="pagination"></ul>
 </center>
-<div id="editarProducto" title="Editar producto" style="display:none;">
+<div id="editarProducto" class="container table-responsive" title="Editar producto" style="display:none;">
 <div class="container" style="margin-top:2%; width:80%;">
   <form class="form-horizontal" action="" method="post" name="editarProductoForm" id="idEditarProductoForm">
      <div class="form-group">

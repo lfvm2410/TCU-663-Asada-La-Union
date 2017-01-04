@@ -48,7 +48,7 @@
           },
           error: function(error){
 
-            alertify.error("Error de conexión al tratar de cargar la información del cliente seleccionado");
+            alertify.error("Error de conexión al tratar de cargar la información del producto seleccionado");
 
           }
 

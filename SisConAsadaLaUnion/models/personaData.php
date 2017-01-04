@@ -189,6 +189,80 @@
 
         }
 
+        /*
+        // Método encargado de obtener una persona por id
+        */
+
+        public function getPersonaPorId($idPersona, $tipoPersona){
+
+            $idPersona = intval($idPersona);
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $consultaPersona = mysql_query("call SP_obtenerPersonaPorId($idPersona,'$tipoPersona')",$conexionBD) or die("Error al tratar de obtener la información de la persona seleccionada en la base de datos");
+
+            $personaSeleccionada = array();
+
+            if ($consultaPersona) {
+                
+                if (mysql_num_rows($consultaPersona) > 0) {
+
+                    while ($producto = mysql_fetch_array($consultaPersona)) {
+
+                        if (strcmp($tipoPersona,"Administrador") == 0) {
+
+                            $idPersona = $producto['id_Persona'];
+                            $cedula = $producto['cedula_Persona'];
+                            $nombre = $producto['nombre_Persona'];
+                            $apellidos = $producto['apellidos_Persona'];
+                            $fechaNacimiento = $producto['fechaNacimiento_UsuarioSistema'];
+                            $correoElectronico = $producto['correoElectronico_Persona'];
+                            $nombreUsuario = $producto['nombre_UsuarioSistema'];
+                            $contrasenia = $producto['contrasenia_UsuarioSistema'];
+                            $direccion = $producto['direccion_Persona'];
+                            $puesto = $producto['puesto_UsuarioSistema'];
+                            $descripcionPuesto = $producto['descripcionPuesto_UsuarioSistema'];
+
+                            $personaSeleccionada = array('idPersona'=>$idPersona, 'cedula'=>$cedula, 'nombre'=>$nombre, 
+                                                           'apellidos'=>$apellidos, 'fechaNacimiento'=>$fechaNacimiento, 
+                                                           'correoElectronico'=>$correoElectronico,
+                                                           'nombreUsuario'=>$nombreUsuario, 'contrasenia'=>$contrasenia, 
+                                                           'direccion'=>$direccion, 'puesto'=>$puesto, 
+                                                           'descripcionPuesto'=>$descripcionPuesto);
+
+                        }elseif (strcmp($tipoPersona,"Colaborador") == 0) {
+
+                            $idPersona = $producto['id_Persona'];
+                            $cedula = $producto['cedula_Persona'];
+                            $nombre = $producto['nombre_Persona'];
+                            $apellidos = $producto['apellidos_Persona'];
+                            $fechaNacimiento = $producto['fechaNacimiento_UsuarioSistema'];
+                            $correoElectronico = $producto['correoElectronico_Persona'];
+                            $direccion = $producto['direccion_Persona'];
+                            $puesto = $producto['puesto_UsuarioSistema'];
+                            $descripcionPuesto = $producto['descripcionPuesto_UsuarioSistema'];
+
+                            $personaSeleccionada = array('idPersona'=>$idPersona, 'cedula'=>$cedula, 'nombre'=>$nombre, 
+                                                           'apellidos'=>$apellidos, 'fechaNacimiento'=>$fechaNacimiento, 
+                                                           'correoElectronico'=>$correoElectronico, 'direccion'=>$direccion, 
+                                                           'puesto'=>$puesto, 'descripcionPuesto'=>$descripcionPuesto);
+                            
+                        }
+
+                    }
+
+                }
+
+            }
+
+            mysql_close($conexionBD);
+
+            return $personaSeleccionada;
+
+        }
+
     }
     
 ?>

@@ -65,6 +65,8 @@
 	          
 	          $listaCampos = explode(",", $cadenaAtributos);
 
+	          $listaAcciones = explode(",", $cadenaAcciones);
+
 	          $listaRegistros = $this->obtenerRegistrosPaginados($listaCampos, $idConsulta, $filtroBusqueda, $registroActual,
 	        										  			  $limiteRegistros, $registrosActivos);
 
@@ -76,8 +78,6 @@
 	          if ($validacionGeneral->validarArray($listaRegistros)) { //Formateando resultados para la vista (Si pasa el filtro)
 
 	                $dataIdentificador = "";
-
-	                $listaAcciones = explode(",", $cadenaAcciones);
 
 	                foreach ($listaRegistros as $registro) {
 
@@ -139,7 +139,15 @@
 	        
 	          }else{
 
-	              $tablaRegistros = "<tr><td colspan='".count($listaCampos)."' style='text-align:center;'>No se encontraron resultados</td></tr>";
+	          		$colspan = count($listaCampos);
+
+	          	  	if (strcmp($listaAcciones[0],"") != 0) {
+	          	  		
+	          	  		$colspan++;
+
+	          	  	}
+
+	              	$tablaRegistros = "<tr><td colspan='".$colspan."' style='text-align:center;'>No se encontraron resultados</td></tr>";
 	          }
 
 	          $informacionRegistros = array("tablaRegistros" => $tablaRegistros);

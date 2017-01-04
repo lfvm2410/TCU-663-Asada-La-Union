@@ -359,7 +359,7 @@
 
           $cedulaCliente = trim($_POST['cedulaCliente']);
 
-          $this->telefonoLogic->formatearTelefonosDePersona($cedulaCliente);
+          $this->telefonoLogic->formatearTelefonosDePersonaPorCedula($cedulaCliente);
           
         }else{
 

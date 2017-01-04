@@ -8,12 +8,14 @@
 	class personaLogic extends logica{
 
 		private $personaData;
+    private $telefonoData;
     private $personaValidation;
     private $telefonoValidation;
 
 		public function __construct(){
 
 			$this->personaData = new personaData();
+      $this->telefonoData = new telefonoData();
       $this->personaValidation = new personaValidation();
       $this->telefonoValidation = new telefonoValidation();
 
@@ -274,6 +276,38 @@
                 <strong><span class='glyphicon glyphicon-remove'></span></strong> 
                 Para verificar si un nombre de usuario ya existe, es necesario que el contenido del campo correspondiente a él no este vacío y no se exceda de 15 caracteres
               </div>";
+
+      }
+
+    }
+
+    /*
+    // Metodo encargado de obtener una persona por su id
+    */
+
+    public function obtenerPersonaPorId($idPersona, $tipoPersona){
+
+      if ($this->personaValidation->validarCamposNumericosEnteros($idPersona) &&
+          $this->personaValidation->validarTipoPersonaAConsultar($tipoPersona)) {
+
+          $persona = $this->personaData->getPersonaPorId($idPersona, $tipoPersona);
+          $telefonosPersona = $this->telefonoData->obtenerTelefonosPorIdPersona($idPersona);
+
+          if ($this->personaValidation->validarArray($persona) && $this->personaValidation->validarArray($telefonosPersona)) {
+
+              $personaResultante = array('persona' => $persona, 'telefonosPersona' => $telefonosPersona);
+              
+              print_r(json_encode($personaResultante));
+                  
+          }else{
+
+              print_r(json_encode("false"));
+
+          }
+
+      }else{
+
+          print_r(json_encode("false"));
 
       }
 

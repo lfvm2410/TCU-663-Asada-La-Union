@@ -208,6 +208,24 @@
 			return $estadoCedula;
 		}
 
+		/*
+		//Metodo encargado de validar el tipo de persona a consultar
+		*/
+
+		public function validarTipoPersonaAConsultar($tipoPersona){
+
+			$estadoTipoPersona = false;
+
+			if (strcmp($tipoPersona, "Administrador") == 0 || strcmp($tipoPersona, "Colaborador") == 0) {
+
+				$estadoTipoPersona = true;
+				
+			}
+
+			return $estadoTipoPersona;
+
+		}
+
 	}
 
 ?>

@@ -5,10 +5,14 @@
 */
 
 	class personaController extends controlador{
+
+        private $telefonoLogic;
 		
   		  public function __construct(){
 
   			 parent::__construct();
+
+         $this->telefonoLogic = new telefonoLogic();
   			
   		  }
 
@@ -192,6 +196,52 @@
          
         }
 
+      }
+
+      /*
+      // Metodo encargado de traer los telefonos de una persona por su id y redireccionarlos a la vista
+      */
+
+      public function consultarTelefonosPersonaPorId(){
+
+          header("Content-Type: application/json");
+
+          if (isset($_POST['idPersona'])) {
+
+            $idPersona = trim($_POST['idPersona']);
+
+            $this->telefonoLogic->formatearTelefonosDePersonaPorId($idPersona);
+            
+          }else{
+
+            $this->redireccionActividadNoAutorizada();
+
+          }
+      
+      }
+
+
+      /*
+      // Metodo encargado de obtener una persona por su id
+      */
+
+      public function obtenerPersonaPorId(){
+
+          header("Content-Type: application/json");
+
+          if (isset($_POST['idPersona']) && isset($_POST['tipoPersona'])) {
+
+            $idPersona = trim($_POST['idPersona']);
+            $tipoPersona = trim($_POST['tipoPersona']);
+            
+            $this->logica->obtenerPersonaPorId($idPersona,$tipoPersona);
+            
+          }else{
+
+            $this->redireccionActividadNoAutorizada();
+
+          }
+      
       }
 
 	}
