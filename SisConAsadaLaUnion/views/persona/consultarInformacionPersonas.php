@@ -1,8 +1,10 @@
 <?php include COMPONENTS.'header.php';?>
 	<link href="<?php print URL;?>public/css/paginacion.css" rel="stylesheet"/>
+    <link href="<?php print URL;?>public/css/datepickerStyle.css" rel="stylesheet"/>
     <script src="<?php print URL;?>public/js/esimakin-twbs-pagination-4a2f5ff/jquery.twbsPagination.min.js" type="text/javascript"></script>
     <script src="<?php print URL;?>public/js/paginacion.js" type="text/javascript"></script>
     <script src="<?php print URL;?>public/js/operacionesGenerales.js" type="text/javascript"></script>
+    <script src="<?php print URL;?>public/js/validacionesPersonas.js" type="text/javascript"></script>
     <script src="<?php print URL;?>public/js/consultarInfoPersonasOperaciones.js" type="text/javascript"></script>
 </head>
 <body>

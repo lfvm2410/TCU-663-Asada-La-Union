@@ -209,7 +209,7 @@
 		}
 
 		/*
-		//Metodo encargado de validar el tipo de persona a consultar
+		// Metodo encargado de validar el tipo de persona a consultar
 		*/
 
 		public function validarTipoPersonaAConsultar($tipoPersona){
@@ -223,6 +223,26 @@
 			}
 
 			return $estadoTipoPersona;
+
+		}
+
+		/*
+		// Metodo encargado de verificar si la persona a eliminar es del perfil que se solicita
+		*/
+
+		public function verificarPerfilPersonaAEliminar($idPersona, $tipoPersona, personaData $personaData){
+
+			$estadoPerfilPersona = false;
+
+			$persona = $personaData->getPersonaPorId($idPersona, $tipoPersona);
+
+			if ($this->validarArray($persona)) {
+				
+				$estadoPerfilPersona = true;
+
+			}
+
+			return $estadoPerfilPersona;
 
 		}
 

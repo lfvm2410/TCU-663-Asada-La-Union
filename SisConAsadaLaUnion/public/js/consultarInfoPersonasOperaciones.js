@@ -18,6 +18,10 @@
 
         buscarRegistrosPorFiltro(direccionCantidadPaginas,direccionConsultaRegistros,idFiltroBusqueda,idCuerpoTabla,colspan);
 
+        calendarioFechaNacimiento();
+
+        validarTelefonoNoRequerido();
+
         crearVentanaModal($("#verNumsTel"),500,180,"true");
 
         crearVentanaModal($("#editarPersona"),600,600,"false");
@@ -27,22 +31,6 @@
         ejecutarAccionSeleccionada(idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
     
      });
-
-  /*
-  // Metodo encargado de levantar la ventana modal de los números de teléfono de una persona
-  */
-
-  function levantarVentanaModalTelefonos(idVentanaNumsTel){
-
-     $("#tablaPersonas").on("click", ".img-telefono", function(e){
-
-        var idPersona = $(this).attr("data-identificador");
-
-        cargarTelefonosPersona(idPersona,idVentanaNumsTel);
-
-      });
-
-  }
 
   /*
   //Metodo encargado de gestionar la carga de los telefonos de una persona con el servidor
@@ -92,45 +80,99 @@
   }
 
   /*
-  // Metodo encargado de ejecutar una accion seleccionada por el usuario en el combobox de Acciones
+  // Metodo encargado de levantar la ventana modal de los números de teléfono de una persona
   */
 
-  function ejecutarAccionSeleccionada(idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan) {
+  function levantarVentanaModalTelefonos(idVentanaNumsTel){
 
-     $("#tablaPersonas").on("change", ".form-control.acciones", function(e){
-        
-        var accion = $(this).val();
+     $("#tablaPersonas").on("click", ".img-telefono", function(e){
 
-        if (accion == "Editar") {
+        var idPersona = $(this).attr("data-identificador");
 
-          var idForm = $("#idEditarPersonaForm");
-          var idPersona = $(this).attr("data-identificador");
-
-          //Limpiar campos siempre antes de cargar form de edicion
-          limpiarCamposForm(idForm);
-          
-          //Llamada al metodo ajax para cargar el form edicion con los datos de la persona seleccionada
-          cargarPersonaPorId(idPersona,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
-
-          $(this).closest('select').val("");
-
-        }else if (accion == "Eliminar") {
-
-          if (confirmarTransaccion("¿Desea continuar con la eliminación de la persona seleccionada?")) {
-      
-              var idPersona = $(this).attr("data-identificador");
-
-              //eliminarPersona(idPersona,$(this));
-
-            }else{
-
-              $(this).closest('select').val("");
-            
-            }
-
-        }
+        cargarTelefonosPersona(idPersona,idVentanaNumsTel);
 
       });
+
+  }
+
+  /*
+  //Metodo para enviar el formulario de persona, usa ajax para la comunicacion del servidor
+  */
+
+  function enviarFormularioPersona(idForm,url,idPersonaActual,cedulaAct,correoElectronicoAct,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
+
+    $.ajax({
+      url:  url,
+      type: "POST",
+      data: "idPersona="+idPersonaActual+"&cedulaActual="+cedulaAct+"&correoElectronicoActual="+correoElectronicoAct+"&"+datosFormulario,
+      success: function(respuesta){
+
+          if (respuesta == "true") {
+            
+              alertify.success("La información de la persona seleccionada se ha editado correctamente");
+             
+              $("#editarPersona").dialog("close");
+             
+              limpiarCamposForm(idForm);
+
+              $('#mensajeVerificacionCedula').html("");
+
+              $('#mensajeVerificacionCorreo').html("");
+
+              $("#idTipoTel2Persona").removeAttr("required");
+              
+              $("#idNumTel2Persona").removeAttr("required");
+
+              //Se recarga la tabla de personas
+
+              actualizarTabla("Update",$('#tablaPersonas tr').length,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+         
+          }else{
+            
+              alertify.error("Ha ocurrido un error al tratar de editar la información de la persona seleccionada, inténtelo de nuevo");
+
+          }
+
+      },
+      error: function(error){
+
+          alertify.error("Error de conexión al tratar de editar la información de la persona seleccionada, inténtelo de nuevo");
+
+      }
+
+    });
+
+  }
+
+  /*
+  //Metodo para enviar el formulario de edición de la persona seleccionada
+  */
+
+  function activarEnvioDatos(idForm,idPersona,cedulaActual,correoElectronicoActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
+
+    idForm.on('submit', function(e){
+
+      e.preventDefault();
+
+      var verificarCedula = $("#msjCedula").attr("data-cedula");
+
+      var verificarCorreo = $("#msjCorreo").attr("data-correo");
+
+      if (verificarCedula != "false" && verificarCorreo != "false") {
+
+          if (confirmarTransaccion('¿Está seguro de proceder con la edición de información de la persona seleccionada?')){
+              
+            var url = "/SisConAsadaLaUnion/persona/editarPersonaTipoColaborador";
+
+            var datosFormulario = idForm.serialize();
+
+            enviarFormularioPersona(idForm,url,idPersona,cedulaActual,correoElectronicoActual,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+
+          }  
+
+      }
+
+    });
 
   }
 
@@ -185,15 +227,23 @@
                   
              });
 
-            var idForm = $("#idEditarProductoForm");
+             var idForm = $("#idEditarPersonaForm"); 
+             var idCedula = $("#idCedulaPersona");
+             var idCorreoElectronico = $("#idCorreoPersona");
 
-            //Desasociar eventos de componentes
-            idForm.unbind("submit");
+             //Desasociar eventos de componentes
+             idForm.unbind("submit");
+             idCedula.unbind("blur");
+             idCorreoElectronico.unbind("blur");
 
-            //Activar .submit del formulario
-            activarEnvioDatos(idForm,idPersonaActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+             //Validaciones para el form de editar persona
+             blurCamposEnEdicion(idCedula,cedulaActual,"verificarCedulaExistenteEditar","de la cédula ingresada",$('#mensajeVerificacionCedula'));
+             blurCamposEnEdicion(idCorreoElectronico,correoActual,"verificarCorreoElectronicoExistenteEditar","del correo electrónico ingresado",$('#mensajeVerificacionCorreo'));
+             
+             //Activar .submit del formulario
+             activarEnvioDatos(idForm,idPersonaActual,cedulaActual,correoActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
 
-            $("#editarPersona").dialog("open");
+             $("#editarPersona").dialog("open");
            
            }else{
 
@@ -213,66 +263,89 @@
   }
 
   /*
-  //Metodo para enviar el formulario de persona, usa ajax para la comunicacion del servidor
+  // Metodo ajax para eliminar una persona
   */
 
-  function enviarFormularioPersona(idForm,url,idPersonaActual,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
+  function eliminarPersona(idPersonaSeleccionada,tablaPersonas,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
 
     $.ajax({
-      url:  url,
-      type: "POST",
-      data: "idPersona="+idPersonaActual+"&"+datosFormulario,
-      success: function(respuesta){
+          url: "/SisConAsadaLaUnion/persona/eliminarPersonaPerfilColaborador",
+          type: "POST",
+          data: "idPersona="+idPersonaSeleccionada,
+          success: function(respuesta){
 
-          if (respuesta == "true") {
+           if (respuesta == "true") {
+
+            alertify.success("Persona eliminada con éxito");
+
+            //Se recarga la tabla de personas
             
-              alertify.success("La información de la persona seleccionada se ha editado correctamente");
-             
-              $("#editarPersona").dialog("close");
-             
-              limpiarCamposForm(idForm);
-
-              //Se recarga la tabla de personas
-
-              actualizarTabla("Update",$('#tablaPersonas tr').length,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+            actualizarTabla("Delete",$('#tablaPersonas tr').length,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
          
-          }else{
-            
-              alertify.error("Ha ocurrido un error al tratar de editar la información de la persona seleccionada, inténtelo de nuevo");
+           }else{
+
+            tablaPersonas.closest('select').val("");
+
+            alertify.error("Ha ocurrido un error al tratar de eliminar la persona seleccionada");            
+
+           }
+          
+          },
+          error: function(error){
+
+            tablaPersonas.closest('select').val("");
+
+            alertify.error("Error de conexión al tratar de eliminar la persona seleccionada");
 
           }
 
-      },
-      error: function(error){
-
-          alertify.error("Error de conexión al tratar de editar la información de la persona seleccionada, inténtelo de nuevo");
-
-      }
-
-    });
+        });
 
   }
 
   /*
-  //Metodo para enviar el formulario de edición de la persona seleccionada
+  // Metodo encargado de ejecutar una accion seleccionada por el usuario en el combobox de Acciones
   */
 
-  function activarEnvioDatos(idForm,idPersona,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
+  function ejecutarAccionSeleccionada(idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan) {
 
-    idForm.on('submit', function(e){
+     $("#tablaPersonas").on("change", ".form-control.acciones", function(e){
+        
+        var accion = $(this).val();
 
-      e.preventDefault();
+        if (accion == "Editar") {
 
-      if (confirmarTransaccion('¿Está seguro de proceder con la edición de información de la persona seleccionada?')){
+          var idForm = $("#idEditarPersonaForm");
+          var idPersona = $(this).attr("data-identificador");
+
+          //Limpiar campos siempre antes de cargar form de edicion
+          limpiarCamposForm(idForm);
+          $('#mensajeVerificacionCedula').html("");
+          $('#mensajeVerificacionCorreo').html("");
+          $("#idTipoTel2Persona").removeAttr("required");    
+          $("#idNumTel2Persona").removeAttr("required");
+          
+          //Llamada al metodo ajax para cargar el form edicion con los datos de la persona seleccionada
+          cargarPersonaPorId(idPersona,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+
+          $(this).closest('select').val("");
+
+        }else if (accion == "Eliminar") {
+
+          if (confirmarTransaccion("¿Desea continuar con la eliminación de la persona seleccionada?")) {
+      
+              var idPersona = $(this).attr("data-identificador");
+
+              eliminarPersona(idPersona,$(this),idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+
+            }else{
+
+              $(this).closest('select').val("");
             
-          var url = "/SisConAsadaLaUnion/persona/editarPersona";
-
-          var datosFormulario = idForm.serialize();
-
-          enviarFormularioPersona(idForm,url,idPersona,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+            }
 
         }
 
-    });
+      });
 
   }

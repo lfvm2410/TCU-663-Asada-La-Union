@@ -313,6 +313,102 @@
 
     }
 
+    /*
+    // Metodo encargado de gestionar la edicion de una persona como usuario, mediando entre controlador y data
+    */
+
+    public function editarPersona($cedulaActual, $correoElectronicoActual, usuarioSistema $usuario, 
+                                  telefono $telefono1, telefono $telefono2){
+
+          $patternTelefono = "/^[0-9]{8}$/";
+
+          if ($this->personaValidation->validarCamposNumericosEnteros($usuario->getIdPersona()) &&
+              $this->personaValidation->validarTipoUsuario($usuario->getTipoUsuario()) &&
+              $this->personaValidation->validarCedulaEnEdicion($cedulaActual,$usuario->getCedula(),$this->personaData) &&
+              $this->personaValidation->validarCamposTexto($usuario->getNombre(),30) &&
+              $this->personaValidation->validarCamposTexto($usuario->getApellidos(),30) &&
+              $this->personaValidation->validarFecha($usuario->getFechaNacimiento()) &&
+              $this->personaValidation->validarCorreoElectronicoEnEdicion($correoElectronicoActual,$usuario->getCorreoElectronico(),$this->personaData) &&
+              $this->personaValidation->validarNombreUsuario($usuario->getTipoUsuario(), $usuario->getNombreUsuario(),$this->personaData) &&
+              $this->personaValidation->validarContrasenias($usuario->getTipoUsuario(), $usuario->getContrasenia(),$usuario->getConfirmarContrasenia()) &&
+              $this->telefonoValidation->validarTipoTelefonoRequerido($telefono1->getTipo()) &&
+              $this->telefonoValidation->validarCamposTextoRegex($telefono1->getNumero(),8,$patternTelefono) &&
+              $this->personaValidation->validarCamposTexto($usuario->getDireccion(),300) &&
+              $this->personaValidation->validarCamposTexto($usuario->getPuesto(),15) &&
+              $this->personaValidation->validarCamposTexto($usuario->getDescripcionPuesto(),50)) {
+
+              //Setear nombre de usuario y contraseña de acuerdo al perfil de la persona
+              if (strcmp($usuario->getTipoUsuario(), "Administrador") == 0) {
+
+                $usuario->setNombreUsuario("'".$usuario->getNombreUsuario()."'");
+                $usuario->setContrasenia("'".password_hash($usuario->getContrasenia(), PASSWORD_DEFAULT)."'");
+        
+              } elseif (strcmp($usuario->getTipoUsuario(), "Colaborador") == 0) {
+
+                $usuario->setNombreUsuario('NULL');
+                $usuario->setContrasenia('NULL');
+            
+              }
+
+              //Verificar si se incluye el telefono #2 a la lista
+              $telefonoLogic = new telefonoLogic();
+
+              $telefonoLogic->setTelefonoALista($telefono1);
+
+              if ($this->telefonoValidation->validarTipoTelefonoRequerido($telefono2->getTipo()) &&
+                  $this->telefonoValidation->validarCamposTextoRegex($telefono2->getNumero(),8,$patternTelefono)) {
+
+                  $telefonoLogic->setTelefonoALista($telefono2);
+                
+              }
+
+              $listaTelefonos = $telefonoLogic->getListaTelefonos();
+
+              //Se edita la persona
+              if($this->personaData->editarPersona($usuario,$listaTelefonos)){
+
+                echo "true";
+                
+              }else{
+
+                echo "false";
+              }
+                
+          }else{
+
+            echo "false";
+
+          }
+
+    }
+
+    /*
+    // Metodo encargado de gestionar la eliminacion de una persona
+    */
+
+    public function eliminarPersona($idPersona, $tipoPersona){
+
+      if ($this->personaValidation->validarCamposNumericosEnteros($idPersona) &&
+          $this->personaValidation->verificarPerfilPersonaAEliminar($idPersona, $tipoPersona, $this->personaData)) {
+
+        if ($this->personaData->eliminarPersona($idPersona)) {
+            
+          echo "true";
+
+        }else{
+
+          echo "false";
+
+        }
+
+      }else{
+
+        echo "false";
+
+      }
+
+    }    
+
 	}
 
 ?>

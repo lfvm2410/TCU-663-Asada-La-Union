@@ -238,7 +238,7 @@
 
             }else{
 
-              verificarExistenciaCampos(metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
+              verificarExistenciaCampos("persona/"+metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
             
             }
         
@@ -256,15 +256,15 @@
 
                     }else{
 
-                      verificarExistenciaCampos(metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
+                      verificarExistenciaCampos("persona/"+metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
                     
                     }
                 
                   }else{
 
-                      verificarExistenciaCampos(metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
+                      verificarExistenciaCampos("cliente/"+metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
                 
-                    }
+                  }
 
               }
 
@@ -281,10 +281,10 @@
   //Metodo ajax que permite verificar la existencia de varios campos del formulario en la base de datos
   */
 
-  function verificarExistenciaCampos(metodoNombre,valorAct,valorNue,mensajeError,idDivMensaje){
+  function verificarExistenciaCampos(controladorMetodoNombre,valorAct,valorNue,mensajeError,idDivMensaje){
 
         $.ajax({
-          url: "/SisConAsadaLaUnion/cliente/"+metodoNombre,
+          url: "/SisConAsadaLaUnion/"+controladorMetodoNombre,
           type: "POST",
           data: "valorActual="+valorAct+"&valorNuevo="+valorNue,
           beforeSend: function(){

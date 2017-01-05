@@ -60,7 +60,7 @@
 
             // Se registra un usuario en la base de datos
 
-            $resultadoRegistroUsuario = mysql_query("call SP_registrarUsuario($nombreUsuario,'$tipoUsuario','$fechaNacimiento','$puesto','$descripcionPuesto',$contrasenia,$idPersona)", $conexionBD) or die(mysql_error());
+            $resultadoRegistroUsuario = mysql_query("call SP_registrarUsuario($nombreUsuario,'$tipoUsuario','$fechaNacimiento','$puesto','$descripcionPuesto',$contrasenia,$idPersona)", $conexionBD);
 
             // Se recorre la lista de telefonos para insertar en la base de datos
 
@@ -209,21 +209,22 @@
                 
                 if (mysql_num_rows($consultaPersona) > 0) {
 
-                    while ($producto = mysql_fetch_array($consultaPersona)) {
+                    while ($persona = mysql_fetch_array($consultaPersona)) {
 
                         if (strcmp($tipoPersona,"Administrador") == 0) {
 
-                            $idPersona = $producto['id_Persona'];
-                            $cedula = $producto['cedula_Persona'];
-                            $nombre = $producto['nombre_Persona'];
-                            $apellidos = $producto['apellidos_Persona'];
-                            $fechaNacimiento = $producto['fechaNacimiento_UsuarioSistema'];
-                            $correoElectronico = $producto['correoElectronico_Persona'];
-                            $nombreUsuario = $producto['nombre_UsuarioSistema'];
-                            $contrasenia = $producto['contrasenia_UsuarioSistema'];
-                            $direccion = $producto['direccion_Persona'];
-                            $puesto = $producto['puesto_UsuarioSistema'];
-                            $descripcionPuesto = $producto['descripcionPuesto_UsuarioSistema'];
+                            $idPersona = $persona['id_Persona'];
+                            $cedula = $persona['cedula_Persona'];
+                            $nombre = $persona['nombre_Persona'];
+                            $apellidos = $persona['apellidos_Persona'];
+                            $fechaNacimientoTemp = date_create($persona['fechaNacimiento_UsuarioSistema']);                           
+                            $fechaNacimiento = date_format($fechaNacimientoTemp,'d/m/Y');
+                            $correoElectronico = $persona['correoElectronico_Persona'];
+                            $nombreUsuario = $persona['nombre_UsuarioSistema'];
+                            $contrasenia = $persona['contrasenia_UsuarioSistema'];
+                            $direccion = $persona['direccion_Persona'];
+                            $puesto = $persona['puesto_UsuarioSistema'];
+                            $descripcionPuesto = $persona['descripcionPuesto_UsuarioSistema'];
 
                             $personaSeleccionada = array('idPersona'=>$idPersona, 'cedula'=>$cedula, 'nombre'=>$nombre, 
                                                            'apellidos'=>$apellidos, 'fechaNacimiento'=>$fechaNacimiento, 
@@ -234,15 +235,16 @@
 
                         }elseif (strcmp($tipoPersona,"Colaborador") == 0) {
 
-                            $idPersona = $producto['id_Persona'];
-                            $cedula = $producto['cedula_Persona'];
-                            $nombre = $producto['nombre_Persona'];
-                            $apellidos = $producto['apellidos_Persona'];
-                            $fechaNacimiento = $producto['fechaNacimiento_UsuarioSistema'];
-                            $correoElectronico = $producto['correoElectronico_Persona'];
-                            $direccion = $producto['direccion_Persona'];
-                            $puesto = $producto['puesto_UsuarioSistema'];
-                            $descripcionPuesto = $producto['descripcionPuesto_UsuarioSistema'];
+                            $idPersona = $persona['id_Persona'];
+                            $cedula = $persona['cedula_Persona'];
+                            $nombre = $persona['nombre_Persona'];
+                            $apellidos = $persona['apellidos_Persona'];
+                            $fechaNacimientoTemp = date_create($persona['fechaNacimiento_UsuarioSistema']);                           
+                            $fechaNacimiento = date_format($fechaNacimientoTemp,'d/m/Y');
+                            $correoElectronico = $persona['correoElectronico_Persona'];
+                            $direccion = $persona['direccion_Persona'];
+                            $puesto = $persona['puesto_UsuarioSistema'];
+                            $descripcionPuesto = $persona['descripcionPuesto_UsuarioSistema'];
 
                             $personaSeleccionada = array('idPersona'=>$idPersona, 'cedula'=>$cedula, 'nombre'=>$nombre, 
                                                            'apellidos'=>$apellidos, 'fechaNacimiento'=>$fechaNacimiento, 
@@ -261,6 +263,142 @@
 
             return $personaSeleccionada;
 
+        }
+
+        /*
+        ** Metodo encargado de editar la información de una persona como usuario en la base de datos
+        */
+        
+        public function editarPersona(usuarioSistema $usuario, $listaTelefonos){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $idPersona = $usuario->getIdPersona();
+            $cedula = $usuario->getCedula();
+            $nombre = $usuario->getNombre();
+            $apellidos = $usuario->getApellidos();
+            $correoElectronico = $usuario->getCorreoElectronico();
+            $direccion = $usuario->getDireccion();
+            $nombreUsuario = $usuario->getNombreUsuario(); 
+            $tipoUsuario = $usuario->getTipoUsuario();
+            
+            $fechaNacimientoTemp = strtr($usuario->getFechaNacimiento(), '/', '-');
+            $fechaNacimiento =  date("Y-m-d",strtotime($fechaNacimientoTemp));
+            
+            $puesto = $usuario->getPuesto();
+            $descripcionPuesto = $usuario->getDescripcionPuesto();
+            $contrasenia = $usuario->getContrasenia();
+
+            $estadoTransaccion = false;
+            $contadorTransaccionesTel = 0;
+
+            mysql_query("SET AUTOCOMMIT=0",$conexionBD);  
+
+            mysql_query("START TRANSACTION",$conexionBD);
+
+            // Se edita una persona en la base de datos
+
+            $resultadoEdicionPersona = mysql_query("call SP_editarPersonaPorId($idPersona,'$cedula','$nombre'
+                    ,'$apellidos','$correoElectronico','$direccion')",$conexionBD);
+
+            // Se edita un usuario en la base de datos
+
+            $resultadoEdicionUsuario = mysql_query("call SP_editarUsuario($nombreUsuario,'$tipoUsuario','$fechaNacimiento','$puesto','$descripcionPuesto',$contrasenia,$idPersona)", $conexionBD);
+
+            //Se eliminan los telefonos asociados a la persona para registrarlos nuevamente
+
+            $resultadoEliminacionTelefonos = mysql_query("call SP_eliminarTelefono($idPersona)", $conexionBD);
+
+            // Se recorre la lista de telefonos para insertar en la base de datos
+
+            foreach ($listaTelefonos as $telefono) { 
+
+                 $tipo = $telefono->getTipo();
+
+                 $numero = $telefono->getNumero();
+
+                 // Se registra cada telefono perteneciente a la persona
+
+                 $registroTelefono = mysql_query("call SP_registrarTelefono('$tipo','$numero',$idPersona)", $conexionBD);   
+
+                 if (!$registroTelefono) {
+
+                    // Contador para controlar que cada uno de los registros se esta efectuando o no
+
+                    $contadorTransaccionesTel++;
+                                     
+                  }
+     
+            }        
+
+            if ($resultadoEdicionPersona && $resultadoEdicionUsuario && $resultadoEliminacionTelefonos && $contadorTransaccionesTel == 0) {  // determina el commit y rollback dependiendo del estado de las transacciones
+                   
+                mysql_query("COMMIT",$conexionBD);
+
+                $estadoTransaccion = true;
+                     
+            }else{
+                  
+                mysql_query("ROLLBACK",$conexionBD);
+
+            }
+               
+            mysql_close($conexionBD);     
+
+            return $estadoTransaccion;
+            
+        }
+
+        /*
+        // Método encargado de eliminar una persona en la base de datos
+        */
+
+        public function eliminarPersona($idPersona){
+
+            $idPersona = intval($idPersona);
+
+            $estadoTransaccion = false;
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            mysql_query("SET AUTOCOMMIT=0",$conexionBD);  
+
+            mysql_query("START TRANSACTION",$conexionBD);
+
+            // Se eliminan los telefonos de la persona en la base de datos
+
+            $resultadoEliminarTelefonos = mysql_query("call SP_eliminarTelefono($idPersona)", $conexionBD); 
+
+            //Se elimina el usuario en la base de datos
+           
+            $resultadoEliminarUsuario = mysql_query("call SP_eliminarUsuario($idPersona)", $conexionBD);
+
+            // Se elimina la persona en la base de datos
+
+            $resultadoEliminarPersona = mysql_query("call SP_eliminarPersona($idPersona)",$conexionBD);
+
+            //Determina el commit y rollback dependiendo del estado de las transacciones
+            
+            if ($resultadoEliminarTelefonos && $resultadoEliminarUsuario && $resultadoEliminarPersona) {  
+
+                mysql_query("COMMIT",$conexionBD);
+
+                $estadoTransaccion = true;
+                     
+            }else{
+                  
+                mysql_query("ROLLBACK",$conexionBD);
+
+            }
+               
+            mysql_close($conexionBD);     
+
+            return $estadoTransaccion;
+            
         }
 
     }

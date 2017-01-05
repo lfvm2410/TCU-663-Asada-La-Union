@@ -50,8 +50,12 @@
 .ui-widget-header{
 	background: none;
 	background-color: #00ABFF;
-	color: #FFFFFF !important;
+}
 
+/*JQuery dialog title style*/
+
+.ui-dialog-title{
+	color: #FFFFFF;
 }
 
 /*JQuery dialog button style*/

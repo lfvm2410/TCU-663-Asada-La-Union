@@ -1,5 +1,7 @@
 <?php include COMPONENTS.'header.php';?>
     <link href="<?php print URL;?>public/css/datepickerStyle.css" rel="stylesheet"/>
+    <script src="<?php print URL;?>public/js/operacionesGenerales.js" type="text/javascript"></script>
+    <script src="<?php print URL;?>public/js/validacionesPersonas.js" type="text/javascript"></script>
     <script src="<?php print URL;?>public/js/registrarPersonaOperaciones.js" type="text/javascript"></script>
 </head>
 <body>

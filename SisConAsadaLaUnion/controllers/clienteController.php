@@ -121,88 +121,6 @@
        }
 
     /*
-    // Metodo para verificar si una cédula existe
-    */
-
-      public function verificarCedulaExistente(){
-
-        if (isset($_POST['valor'])) {
-
-          $cedula = trim($_POST['valor']);
-
-          $this->personaLogic->comprobarExistenciaCedula($cedula);
-
-        }else{
-
-          $this->redireccionActividadNoAutorizada();
-         
-        }
-    
-      }
-
-    /*
-    // Metodo para verificar si una cédula (en edición) existe
-    */
-
-      public function verificarCedulaExistenteEditar(){
-
-        if (isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
-
-          $cedulaActual = trim($_POST['valorActual']);
-          $cedulaNueva = trim($_POST['valorNuevo']);
-
-          $this->personaLogic->comprobarExistenciaCedulaEnEdicion($cedulaActual,$cedulaNueva);
-
-        }else{
-
-          $this->redireccionActividadNoAutorizada();
-         
-        }
-    
-      }
-
-    /*
-    // Metodo para verificar si un correo electrónico existe
-    */
-
-      public function verificarCorreoElectronicoExistente(){
-
-        if (isset($_POST['valor'])) {
-
-          $correoElectronico = trim($_POST['valor']);
-
-          $this->personaLogic->comprobarExistenciaCorreoElectronico($correoElectronico);
-
-        }else{
-
-          $this->redireccionActividadNoAutorizada();
-         
-        }
-
-      }
-
-      /*
-    // Metodo para verificar si un correo electrónico (en edición) existe
-    */
-
-      public function verificarCorreoElectronicoExistenteEditar(){
-
-         if (isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
-
-          $correoElectronicoActual = trim($_POST['valorActual']);
-          $correoElectronicoNuevo = trim($_POST['valorNuevo']);
-
-          $this->personaLogic->comprobarExistenciaCorreoElectronicoEnEdicion($correoElectronicoActual,$correoElectronicoNuevo);
-
-        }else{
-
-          $this->redireccionActividadNoAutorizada();
-         
-        }
-
-      }
-
-    /*
     // Metodo para verificar si un número de plano existe
     */
 
@@ -295,7 +213,7 @@
 
       }
 
-      /*
+    /*
     // Metodo encargado de consultar la totalidad de páginas de clientes inactivos en el sistema
     */
 
