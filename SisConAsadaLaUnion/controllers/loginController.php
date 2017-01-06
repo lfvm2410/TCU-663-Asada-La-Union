@@ -7,18 +7,18 @@
 
 	class loginController extends controlador{
 
-		private $usuarioLogic;
+		private $personaLogic;
 		
 		public function __construct(){
 
 			parent::__construct();
-			$this->usuarioLogic = new usuarioLogic();
+			$this->personaLogic = new personaLogic();
 			
 		}
 
-	/*
-    // Metodos para mostrar las vistas asociadas a este controlador
-    */
+		/*
+	    // Metodos para mostrar las vistas asociadas a este controlador
+	    */
 
       	public function index(){
 
@@ -32,25 +32,39 @@
 
       	}
 
+      	/*
+		// Metodo encargado de recibir una solicitud de inicio de sesión al sistema
+      	*/
+
       	public function validarLogin(){
 
       		if (isset($_POST['nombreUsuario']) && isset($_POST['contraseniaUsuario'])) {
 
-	        	$user = trim($_POST['nombreUsuario']);
-	            $pass = trim($_POST['contraseniaUsuario']);
+	        	$nombreUsuario = trim($_POST['nombreUsuario']);
+	            $contraseniaUsuario = trim($_POST['contraseniaUsuario']);
 	            
+	            $usuario = new usuarioSistema(null, null, null, null, null,
+		                 null, null, $nombreUsuario, null, null, 
+		                 null, null, $contraseniaUsuario, null);
 
-	            $usuario = new usuarioSistema(null,null,null,null,null,
-		                 null,null, $user, null, null, 
-		                 null, null, $pass, null);
-
-	            $this->usuarioLogic->validarLogin($usuario);
+	            $this->personaLogic->validarLogin($usuario);
 
 	         }else{
 
 	            $this->redireccionActividadNoAutorizada();
 	         
 	         }
+	         
+      	}
+
+      	/*
+		// Metodo encargado de recibir una solicitud para el cierre de la sesión actual
+      	*/
+
+      	public function cerrarSession(){
+
+      	   $this->personaLogic->cerrarSession();
+
       	}
 
 	}

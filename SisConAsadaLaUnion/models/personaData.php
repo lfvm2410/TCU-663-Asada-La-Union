@@ -401,6 +401,57 @@
             
         }
 
+        /*
+        // Metodo encargado de obtener un usuario del sistema a partir de su nombre de usuario 
+        */
+
+        public function obtenerUsuarioSistemaPorNombreUsuario($nombreUsuario){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $consultaUsuarioSistema = mysql_query("call SP_obtenerUsuarioSistemaPorNombreUsuario('$nombreUsuario')",$conexionBD) or die("Error al tratar de obtener el usuario del sistema en la base de datos");
+
+            $usuarioSistema = null;
+
+            if($consultaUsuarioSistema){
+                
+                if(mysql_num_rows($consultaUsuarioSistema) > 0){
+
+                    while ($usuario = mysql_fetch_array($consultaUsuarioSistema)) {
+
+                        $idPersona = $usuario['id_Persona'];
+                        $cedula = $usuario['cedula_Persona'];
+                        $nombre = $usuario['nombre_Persona'];
+                        $apellidos = $usuario['apellidos_Persona'];
+                        $correoElectronico = $usuario['correoElectronico_Persona'];
+                        $direccion = $usuario['direccion_Persona'];
+                        $idUsuarioSistema = $usuario['id_UsuarioSistema'];
+                        $nombreUsuarioSistema = $usuario['nombre_UsuarioSistema'];
+                        $tipoUsuario = $usuario['tipo_UsuarioSistema'];
+                        $fechaNacimientoTemp = date_create($usuario['fechaNacimiento_UsuarioSistema']);                           
+                        $fechaNacimiento = date_format($fechaNacimientoTemp,'d/m/Y');
+                        $puesto = $usuario['puesto_UsuarioSistema'];
+                        $descripcionPuesto = $usuario['descripcionPuesto_UsuarioSistema'];
+                        $contrasenia = $usuario['contrasenia_UsuarioSistema'];
+     
+                        $usuarioSistema = new usuarioSistema($idPersona, $cedula, $nombre, $apellidos, $correoElectronico,
+                                                             $direccion, $idUsuarioSistema, $nombreUsuarioSistema, $tipoUsuario, 
+                                                             $fechaNacimiento, $puesto, $descripcionPuesto, $contrasenia, $contrasenia);
+
+                    }
+
+                }
+
+            }
+
+            mysql_close($conexionBD);
+
+            return $usuarioSistema;
+
+        }
+
     }
     
 ?>

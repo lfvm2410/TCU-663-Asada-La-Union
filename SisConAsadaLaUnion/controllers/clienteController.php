@@ -24,30 +24,62 @@
 
       public function index(){
 
-      //Temporal, mientras se define la vista principal del controlador
+        if ($this->verificarSessionIniciada()) {
 
-        header('Location: '.URL);
+          //Temporal, mientras se define la vista principal del controlador
 
-        exit;
+          header('Location: '.URL);
+
+          exit;
+            
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
 
       }
 
       public function registrarClienteForm(){
-  
-          $this->vista->render($this,'registrarCliente','Registrar cliente');
 
+        if ($this->verificarSessionIniciada()) {
+
+          $this->vista->render($this,'registrarCliente','Registrar cliente');
+            
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+  
       }
 
       public function consultarInformacionClientes(){
-  
+
+        if ($this->verificarSessionIniciada()) {
+
           $this->vista->render($this,'consultarInformacionClientes','Consultar información de clientes');
+
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
 
       }
 
       public function activarClientes(){
-  
+
+        if ($this->verificarSessionIniciada()) {
+
           $this->vista->render($this,'activarClientes','Activar clientes');
 
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+  
       }
 
     /*
@@ -56,10 +88,10 @@
 
       public function registrarCliente(){
 
-         if (isset($_POST['cedulaCliente']) && isset($_POST['nombreCliente']) && isset($_POST['apellidosCliente']) &&
-             isset($_POST['correoCliente']) && isset($_POST['tipoTel1Cliente']) && isset($_POST['numTel1Cliente']) &&
-             isset($_POST['tipoTel2Cliente']) && isset($_POST['numTel2Cliente']) && isset($_POST['direccionCliente']) &&
-             isset($_POST['numPlanoCliente'])) {
+         if ($this->verificarSessionIniciada() && isset($_POST['cedulaCliente']) && isset($_POST['nombreCliente']) && 
+             isset($_POST['apellidosCliente']) && isset($_POST['correoCliente']) && isset($_POST['tipoTel1Cliente']) && 
+             isset($_POST['numTel1Cliente']) && isset($_POST['tipoTel2Cliente']) && isset($_POST['numTel2Cliente']) && 
+             isset($_POST['direccionCliente']) && isset($_POST['numPlanoCliente'])) {
 
         	  $cedula = trim($_POST['cedulaCliente']);
             $nombre = trim($_POST['nombreCliente']);
@@ -89,8 +121,8 @@
 
       public function editarCliente(){
 
-         if (isset($_POST['cedulaActual']) && isset($_POST['correoElectronicoActual']) && isset($_POST['numeroPlanoActual']) && 
-             isset($_POST['cedulaCliente']) && isset($_POST['nombreCliente']) && 
+         if ($this->verificarSessionIniciada() && isset($_POST['cedulaActual']) && isset($_POST['correoElectronicoActual']) && 
+             isset($_POST['numeroPlanoActual']) && isset($_POST['cedulaCliente']) && isset($_POST['nombreCliente']) && 
              isset($_POST['apellidosCliente']) && isset($_POST['correoCliente']) && isset($_POST['tipoTel1Cliente']) && 
              isset($_POST['numTel1Cliente']) && isset($_POST['tipoTel2Cliente']) && isset($_POST['numTel2Cliente']) && 
              isset($_POST['direccionCliente']) && isset($_POST['numPlanoCliente'])) {
@@ -126,7 +158,7 @@
 
       public function verificarNumeroPlanoExistente(){
 
-        if (isset($_POST['valor'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['valor'])) {
 
           $numeroPlano = trim($_POST['valor']);
 
@@ -146,7 +178,7 @@
 
       public function verificarNumeroPlanoExistenteEditar(){
 
-      if (isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
+      if ($this->verificarSessionIniciada() && isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
           
           $numeroPlanoActual = trim($_POST['valorActual']);
           $numeroPlanoNuevo = trim($_POST['valorNuevo']);
@@ -169,7 +201,8 @@
 
         header("Content-Type: application/json");
 
-        if (isset($_POST['permisoConsultaTotalPaginas']) && isset($_POST['metodo']) && isset($_POST['busqueda'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['permisoConsultaTotalPaginas']) && 
+            isset($_POST['metodo']) && isset($_POST['busqueda'])) {
 
           $permisoConsultaTotalPaginas = trim($_POST['permisoConsultaTotalPaginas']);
 
@@ -195,7 +228,8 @@
 
         header("Content-Type: application/json");
 
-        if (isset($_POST['paginaActual']) && isset($_POST['metodo']) && isset($_POST['busqueda'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['paginaActual']) && 
+            isset($_POST['metodo']) && isset($_POST['busqueda'])) {
 
           $paginaActual = trim($_POST['paginaActual']);
 
@@ -221,7 +255,8 @@
 
         header("Content-Type: application/json");
 
-        if (isset($_POST['permisoConsultaTotalPaginas']) && isset($_POST['metodo']) && isset($_POST['busqueda'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['permisoConsultaTotalPaginas']) && 
+            isset($_POST['metodo']) && isset($_POST['busqueda'])) {
 
           $permisoConsultaTotalPaginas = trim($_POST['permisoConsultaTotalPaginas']);
 
@@ -247,7 +282,8 @@
 
         header("Content-Type: application/json");
 
-        if (isset($_POST['paginaActual']) && isset($_POST['metodo']) && isset($_POST['busqueda'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['paginaActual']) && 
+            isset($_POST['metodo']) && isset($_POST['busqueda'])) {
 
           $paginaActual = trim($_POST['paginaActual']);
 
@@ -273,7 +309,7 @@
 
         header("Content-Type: application/json");
 
-        if (isset($_POST['cedulaCliente'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['cedulaCliente'])) {
 
           $cedulaCliente = trim($_POST['cedulaCliente']);
 
@@ -293,7 +329,7 @@
 
     public function anularCliente(){
 
-        if (isset($_POST['cedulaCliente'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['cedulaCliente'])) {
 
           $cedulaCliente = trim($_POST['cedulaCliente']);
           
@@ -313,7 +349,7 @@
 
     public function activarCliente(){
 
-        if (isset($_POST['cedulaCliente'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['cedulaCliente'])) {
 
           $cedulaCliente = trim($_POST['cedulaCliente']);
           
@@ -335,7 +371,7 @@
 
         header("Content-Type: application/json");
 
-        if (isset($_POST['cedulaCliente'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['cedulaCliente'])) {
 
           $cedulaCliente = trim($_POST['cedulaCliente']);
           

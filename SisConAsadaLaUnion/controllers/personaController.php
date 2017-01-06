@@ -22,23 +22,47 @@
 
       	public function index(){
 
-      	//Temporal, mientras se define la vista principal del controlador
+          if ($this->verificarSessionIniciada()) {
 
-        header('Location: '.URL);
+            //Temporal, mientras se define la vista principal del controlador
 
-        exit;
+            header('Location: '.URL);
+
+            exit;
+            
+          }else{
+
+            $this->redireccionActividadNoAutorizada();
+
+          }
 
       	}
 
       	public function registrarPersonaForm(){
 
-      		$this->vista->render($this,'registrarPersona','Registrar persona');
+          if ($this->verificarSessionIniciada()) {
+
+            $this->vista->render($this,'registrarPersona','Registrar persona');
+            
+          }else{
+
+            $this->redireccionActividadNoAutorizada();
+
+          }
 
       	}
 
         public function consultarInformacionPersonas(){
 
-          $this->vista->render($this,'consultarInformacionPersonas','Consultar información de personas');
+          if ($this->verificarSessionIniciada()) {
+
+            $this->vista->render($this,'consultarInformacionPersonas','Consultar información de personas');
+            
+          }else{
+
+            $this->redireccionActividadNoAutorizada();
+
+          }
 
         }
 
@@ -49,7 +73,7 @@
 
       	public function verificarCedulaExistente(){
 
-        	if (isset($_POST['valor'])) {
+        	if ($this->verificarSessionIniciada() && isset($_POST['valor'])) {
 
           		$cedula = trim($_POST['valor']);
 
@@ -69,7 +93,7 @@
 
         public function verificarCedulaExistenteEditar(){
 
-          if (isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
+          if ($this->verificarSessionIniciada() && isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
 
             $cedulaActual = trim($_POST['valorActual']);
             $cedulaNueva = trim($_POST['valorNuevo']);
@@ -90,7 +114,7 @@
 
       	public function verificarCorreoElectronicoExistente(){
 
-        	if (isset($_POST['valor'])) {
+        	if ($this->verificarSessionIniciada() && isset($_POST['valor'])) {
 
           		$correoElectronico = trim($_POST['valor']);
 
@@ -110,7 +134,7 @@
 
         public function verificarCorreoElectronicoExistenteEditar(){
 
-           if (isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
+           if ($this->verificarSessionIniciada() && isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
 
             $correoElectronicoActual = trim($_POST['valorActual']);
             $correoElectronicoNuevo = trim($_POST['valorNuevo']);
@@ -131,7 +155,7 @@
 
       	public function verificarNombreUsuarioExistente(){
 
-        	if (isset($_POST['valor'])) {
+        	if ($this->verificarSessionIniciada() && isset($_POST['valor'])) {
 
           		$nombreUsuario = trim($_POST['valor']);
 
@@ -151,12 +175,12 @@
 
       	public function registrarPersona(){
 
-           if (isset($_POST['perfilPersona']) && isset($_POST['cedulaPersona']) && isset($_POST['nombrePersona']) &&
-               isset($_POST['apellidosPersona']) && isset($_POST['fechaNacimientoPersona']) && isset($_POST['correoPersona']) && 
-               isset($_POST['nombreUsuarioPersona'])&& isset($_POST['contraseniaPersona']) && isset($_POST['confirmarContraseniaPersona']) && 
-               isset($_POST['tipoTel1Persona']) && isset($_POST['numTel1Persona']) && isset($_POST['tipoTel2Persona']) &&
-               isset($_POST['numTel2Persona']) && isset($_POST['direccionPersona']) && isset($_POST['puestoPersona']) &&
-               isset($_POST['descripcionPuestoPersona'])) {
+           if ($this->verificarSessionIniciada() && isset($_POST['perfilPersona']) && isset($_POST['cedulaPersona']) && 
+               isset($_POST['nombrePersona']) && isset($_POST['apellidosPersona']) && isset($_POST['fechaNacimientoPersona']) && 
+               isset($_POST['correoPersona']) && isset($_POST['nombreUsuarioPersona'])&& isset($_POST['contraseniaPersona']) && 
+               isset($_POST['confirmarContraseniaPersona']) && isset($_POST['tipoTel1Persona']) && isset($_POST['numTel1Persona']) && 
+               isset($_POST['tipoTel2Persona']) && isset($_POST['numTel2Persona']) && isset($_POST['direccionPersona']) && 
+               isset($_POST['puestoPersona']) && isset($_POST['descripcionPuestoPersona'])) {
 
         	  $perfil = trim($_POST['perfilPersona']);
             $cedula = trim($_POST['cedulaPersona']);
@@ -193,9 +217,9 @@
 
         public function editarPersonaTipoColaborador(){
 
-           if (isset($_POST['idPersona']) && isset($_POST['cedulaActual']) && isset($_POST['correoElectronicoActual']) &&
-               isset($_POST['cedulaPersona']) && isset($_POST['nombrePersona']) && isset($_POST['apellidosPersona']) && 
-               isset($_POST['fechaNacimientoPersona']) && isset($_POST['correoPersona']) &&
+           if ($this->verificarSessionIniciada() && isset($_POST['idPersona']) && isset($_POST['cedulaActual']) && 
+               isset($_POST['correoElectronicoActual']) && isset($_POST['cedulaPersona']) && isset($_POST['nombrePersona']) && 
+               isset($_POST['apellidosPersona']) && isset($_POST['fechaNacimientoPersona']) && isset($_POST['correoPersona']) &&
                isset($_POST['tipoTel1Persona']) && isset($_POST['numTel1Persona']) && isset($_POST['tipoTel2Persona']) &&
                isset($_POST['numTel2Persona']) && isset($_POST['direccionPersona']) && isset($_POST['puestoPersona']) &&
                isset($_POST['descripcionPuestoPersona'])) {
@@ -240,7 +264,8 @@
 
         header("Content-Type: application/json");
 
-        if (isset($_POST['permisoConsultaTotalPaginas']) && isset($_POST['filtroBusqueda'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['permisoConsultaTotalPaginas']) && 
+            isset($_POST['filtroBusqueda'])) {
 
           $permisoConsultaTotalPaginas = trim($_POST['permisoConsultaTotalPaginas']);
 
@@ -264,7 +289,8 @@
 
         header("Content-Type: application/json");
 
-        if (isset($_POST['paginaActual']) && isset($_POST['filtroBusqueda'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['paginaActual']) && 
+            isset($_POST['filtroBusqueda'])) {
 
           $paginaActual = trim($_POST['paginaActual']);
 
@@ -293,7 +319,7 @@
 
           header("Content-Type: application/json");
 
-          if (isset($_POST['idPersona'])) {
+          if ($this->verificarSessionIniciada() && isset($_POST['idPersona'])) {
 
             $idPersona = trim($_POST['idPersona']);
 
@@ -316,7 +342,7 @@
 
           header("Content-Type: application/json");
 
-          if (isset($_POST['idPersona']) && isset($_POST['tipoPersona'])) {
+          if ($this->verificarSessionIniciada() && isset($_POST['idPersona']) && isset($_POST['tipoPersona'])) {
 
             $idPersona = trim($_POST['idPersona']);
             $tipoPersona = trim($_POST['tipoPersona']);
@@ -337,7 +363,7 @@
 
       public function eliminarPersonaPerfilColaborador(){
 
-          if (isset($_POST['idPersona'])) {
+          if ($this->verificarSessionIniciada() && isset($_POST['idPersona'])) {
 
             $idPersona = trim($_POST['idPersona']);
             

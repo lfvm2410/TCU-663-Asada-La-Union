@@ -84,7 +84,7 @@
 				<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Mi cuenta <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="#">Información personal</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
+					<li><a href="<?php print URL;?>login/cerrarSession"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
 				</ul>
 			</li>
 		</ul>

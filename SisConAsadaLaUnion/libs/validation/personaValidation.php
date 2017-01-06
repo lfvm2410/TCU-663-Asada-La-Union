@@ -246,6 +246,25 @@
 
 		}
 
+		/*
+		// Metodo encargado de validar una solicitud de inicio de sesión al sistema
+		*/
+
+		public function validarInicioSesionSistema(usuarioSistema $usuarioSistema, $nombreUsuario, $contrasenia){
+
+			$estadoInicioSesionSistema = false;
+
+			if (strcmp($nombreUsuario, $usuarioSistema->getNombreUsuario()) == 0 && 
+			    password_verify($contrasenia, $usuarioSistema->getContrasenia())) {
+
+				$estadoInicioSesionSistema = true;				
+			
+			}
+
+			return $estadoInicioSesionSistema;
+		
+		}
+
 	}
 
 ?>

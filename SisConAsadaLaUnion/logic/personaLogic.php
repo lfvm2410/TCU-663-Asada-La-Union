@@ -407,7 +407,66 @@
 
       }
 
-    }    
+    }
+
+    /*
+    //Metodo encargado de validar una solicitud para iniciar sesión en el sistema
+    */
+
+    public function validarLogin(usuarioSistema $usuario){
+
+      if ($this->personaValidation->validarCamposTexto($usuario->getNombreUsuario(),15) &&
+          $this->personaValidation->validarCamposTexto($usuario->getContrasenia(),15)) {
+      
+        $usuarioSistema = $this->personaData->obtenerUsuarioSistemaPorNombreUsuario($usuario->getNombreUsuario());
+        
+        if(!is_null($usuarioSistema)){
+
+          if($this->personaValidation->validarInicioSesionSistema($usuarioSistema, $usuario->getNombreUsuario(), $usuario->getContrasenia())) {
+          
+              session::init();
+
+              session::set("usuarioSistema",$usuarioSistema);
+
+              echo "true";
+          
+          }else{
+          
+              echo "La contraseña para el usuario ingresado es incorrecta";
+          
+          }
+        
+        }else{
+        
+          echo "El usuario ingresado no se encuentra registrado en la base de datos";
+        
+        }
+
+    }else{
+
+      echo "Los campos referentes a usuario y contraseña no pueden estar vacíos. El contenido de estos campos no puede exceder los 15 caracteres";
+
+    }
+
+  }
+
+    /*
+    // Metodo encargado de cerrar la sesión del usuario activo
+    */
+
+    public function cerrarSession(){
+
+      session::init();
+
+      session::remove("usuarioSistema");
+
+      session::destroy();
+
+      header('Location: '.URL.'login');
+
+      exit;
+
+    } 
 
 	}
 

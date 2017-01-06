@@ -6,7 +6,7 @@
 
 	class productoController extends controlador{
 		
-		public function __construct(){
+		  public function __construct(){
 
         	parent::__construct();
 
@@ -18,23 +18,47 @@
 
       public function index(){
 
-      	//Temporal, mientras se define la vista principal del controlador
+          if ($this->verificarSessionIniciada()) {
 
-        header('Location: '.URL);
+            //Temporal, mientras se define la vista principal del controlador
 
-        exit;
+            header('Location: '.URL);
+
+            exit;
+            
+          }else{
+
+            $this->redireccionActividadNoAutorizada();
+
+          }
 
       }
 
       public function registrarProductoForm(){
-  
-          $this->vista->render($this,'registrarProducto','Registrar producto');
 
+        if ($this->verificarSessionIniciada()) {
+
+          $this->vista->render($this,'registrarProducto','Registrar producto');
+            
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+  
       }
 
       public function consultarInformacionProductos(){
-  
+
+        if ($this->verificarSessionIniciada()) {
+
           $this->vista->render($this,'consultarInformacionProductos','Consultar información de productos');
+            
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
 
       }
 
@@ -44,7 +68,8 @@
 
       public function registrarProducto(){
 
-         if (isset($_POST['nombreProducto']) && isset($_POST['descripcionProducto']) && isset($_POST['cantidadProducto'])) {
+         if ($this->verificarSessionIniciada() && isset($_POST['nombreProducto']) && 
+             isset($_POST['descripcionProducto']) && isset($_POST['cantidadProducto'])) {
 
         	$nombre = trim($_POST['nombreProducto']);
             $descripcion = trim($_POST['descripcionProducto']);
@@ -70,7 +95,8 @@
 
         header("Content-Type: application/json");
 
-        if (isset($_POST['permisoConsultaTotalPaginas']) && isset($_POST['metodo']) && isset($_POST['busqueda'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['permisoConsultaTotalPaginas']) && 
+            isset($_POST['metodo']) && isset($_POST['busqueda'])) {
 
           $permisoConsultaTotalPaginas = trim($_POST['permisoConsultaTotalPaginas']);
           $metodo = trim($_POST['metodo']);
@@ -94,7 +120,8 @@
 
         header("Content-Type: application/json");
 
-        if (isset($_POST['paginaActual']) && isset($_POST['metodo']) && isset($_POST['busqueda'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['paginaActual']) && 
+            isset($_POST['metodo']) && isset($_POST['busqueda'])) {
 
           $paginaActual = trim($_POST['paginaActual']);
           $metodo = trim($_POST['metodo']);
@@ -118,7 +145,7 @@
 
         header("Content-Type: application/json");
 
-        if (isset($_POST['idProducto'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['idProducto'])) {
 
           $idProducto = trim($_POST['idProducto']);
           
@@ -138,8 +165,9 @@
 
       public function editarProducto(){
 
-         if (isset($_POST['idProducto']) && isset($_POST['nombreProducto']) && 
-         	isset($_POST['descripcionProducto']) && isset($_POST['cantidadProducto'])) {
+         if ($this->verificarSessionIniciada() && isset($_POST['idProducto']) && 
+             isset($_POST['nombreProducto']) && isset($_POST['descripcionProducto']) && 
+             isset($_POST['cantidadProducto'])) {
 
          	$idProducto = $_POST['idProducto'];
         	$nombre = trim($_POST['nombreProducto']);
@@ -164,7 +192,7 @@
 
     public function eliminarProducto(){
 
-        if (isset($_POST['idProducto'])) {
+        if ($this->verificarSessionIniciada() && isset($_POST['idProducto'])) {
 
           $idProducto = trim($_POST['idProducto']);
           

@@ -42,5 +42,43 @@
         	
 		}
 
+		/*
+		// Metodo encargado de verificar si existe un usuario logueado en el sistema.
+		// Ademas comprueba si el usuario aun existe en la base de datos y si tiene el perfil administrativo
+		// Nota: Este metodo se llama en cada metodo de los controladores protegidos
+		*/
+
+		public function verificarSessionIniciada(){
+
+	    	$estadoSession = false;
+
+	    	session::init();
+
+	    	$sessionActual = session::get("usuarioSistema");
+
+	    	if($sessionActual != false){
+
+	     		$usuarioSistemaActual = (object) $sessionActual;
+
+	     		$personaData = new personaData();
+
+	     		$usuarioSistema = $personaData->obtenerUsuarioSistemaPorNombreUsuario($usuarioSistemaActual->getNombreUsuario());
+
+	     		if (!is_null($usuarioSistema)) {
+
+	     			if (strcmp($usuarioSistema->getTipoUsuario(), "Administrador") == 0) {
+	        
+	         			$estadoSession = true;
+
+	        		}
+	     			
+	     		}
+	        	
+	    	}
+
+	    	return $estadoSession;
+
+		}
+
 	}
 ?>
