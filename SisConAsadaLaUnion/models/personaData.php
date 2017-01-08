@@ -452,6 +452,151 @@
 
         }
 
+        /*
+        // Metodo encargado de obtener un usuario del sistema a partir de su correo electronico 
+        */
+
+        public function obtenerUsuarioSistemaPorCorreoElectronico($correoElectronico){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $consultaUsuarioSistema = mysql_query("call SP_obtenerUsuarioSistemaPorCorreoElectronico('$correoElectronico')",$conexionBD) or die("Error al tratar de obtener el usuario del sistema en la base de datos");
+
+            $usuarioSistema = null;
+
+            if($consultaUsuarioSistema){
+                
+                if(mysql_num_rows($consultaUsuarioSistema) > 0){
+
+                    while ($usuario = mysql_fetch_array($consultaUsuarioSistema)) {
+
+                        $idPersona = $usuario['id_Persona'];
+                        $cedula = $usuario['cedula_Persona'];
+                        $nombre = $usuario['nombre_Persona'];
+                        $apellidos = $usuario['apellidos_Persona'];
+                        $correoElectronico = $usuario['correoElectronico_Persona'];
+                        $direccion = $usuario['direccion_Persona'];
+                        $idUsuarioSistema = $usuario['id_UsuarioSistema'];
+                        $nombreUsuarioSistema = $usuario['nombre_UsuarioSistema'];
+                        $tipoUsuario = $usuario['tipo_UsuarioSistema'];
+                        $fechaNacimientoTemp = date_create($usuario['fechaNacimiento_UsuarioSistema']);                           
+                        $fechaNacimiento = date_format($fechaNacimientoTemp,'d/m/Y');
+                        $puesto = $usuario['puesto_UsuarioSistema'];
+                        $descripcionPuesto = $usuario['descripcionPuesto_UsuarioSistema'];
+                        $contrasenia = $usuario['contrasenia_UsuarioSistema'];
+     
+                        $usuarioSistema = new usuarioSistema($idPersona, $cedula, $nombre, $apellidos, $correoElectronico,
+                                                             $direccion, $idUsuarioSistema, $nombreUsuarioSistema, $tipoUsuario, 
+                                                             $fechaNacimiento, $puesto, $descripcionPuesto, $contrasenia, $contrasenia);
+
+                    }
+
+                }
+
+            }
+
+            mysql_close($conexionBD);
+
+            return $usuarioSistema;
+
+        }
+
+        /*
+        // Metodo encargado de obtener un usuario del sistema a partir de su token de recuperar contraseña 
+        */
+
+        public function obtenerUsuarioSistemaPorToken($token){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $consultaUsuarioSistema = mysql_query("call SP_obtenerUsuarioSistemaPorToken('$token')",$conexionBD) or die("Error al tratar de obtener el usuario del sistema en la base de datos");
+
+            $usuarioSistema = null;
+
+            if($consultaUsuarioSistema){
+                
+                if(mysql_num_rows($consultaUsuarioSistema) > 0){
+
+                    while ($usuario = mysql_fetch_array($consultaUsuarioSistema)) {
+
+                        $idPersona = $usuario['id_Persona'];
+                        $cedula = $usuario['cedula_Persona'];
+                        $nombre = $usuario['nombre_Persona'];
+                        $apellidos = $usuario['apellidos_Persona'];
+                        $correoElectronico = $usuario['correoElectronico_Persona'];
+                        $direccion = $usuario['direccion_Persona'];
+                        $idUsuarioSistema = $usuario['id_UsuarioSistema'];
+                        $nombreUsuarioSistema = $usuario['nombre_UsuarioSistema'];
+                        $tipoUsuario = $usuario['tipo_UsuarioSistema'];
+                        $fechaNacimientoTemp = date_create($usuario['fechaNacimiento_UsuarioSistema']);                           
+                        $fechaNacimiento = date_format($fechaNacimientoTemp,'d/m/Y');
+                        $puesto = $usuario['puesto_UsuarioSistema'];
+                        $descripcionPuesto = $usuario['descripcionPuesto_UsuarioSistema'];
+                        $contrasenia = $usuario['contrasenia_UsuarioSistema'];
+     
+                        $usuarioSistema = new usuarioSistema($idPersona, $cedula, $nombre, $apellidos, $correoElectronico,
+                                                             $direccion, $idUsuarioSistema, $nombreUsuarioSistema, $tipoUsuario, 
+                                                             $fechaNacimiento, $puesto, $descripcionPuesto, $contrasenia, $contrasenia);
+
+                    }
+
+                }
+
+            }
+
+            mysql_close($conexionBD);
+
+            return $usuarioSistema;
+
+        }
+
+        /*
+        // Metodo encargado de registrar un token en la base de datos para la recuperación de una contraseña
+        */
+
+        public function registrarTokenRecuperarContrasenia(recuperarContrasenia $recuperarContrasenia){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $token = $recuperarContrasenia->getToken();
+            $idUsuarioSistema = intval($recuperarContrasenia->getIdUsuarioSistema());
+
+            $estadoTransaccion = false;
+
+            $estadoTransaccion = mysql_query("call SP_registrarTokenRecuperarContrasenia('$token', $idUsuarioSistema)",$conexionBD)  or die("Error al tratar de registrar el permiso de acceso a la recuperación de contraseña en la base de datos");
+               
+            mysql_close($conexionBD);     
+
+            return $estadoTransaccion;
+            
+        }
+
+        /*
+        // Metodo encargado de restablecer la contraseña de un usuario en la base de datos
+        */
+
+        public function restablecerContraseniaUsuario($idUsuarioSistema, $contrasenia){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $estadoTransaccion = false;
+
+            $estadoTransaccion = mysql_query("call SP_restablecerContraseniaUsuario($idUsuarioSistema, '$contrasenia')",$conexionBD)  or die("Error al tratar de establecer la nueva contraseña en la base de datos");
+               
+            mysql_close($conexionBD);     
+
+            return $estadoTransaccion;
+            
+        }
+
     }
     
 ?>

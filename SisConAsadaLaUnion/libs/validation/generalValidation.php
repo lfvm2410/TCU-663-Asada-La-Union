@@ -25,6 +25,22 @@
 		}
 
 		/*
+        //Metodo encargado de validar campos de texto de acuerdo a la condición: No nulo
+		*/
+
+		public function validarCamposTextoRequeridos($texto){
+
+			$estadoCampo = false;
+
+			if (!is_null($texto) && !empty($texto)) {
+				
+				$estadoCampo = true;
+			}
+
+			return $estadoCampo;
+		}
+
+		/*
 	    //Metodo encargado de validar solamente la longitud de un campo de texto
 		*/
 
@@ -104,9 +120,9 @@
 
                 $fechaDividida = explode ("/", $fecha);
 
-                $dia=$fechaDividida[0]; 
-                $mes=$fechaDividida[1]; 
-                $anio=$fechaDividida[2];
+                $dia = $fechaDividida[0]; 
+                $mes = $fechaDividida[1]; 
+                $anio = $fechaDividida[2];
 
                 if(checkdate($mes,$dia,$anio)){ 
                 
@@ -117,6 +133,24 @@
 			}
 			
 			return $estadoFecha;
+		}
+
+		/*
+		//Metodo encargado de verificar si 2 cadenas son iguales
+		*/
+
+		public function verificarCadenasIguales($cadena1, $cadena2){
+
+			$cadenasIguales = false;
+
+			if (strcmp($cadena1, $cadena2) == 0) {
+
+				$cadenasIguales = true;
+				
+			}
+
+			return $cadenasIguales;
+
 		}
 
 	}

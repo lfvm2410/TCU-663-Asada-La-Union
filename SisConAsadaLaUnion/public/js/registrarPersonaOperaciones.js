@@ -95,19 +95,25 @@
 
       var verificarNombreUsuario = "";
 
-      //Se ignora o se incluye la validación para el nombre del usuario de acuerdo al perfil de persona a registrar
+      var verificarContrasenias = "";
+
+      //Se ignora o se incluye la validación para el nombre del usuario y las contraseñas de acuerdo al perfil de persona a registrar
 
       if (perfilPersona.val() == "Administrador") {
 
         verificarNombreUsuario = $("#msjNombreUsuario").attr("data-nombreUsuario");
+        
+        verificarContrasenias = $("#msjContrasenias").attr("data-password");
 
       }else if (perfilPersona.val() == "Colaborador") {
 
         verificarNombreUsuario = "true";
+        
+        verificarContrasenias = "true";
 
       }
       
-      if (verificarCedula == "true" && verificarCorreo == "true" && verificarNombreUsuario  == "true") {
+      if (verificarCedula == "true" && verificarCorreo == "true" && verificarNombreUsuario  == "true" && verificarContrasenias == "true") {
 
         if (confirmarTransaccion('¿Está seguro de proceder con el registro de la persona?')) 
           {

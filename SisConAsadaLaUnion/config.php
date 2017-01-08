@@ -1,5 +1,6 @@
 <?php
-
+	
+	define('SERVER', 'https://localhost');
 	define('URL', '/SisConAsadaLaUnion/');
 	define('LIBS', 'libs/');
 	define('DOMAIN', 'libs/domain/');

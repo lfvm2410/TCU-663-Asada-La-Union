@@ -12,6 +12,24 @@
 		}
 
 		/*
+		//Metodo encargado de validar si un usuario cuenta con el perfil administrativo
+		*/
+
+		public function validarTipoUsuarioAdministrativo($tipoUsuario){
+
+			$estadoTipoUsuario = false;
+
+			if (strcmp($tipoUsuario, "Administrador") == 0) {
+
+				$estadoTipoUsuario = true;
+				
+			}
+
+			return $estadoTipoUsuario;
+
+		}
+
+		/*
 		//Metodo encargado de validar el tipo de usuario
 		*/
 

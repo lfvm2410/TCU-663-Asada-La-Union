@@ -113,11 +113,11 @@
 
         if (idContrasenia1.val() == idContrasenia2.val()) {
 
-            idMensajeContrasenias.html("<div id='msjCedula' class='alert alert-success' data-password='true'><strong><span class='glyphicon glyphicon-ok'></span></strong> Contraseñas idénticas</div>");
+            idMensajeContrasenias.html("<div id='msjContrasenias' class='alert alert-success' data-password='true'><strong><span class='glyphicon glyphicon-ok'></span></strong> Contraseñas idénticas</div>");
 
           }else{
 
-            idMensajeContrasenias.html("<div id='msjCedula' class='alert alert-danger' data-password='false'><strong><span class='glyphicon glyphicon-remove'></span></strong> Contraseñas distintas</div>");
+            idMensajeContrasenias.html("<div id='msjContrasenias' class='alert alert-danger' data-password='false'><strong><span class='glyphicon glyphicon-remove'></span></strong> Contraseñas distintas</div>");
 
           }
 
@@ -128,7 +128,7 @@
 
   }
 
-/*
+  /*
   //Metodo ajax que permite verificar la existencia de varios campos del formulario en la base de datos
   */
 

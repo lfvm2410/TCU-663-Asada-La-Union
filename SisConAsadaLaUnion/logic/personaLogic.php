@@ -466,7 +466,207 @@
 
       exit;
 
-    } 
+    }
+
+    /*
+    // Metodo encargado de generar un link temporal para la recuperación de la contraseña
+    */
+
+    private function generarLinkTemporal($idUsuarioSistema, $nombreUsuarioSistema){
+   
+      // Se genera un token para validar el cambio de contraseña
+      $token = sha1($idUsuarioSistema.$nombreUsuarioSistema.rand(1,9999999).date('d-m-y'));
+
+      $recuperarContrasenia = new recuperarContrasenia(0, $token, "", $idUsuarioSistema);
+
+      $enlace = null;
+
+      if ($this->personaData->registrarTokenRecuperarContrasenia($recuperarContrasenia)) {
+        
+         //Se devuelve el link que se enviara al usuario
+        $enlace = SERVER.URL.'login/solicitudRestablecerContrasenia/?idUsuarioSistema='.sha1($idUsuarioSistema).'&token='.$token;
+      
+      }
+
+      return $enlace;
+
+    }
+
+    /*
+    // Metodo encargado de enviar el link generado al correo electrónico correspondiente para la recuperación de contraseña
+    */
+ 
+    private function enviarCorreoElectronico($correoElectronico, $nombreUsuario, $link){
+
+       $mensaje = '<html>
+         <head>
+            <title>Restablecer su contraseña</title>
+         </head>
+         <body>
+           <p>Hemos recibido una petición para restablecer la contraseña de su cuenta.</p>
+           <p>Si usted hizo esta petición, haga click en el siguiente enlace, de lo contrario por favor ignore este correo.</p>
+           <p><strong>Nota recordatoria:</strong></p>
+           <p>Su nombre de usuario es: <strong>'.$nombreUsuario.'</strong></p>
+           <p><strong>Enlace para restablecer su contraseña:</strong></p>
+           <p><a href="'.$link.'"> Restablecer contraseña </a></p>
+         </body>
+        </html>';
+     
+       $cabeceras = 'MIME-Version: 1.0' . "\r\n";
+       $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+       $cabeceras .= 'From: Sistema de control ASADA La Unión <noreply@sisconasadalaunion.com>' . "\r\n";
+
+       // Se envia el correo al usuario
+       return mail($correoElectronico, utf8_decode("Recuperar contraseña"), utf8_decode($mensaje), $cabeceras);
+    
+    }
+
+    /*
+    // Metodo encargado de recibir una solicitud para la recuperación de la contraseña de una cuenta
+    */
+
+    public function solicitudRecuperarContrasenia($correoElectronico){
+
+      $patternCorreoElectronico = "/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/";
+
+      if ($this->personaValidation->validarCamposTextoRegex($correoElectronico,30,$patternCorreoElectronico)) {
+
+        $usuarioSistema = $this->personaData->obtenerUsuarioSistemaPorCorreoElectronico($correoElectronico);
+
+        if (!is_null($usuarioSistema)) {
+
+          if ($this->personaValidation->validarTipoUsuarioAdministrativo($usuarioSistema->getTipoUsuario())) {
+
+            $idUsuarioSistema = $usuarioSistema->getIdUsuarioSistema();
+            $nombreUsuarioSistema = $usuarioSistema->getNombreUsuario();
+            $linkTemporal = $this->generarLinkTemporal($idUsuarioSistema, $nombreUsuarioSistema);
+
+            if (!is_null($linkTemporal)) {
+                
+                if ($this->enviarCorreoElectronico($correoElectronico, $usuarioSistema->getNombreUsuario(), $linkTemporal)) {
+                  
+                  echo "true";
+
+                }else{
+
+                  echo "Ha ocurrido un error al tratar de enviar el correo electrónico con las instrucciones para recuperar la contraseña, inténtelo de nuevo";
+
+                }
+
+            }else{
+
+              echo "Ha ocurrido un error al tratar de generar el enlace para la recuperación de la contraseña, inténtelo de nuevo";
+
+            }
+            
+          }else{
+
+            echo "El correo ingresado no pertenece a ninguna de las cuentas administrativas registradas en el sistema, inténtelo de nuevo";
+
+          }
+          
+        }else{
+
+          echo "El correo ingresado no esta asociado a ninguna cuenta registrada en el sistema, inténtelo de nuevo";
+
+        }
+
+
+      }else{
+
+        echo "El contenido del campo correspondiente a correo electrónico no puede estar vacío y no puede execederse de 30 caracteres. Formato: ejemplo@gmail.com";
+
+      }
+
+    }
+
+    /*
+    // Metodo encargado de procesar la solicitud para restablecer una contraseña
+    */
+
+    public function solicitudRestablecerContrasenia($idUsuarioSistema, $token){
+
+      $estadoSolicitudRestablecerContrasenia = false;
+
+      if ($this->personaValidation->validarCamposTextoRequeridos($idUsuarioSistema) &&
+          $this->personaValidation->validarCamposTextoRequeridos($token)) {
+
+          $usuarioSistema = $this->personaData->obtenerUsuarioSistemaPorToken($token);
+
+          if (!is_null($usuarioSistema)) {
+
+            if ($this->personaValidation->validarTipoUsuarioAdministrativo($usuarioSistema->getTipoUsuario())) {
+              
+              if ($this->personaValidation->verificarCadenasIguales(sha1($usuarioSistema->getIdUsuarioSistema()), $idUsuarioSistema)) {
+                
+                $estadoSolicitudRestablecerContrasenia = true;
+
+              }
+
+            }
+
+          }
+
+        }
+
+      return $estadoSolicitudRestablecerContrasenia;
+
+    }
+
+    /*
+    // Metodo encargado de restablecer la contraseña de un usuario
+    */
+    public function restablecerContrasenia($idUsuarioSistema, $token, $nuevaContrasenia, $confirmarNuevaContrasenia){
+
+      if ($this->personaValidation->validarCamposTextoRequeridos($idUsuarioSistema) &&
+          $this->personaValidation->validarCamposTextoRequeridos($token) &&
+          $this->personaValidation->validarContrasenias("Administrador", $nuevaContrasenia, $confirmarNuevaContrasenia)) {
+
+          $usuarioSistema = $this->personaData->obtenerUsuarioSistemaPorToken($token);
+
+          if (!is_null($usuarioSistema)) {
+
+            if ($this->personaValidation->validarTipoUsuarioAdministrativo($usuarioSistema->getTipoUsuario())) {
+              
+              if ($this->personaValidation->verificarCadenasIguales(sha1($usuarioSistema->getIdUsuarioSistema()), $idUsuarioSistema)) {
+                
+                $nuevaContrasenia = password_hash($nuevaContrasenia, PASSWORD_DEFAULT);
+
+                if ($this->personaData->restablecerContraseniaUsuario(intval($usuarioSistema->getIdUsuarioSistema()), $nuevaContrasenia)) {
+
+                  echo "true";
+                                      
+                }else{
+
+                  echo "Ha ocurrido un error al tratar de restablecer su contraseña en la base de datos, inténtelo de nuevo";
+
+                }
+
+              }else{
+
+                echo "Ha ocurrido un error al validar su usuario para el cambio de contraseña";
+
+              }
+
+            }else{
+
+              echo "El cambio de contraseña solo aplica para usuarios que tengan el perfil administrativo";
+
+            }
+
+          }else{
+
+            echo "El enlace para acceder al cambio de su contraseña ha caducado";
+
+          }
+
+      }else{
+
+        echo "Es necesario que el contenido de todos los campos pertenecientes al formulario para restablecer su contraseña no esten vacíos";
+
+      }
+
+    }
 
 	}
 
