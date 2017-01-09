@@ -109,6 +109,24 @@
 		}
 
 		/*
+        //Metodo encargado de validar campos numericos (numericos decimales) de acuerdo a las condiciones: 
+        //Mínimo de 0.01, Máximo de 999999999999.99, no nulo
+		*/
+
+		public function validarCamposNumericosDecimales($numero){
+
+			$estadoCampo = false;
+
+			if (is_numeric($numero) && $numero >= 0.01 && $numero <= 999999999999.99 && 
+				!is_null($numero) && !empty($numero)) {
+				
+				$estadoCampo = true;
+			}
+			
+			return $estadoCampo;
+		}
+
+		/*
 		//Metodo encargado de validar si una fecha es correcta
 		*/
 

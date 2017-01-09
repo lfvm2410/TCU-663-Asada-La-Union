@@ -1,7 +1,7 @@
 <?php
 
     /*
-    * Clase encargada de contener todas las operaciones de datos referentes al modulo de mantenimiento de cliente
+    * Clase encargada de contener todas las operaciones de datos referentes a la clase telefono
     */
 
     class telefonoData extends modelo{

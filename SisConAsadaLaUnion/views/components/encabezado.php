@@ -58,9 +58,8 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Tarifas<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar tarifa</a></li>
-					<li><a href="#">Actualizar tarifa</a></li>
-					<li><a href="#">Consultar información sobre las tarifas</a></li>			
+					<li><a href="<?php print URL;?>tarifa/registrarTarifaForm">Registrar tarifa</a></li>
+					<li><a href="<?php print URL;?>tarifa/consultarInformacionTarifas">Consultar información sobre las tarifas</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">

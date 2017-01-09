@@ -2,7 +2,7 @@
 
   /*
   // Clase logica intermediaria entre el controlador y la data de la persona, tiene como objetivo validar
-  // reglas de negocio y gestiona los llamados hacia la data
+  // reglas de negocio y gestionar los llamados hacia la data
   */
 
 	class personaLogic extends logica{

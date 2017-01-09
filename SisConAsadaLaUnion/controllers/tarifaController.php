@@ -1,0 +1,219 @@
+<?php
+
+	/*
+	// Clase controladora de las operaciones sobre una tarifa
+	*/
+
+	class tarifaController extends controlador{
+		
+		  public function __construct(){
+
+        	parent::__construct();
+
+     	}
+
+      /*
+      // Metodos para mostrar las vistas asociadas a este controlador
+      */
+
+      public function index(){
+
+          if ($this->verificarSessionIniciada()) {
+
+            //Temporal, mientras se define la vista principal del controlador
+
+            header('Location: '.URL);
+
+            exit;
+            
+          }else{
+
+            $this->redireccionActividadNoAutorizada();
+
+          }
+
+      }
+
+      public function registrarTarifaForm(){
+
+        if ($this->verificarSessionIniciada()) {
+
+          $this->vista->render($this,'registrarTarifa','Registrar tarifa');
+            
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+  
+      }
+
+      public function consultarInformacionTarifas(){
+
+        if ($this->verificarSessionIniciada()) {
+
+          $this->vista->render($this,'consultarInformacionTarifas','Consultar información de tarifas');
+            
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+
+      }
+
+      /*
+      //Metodo encargado de llenar el combobox de rango de asada
+      */
+
+      public function llenarComboRangoAsada(){
+
+        header("Content-Type: application/json");
+
+        if ($this->verificarSessionIniciada()) {
+
+          $this->logica->formatearComboBoxRangosAbonadosAsada();
+
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+
+      }
+
+      /*
+      // Metodo encargado de registrar una tarifa
+      */
+
+      public function registrarTarifa(){
+
+        if ($this->verificarSessionIniciada() && isset($_POST['rangoAbonados']) && isset($_POST['nombreTarifa']) && 
+            isset($_POST['tipoServicio']) && isset($_POST['montoTarifa'])) {
+
+          $idAbonadoAsada = $_POST['rangoAbonados'];
+          $nombre = $_POST['nombreTarifa'];
+          $tipoServicio = $_POST['tipoServicio'];
+          $monto = $_POST['montoTarifa'];
+
+          $tarifa = new tarifa(0, $nombre, $tipoServicio, $monto, null, $idAbonadoAsada);
+
+          $this->logica->registrarTarifa($tarifa);
+         
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+
+      }
+
+      /*
+      // Metodo encargado de editar una tarifa
+      */
+
+      public function editarTarifa(){
+
+        if ($this->verificarSessionIniciada() && isset($_POST['idTarifa']) &&
+            isset($_POST['rangoAbonados']) && isset($_POST['nombreTarifa']) && 
+            isset($_POST['tipoServicio']) && isset($_POST['montoTarifa'])) {
+
+          $idTarifa = $_POST['idTarifa'];
+          $idAbonadoAsada = $_POST['rangoAbonados'];
+          $nombre = $_POST['nombreTarifa'];
+          $tipoServicio = $_POST['tipoServicio'];
+          $monto = $_POST['montoTarifa'];
+
+          $tarifa = new tarifa($idTarifa, $nombre, $tipoServicio, $monto, null, $idAbonadoAsada);
+
+          $this->logica->editarTarifa($tarifa);
+         
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+
+      }
+
+     /*
+     // Metodo encargado de consultar la totalidad de páginas sobre las tarifas
+     */
+
+      public function consultarTotalidadPaginasTarifas(){
+
+        header("Content-Type: application/json");
+
+        if ($this->verificarSessionIniciada() && isset($_POST['permisoConsultaTotalPaginas']) && 
+            isset($_POST['filtroBusqueda'])) {
+
+          $permisoConsultaTotalPaginas = trim($_POST['permisoConsultaTotalPaginas']);
+
+          $filtroBusqueda = trim($_POST['filtroBusqueda']);
+
+          $this->logica->obtenertotalidadPaginas(TOTAL_TARIFAS, $permisoConsultaTotalPaginas, $filtroBusqueda, LIMITE_REGISTROS,
+                                                 "Si");
+
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+
+      }
+
+      /*
+      // Metodo encargado de consultar las tarifas
+      */
+
+      public function consultarTarifas(){
+
+        header("Content-Type: application/json");
+
+        if ($this->verificarSessionIniciada() && isset($_POST['paginaActual']) && 
+            isset($_POST['filtroBusqueda'])) {
+
+          $paginaActual = trim($_POST['paginaActual']);
+
+          $filtroBusqueda = trim($_POST['filtroBusqueda']);
+
+          $cadenaAtributos = "id_Tarifa,rango_AbonadoAsada,nombre_Tarifa,tipoServicio_Tarifa,monto_Tarifa,fechaModificacion_Tarifa";
+          
+          $cadenaAcciones = "Elegir,Editar";
+
+          $this->logica->elaborarPaginacionRegistros($cadenaAtributos, $cadenaAcciones, false, PAGINACION_TARIFAS, 
+                            $filtroBusqueda, $paginaActual, LIMITE_REGISTROS, "Si");
+        
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+
+      }
+
+      /*
+      // Metodo encargado de obtener una tarifa por su id
+      */
+
+      public function obtenerTarifaPorId(){
+
+          header("Content-Type: application/json");
+
+          if ($this->verificarSessionIniciada() && isset($_POST['idTarifa'])) {
+
+            $idTarifa = trim($_POST['idTarifa']);
+            
+            $this->logica->obtenerTarifaPorId($idTarifa);
+            
+          }else{
+
+            $this->redireccionActividadNoAutorizada();
+
+          }
+      
+      } 
+
+	}
+
+?>

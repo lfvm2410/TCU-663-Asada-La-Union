@@ -100,3 +100,4 @@
 </div>
 <?php include COMPONENTS.'pie.php';?>
 </body>
+</html>

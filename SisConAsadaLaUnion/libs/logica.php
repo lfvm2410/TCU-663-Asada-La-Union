@@ -164,6 +164,27 @@
 
 	    }
 
+	    /*
+		//Metodo encargado de retornar las opciones formateadas de un combobox
+	    */
+
+	    public function formatearOptionsCombobox($listaElementos){
+
+        	$optionsList = "<option value=''>Seleccione</option>";
+
+		    foreach ($listaElementos as $elemento) {
+
+		    	$llavesElemento = array_keys($elemento);
+
+		    	$optionsList .= "<option value='".$elemento[$llavesElemento[0]]."'>"
+		    										  .$elemento[$llavesElemento[1]]."</option>";
+
+		    }               
+		        
+          	print_r(json_encode(array("optionsList" => $optionsList)));
+
+	    }
+
 	}
 
 ?>

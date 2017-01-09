@@ -13,6 +13,8 @@
 	define('LIMITE_REGISTROS', 10);	
 	define('PAGINACION_USUARIOS', 1);
 	define('TOTAL_USUARIOS', 2);
+	define('PAGINACION_TARIFAS', 5);
+	define('TOTAL_TARIFAS', 6);
 	
 	define('DB_HOST', 'localhost');
 	define('DB_USER', 'root');

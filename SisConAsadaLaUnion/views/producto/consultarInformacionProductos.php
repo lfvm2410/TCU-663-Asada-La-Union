@@ -50,10 +50,11 @@
             placeholder="Ingrese la cantidad disponible del producto" required/>
          </div>
          <div class="form-group">
-            <input type="submit" class="btn btn-primary center-block" id="idBtnEditarProducto" value="Editar"/>
+            <input type="submit" class="btn btn-primary center-block" id="idBtnEditarProducto" value="Actualizar información"/>
          </div>
      </form>
     </div>
 </div>
 <?php include COMPONENTS.'pie.php';?>
 </body>
+</html>
