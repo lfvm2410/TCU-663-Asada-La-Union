@@ -7,6 +7,11 @@
 	define('LOGIC', 'logic/');
 	define('MODELS', 'models/');
 	define('COMPONENTS', 'views/components/');
+
+	//Codigos para paginacion de registros dinamica
+	define('LIMITE_REGISTROS', 10);	
+	define('PAGINACION_USUARIOS', 1);
+	define('TOTAL_USUARIOS', 2);
 	
 	define('DB_HOST', 'db4free.net');
 	define('DB_USER', 'devasada');

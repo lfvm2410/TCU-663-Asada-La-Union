@@ -25,6 +25,22 @@
 		}
 
 		/*
+	    //Metodo encargado de validar solamente la longitud de un campo de texto
+		*/
+
+		public function validarLongitudCampoTexto($texto,$maximaCantidadCaracteres){
+
+			$estadoCampo = false;
+
+			if (strlen($texto) <= $maximaCantidadCaracteres) {
+				
+				$estadoCampo = true;
+			}
+
+			return $estadoCampo;
+		}
+
+		/*
         //Metodo encargado de validar campos de texto de acuerdo a las condiciones: Máximo de N caracteres, no nulo, pattern
 		*/
 

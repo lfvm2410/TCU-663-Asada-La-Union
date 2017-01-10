@@ -4,13 +4,15 @@
 
   $(document).on("ready", function () {
 
-    var idForm = $("#idRegistrarUsuarioForm");
+    var idForm = $("#idRegistrarPersonaForm");
 
-    var idCedula = $("#idCedulaUsuario");
+    var idCedula = $("#idCedulaPersona");
 
-    var idNombreUsuario = $("#idNombreUsuarioSistema");
+    var idCorreoElectronico = $("#idCorreoPersona");
 
-    var idCorreoElectronico = $("#idCorreoUsuario");
+    var idNombreUsuario = $("#idNombreUsuarioPersona");
+
+    configurarFormularioPorPerfilPersona();
 
     calendarioFechaNacimiento();
 
@@ -29,12 +31,74 @@
   });
 
   /*
+  //Metodo encargado de habilitar o deshabilitar campos obligatorios de acuerdo al perfil de la persona
+  */
+  function habilitarCamposRequeridosUsuarioSistema(habilitado){
+
+    var idNombreUsuarioPersona = $("#idNombreUsuarioPersona");
+    var idContraseniaPersona = $("#idContraseniaPersona");
+    var idConfirmarContraseniaPersona = $("#idConfirmarContraseniaPersona");
+
+    if (habilitado == "true") {
+
+      idNombreUsuarioPersona.attr("required","");
+      idContraseniaPersona.attr("required","");
+      idConfirmarContraseniaPersona.attr("required","");
+
+    }else if (habilitado == "false") {
+
+      idNombreUsuarioPersona.removeAttr("required");
+      idContraseniaPersona.removeAttr("required");
+      idConfirmarContraseniaPersona.removeAttr("required");
+
+    }
+
+  }
+
+  /*
+  //Metodo encargado de adaptar el formulario de acuerdo al tipo de perfil de la persona a registrar
+  */
+  function configurarFormularioPorPerfilPersona(){
+
+      var idPerfilPersona = $("#idPerfilPersona");
+      var seccionformularioPersona = $("#seccionFormularioPersona");
+      var seccionUsuarioSistema = $("#seccionUsuarioSistema");
+
+      seccionformularioPersona.hide();
+      habilitarCamposRequeridosUsuarioSistema("false");
+
+      idPerfilPersona.change(function() {
+      
+        if (idPerfilPersona.val() == ""){
+
+          seccionformularioPersona.hide();
+          habilitarCamposRequeridosUsuarioSistema("false");
+          
+        }else if (idPerfilPersona.val() == "Administrador") {
+
+          seccionformularioPersona.show();
+          seccionUsuarioSistema.show();
+          habilitarCamposRequeridosUsuarioSistema("true");
+
+        }else if (idPerfilPersona.val() == "Colaborador") {
+
+          seccionformularioPersona.show();
+          seccionUsuarioSistema.hide();
+          habilitarCamposRequeridosUsuarioSistema("false");
+
+        }
+    
+     });
+
+  }
+
+  /*
   //Metodo encargado de inicializar el datepicker de jquery
   */
 
   function calendarioFechaNacimiento(){
 
-    $('#idFechaNacimientoUsuario').datepicker({
+    $('#idFechaNacimientoPersona').datepicker({
       dateFormat: 'dd/mm/yy', 
       changeMonth: true, 
       changeYear: true, 
@@ -49,13 +113,13 @@
 
   function gestionarValidacionContrasenias(){
 
-     $("#idContraseniaUsuario").keyup(function(){
+     $("#idContraseniaPersona").keyup(function(){
 
         validarContrasenias();
 
      });
 
-     $("#idConfirmarContraseniaUsuario").keyup(function(){
+     $("#idConfirmarContraseniaPersona").keyup(function(){
 
         validarContrasenias();
 
@@ -69,8 +133,8 @@
 
   function validarContrasenias(){
 
-    var idContrasenia1 = $("#idContraseniaUsuario");
-    var idContrasenia2 = $("#idConfirmarContraseniaUsuario");
+    var idContrasenia1 = $("#idContraseniaPersona");
+    var idContrasenia2 = $("#idConfirmarContraseniaPersona");
     var idMensajeContrasenias = $("#mensajeVerificacionContrasenias");
 
     if (idContrasenia1.val() != "" || idContrasenia2.val() != "") {
@@ -99,7 +163,7 @@
   function verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError,idDivMensaje){
 
         $.ajax({
-          url: "/SisConAsadaLaUnion/usuario/"+metodoNombre,
+          url: "/SisConAsadaLaUnion/persona/"+metodoNombre,
           type: "POST",
           data: "valor="+datosEnvio,
           beforeSend: function(){
@@ -184,8 +248,8 @@
 
   function validarTelefonoNoRequerido(){
 
-    var idTelefono = $("#idTipoTel2Usuario");
-    var idNumTelefono = $("#idNumTel2Usuario");
+    var idTelefono = $("#idTipoTel2Persona");
+    var idNumTelefono = $("#idNumTel2Persona");
 
     idTelefono.change(function() {
       
@@ -231,10 +295,10 @@
   }
 
   /*
-  //Metodo para enviar el formulario de usuario, usa ajax para la comunicacion del servidor
+  //Metodo para enviar el formulario de persona, usa ajax para la comunicacion del servidor
   */
 
-  function enviarFormularioUsuario(idForm,url,datosFormulario){
+  function enviarFormularioPersona(idForm,url,datosFormulario){
 
     $.ajax({
       url:  url,
@@ -244,7 +308,7 @@
 
           if (respuesta == "true") {
             
-              alertify.success("Usuario registrado con éxito");
+              alertify.success("Persona registrada con éxito");
 
               limpiarCamposForm(idForm);
 
@@ -256,20 +320,20 @@
 
               $('#mensajeVerificacionContrasenias').html("");
 
-              $("#idTipoTel2Usuario").removeAttr("required");
+              $("#idTipoTel2Persona").removeAttr("required");
               
-              $("#idNumTel2Usuario").removeAttr("required");
+              $("#idNumTel2Persona").removeAttr("required");
 
           }else{
             
-              alertify.error("Ha ocurrido un error al tratar de registrar el usuario, inténtelo de nuevo");
+              alertify.error("Ha ocurrido un error al tratar de registrar la persona, inténtelo de nuevo");
 
       }
 
       },
       error: function(error){
 
-          alertify.error("Error de conexión al tratar de registrar el usuario, inténtelo de nuevo");
+          alertify.error("Error de conexión al tratar de registrar la persona, inténtelo de nuevo");
 
       }
 
@@ -302,7 +366,7 @@
   }
 
   /*
-  //Metodo para enviar el formulario de registro de usuario
+  //Metodo para enviar el formulario de registro de una persona
   */
 
   function activarEnvioDatos(idForm){
@@ -311,22 +375,36 @@
 
       e.preventDefault(); 
 
+      var perfilPersona = $("#idPerfilPersona");
+
       var verificarCedula = $("#msjCedula").attr("data-cedula");
 
       var verificarCorreo = $("#msjCorreo").attr("data-correo");
 
-      var verificarNombreUsuario = $("#msjNombreUsuario").attr("data-nombreUsuario");
+      var verificarNombreUsuario = "";
 
+      //Se ignora o se incluye la validación para el nombre del usuario de acuerdo al perfil de persona a registrar
+
+      if (perfilPersona.val() == "Administrador") {
+
+        verificarNombreUsuario = $("#msjNombreUsuario").attr("data-nombreUsuario");
+
+      }else if (perfilPersona.val() == "Colaborador") {
+
+        verificarNombreUsuario = "true";
+
+      }
+      
       if (verificarCedula == "true" && verificarCorreo == "true" && verificarNombreUsuario  == "true") {
 
-        if (confirmarTransaccion('¿Está seguro de proceder con el registro del usuario?')) 
+        if (confirmarTransaccion('¿Está seguro de proceder con el registro de la persona?')) 
           {
             
-            var url = "/SisConAsadaLaUnion/usuario/registrarUsuario";
+            var url = "/SisConAsadaLaUnion/persona/registrarPersona";
 
             var datosFormulario = idForm.serialize();
 
-            enviarFormularioUsuario(idForm,url,datosFormulario);
+            enviarFormularioPersona(idForm,url,datosFormulario);
 
           }
 
