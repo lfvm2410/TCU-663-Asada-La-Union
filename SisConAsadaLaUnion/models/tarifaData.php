@@ -55,7 +55,7 @@
 
             $estadoTransaccion = false;
 
-            $estadoTransaccion = mysql_query("call SP_editarTarifa($idTarifa, '$nombre', '$tipoServicio', $monto, $idAbonadoAsada)",$conexionBD) or die("Error al tratar de registrar la tarifa en la base de datos");
+            $estadoTransaccion = mysql_query("call SP_editarTarifa($idTarifa, '$nombre', '$tipoServicio', $monto, $idAbonadoAsada)",$conexionBD) or die("Error al tratar de editar la tarifa en la base de datos");
                
             mysql_close($conexionBD);     
 

@@ -15,6 +15,8 @@
 	define('TOTAL_USUARIOS', 2);
 	define('PAGINACION_TARIFAS', 5);
 	define('TOTAL_TARIFAS', 6);
+	define('PAGINACION_ABONADOSASADA', 7);
+	define('TOTAL_ABONADOSASADA', 8);
 	
 	define('DB_HOST', 'localhost');
 	define('DB_USER', 'root');

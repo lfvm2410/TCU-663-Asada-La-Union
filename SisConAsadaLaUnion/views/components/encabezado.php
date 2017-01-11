@@ -1,7 +1,7 @@
 <link href="<?php print URL;?>public/css/encabezado.css" rel="stylesheet"/>
 <script src="<?php print URL;?>public/js/encabezado.js" type="text/javascript"></script>
 <div id="presentacionEncabezado">
-	<a href="#"><img id="logoAsada" src="<?php print URL;?>public/assets/images/LogoAsadaUnion.png"/></a>
+	<a href="<?php print URL;?>index"><img id="logoAsada" src="<?php print URL;?>public/assets/images/LogoAsadaUnion.png"/></a>
 	<h1><em>Sistema de control ASADA La Unión</em></h1>
 	<h4><em>!Cuidamos tu agua!</em></h4>
 </div>
@@ -50,9 +50,8 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Abonados<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar rango de abonados</a></li>
-					<li><a href="#">Actualizar rango de abonados</a></li>
-					<li><a href="#">Consultar los rangos de abonados del sistema</a></li>			
+					<li><a href="<?php print URL;?>abonadoAsada/registrarRangoAbonadosForm">Registrar rango de abonados</a></li>
+					<li><a href="<?php print URL;?>abonadoAsada/consultarInformacionRangosAbonados">Consultar información de los rangos de abonados</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">

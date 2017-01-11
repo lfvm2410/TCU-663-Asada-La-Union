@@ -18,19 +18,19 @@
 
       public function index(){
 
-          if ($this->verificarSessionIniciada()) {
+        if ($this->verificarSessionIniciada()) {
 
-            //Temporal, mientras se define la vista principal del controlador
+          //Temporal, mientras se define la vista principal del controlador
 
-            header('Location: '.URL);
+          header('Location: '.URL);
 
-            exit;
+          exit;
             
-          }else{
+        }else{
 
-            $this->redireccionActividadNoAutorizada();
+          $this->redireccionActividadNoAutorizada();
 
-          }
+        }
 
       }
 
