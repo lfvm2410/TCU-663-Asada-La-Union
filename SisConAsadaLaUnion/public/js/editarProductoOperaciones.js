@@ -17,17 +17,11 @@
 
            if (respuesta != "false") {
 
-            var idProductoActual = 0;
+            var idProductoActual = respuesta.idProducto;
 
-             $(respuesta).each(function(indice, valor){
-
-                idProductoActual = valor.idProducto;
-
-                $("#idNombreProducto").val(valor.nombre);
-                $("#idDescripcionProducto").val(valor.descripcion);
-                $("#idCantidadProducto").val(valor.cantidad);
-
-             });
+            $("#idNombreProducto").val(respuesta.nombre);
+            $("#idDescripcionProducto").val(respuesta.descripcion);
+            $("#idCantidadProducto").val(respuesta.cantidad);
 
             var idForm = $("#idEditarProductoForm");
 

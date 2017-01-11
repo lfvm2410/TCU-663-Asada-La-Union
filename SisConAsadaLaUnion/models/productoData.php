@@ -207,7 +207,7 @@
                     $cantidad = $producto['cantidad_Producto'];
                     $fechaModificacion = $producto['fechaModificacionCantidad_Producto'];
             
-                    $productoSeleccionado[] = array('idProducto'=>$idProducto, 'nombre'=>$nombre, 'descripcion'=>$descripcion, 
+                    $productoSeleccionado = array('idProducto'=>$idProducto, 'nombre'=>$nombre, 'descripcion'=>$descripcion, 
                         'cantidad'=>$cantidad);
 
                     }

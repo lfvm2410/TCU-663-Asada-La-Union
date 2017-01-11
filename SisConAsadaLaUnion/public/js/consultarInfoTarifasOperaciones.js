@@ -103,29 +103,23 @@
           success: function(respuesta){
 
            if (respuesta != "false") {
+            
+            var idTarifaActual = respuesta.idTarifa;
 
-            var idTarifaActual = 0;
+            $("#idRangoAbonados").val(respuesta.idAbonadoAsada).change();
+            $("#idNombreTarifa").val(respuesta.nombre);
+            $("#idTipoServicio").val(respuesta.tipoServicio).change();
+            $("#idMontoTarifa").val(respuesta.monto);
 
-             $(respuesta).each(function(indice, valor){
+            var idForm = $("#idEditarTarifaForm");
 
-                idTarifaActual = valor.idTarifa;
-
-                $("#idRangoAbonados").val(valor.idAbonadoAsada).change();
-                $("#idNombreTarifa").val(valor.nombre);
-                $("#idTipoServicio").val(valor.tipoServicio).change();
-                $("#idMontoTarifa").val(valor.monto);
-
-             });
-
-             var idForm = $("#idEditarTarifaForm");
-
-             //Desasociar eventos de componentes
-             idForm.unbind("submit");
+            //Desasociar eventos de componentes
+            idForm.unbind("submit");
              
-             //Activar .submit del formulario
-             activarEnvioDatos(idForm,idTarifaActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+            //Activar .submit del formulario
+            activarEnvioDatos(idForm,idTarifaActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
 
-             $("#editarTarifa").dialog("open");
+            $("#editarTarifa").dialog("open");
            
            }else{
 

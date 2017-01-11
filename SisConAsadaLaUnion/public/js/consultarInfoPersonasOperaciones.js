@@ -191,59 +191,51 @@
 
            if (respuesta != "false") {
 
-            var idPersonaActual = 0;
-            var cedulaActual = "";
-            var correoActual = "";
+            var idPersonaActual = respuesta.persona.idPersona;
+            var cedulaActual = respuesta.persona.cedula;
+            var correoActual = respuesta.persona.correoElectronico;
 
-             $(respuesta).each(function(indice, valor){
+            $("#idCedulaPersona").val(respuesta.persona.cedula);
+            $("#idNombrePersona").val(respuesta.persona.nombre);
+            $("#idApellidosPersona").val(respuesta.persona.apellidos);
+            $("#idFechaNacimientoPersona").val(respuesta.persona.fechaNacimiento);
+            $("#idCorreoPersona").val(respuesta.persona.correoElectronico);   
+            $("#idTipoTel1Persona").val(respuesta.telefonosPersona[0].tipo).change();
+            $("#idNumTel1Persona").val(respuesta.telefonosPersona[0].numero);
+                
+            if(respuesta.telefonosPersona.length > 1){
+              
+              $("#idTipoTel2Persona").val(respuesta.telefonosPersona[1].tipo).change();
+              $("#idNumTel2Persona").val(respuesta.telefonosPersona[1].numero);
+                
+            }else{
+                
+              $("#idTipoTel2Persona").val("").change();
+              $("#idNumTel2Persona").val("");
+                
+            }
+                
+            $("#idDireccionPersona").val(respuesta.persona.direccion);
+            $("#idPuestoPersona").val(respuesta.persona.puesto);
+            $("#idDescripcionPuestoPersona").val(respuesta.persona.descripcionPuesto);
+                
+            var idForm = $("#idEditarPersonaForm"); 
+            var idCedula = $("#idCedulaPersona");
+            var idCorreoElectronico = $("#idCorreoPersona");
 
-                idPersonaActual = valor.persona.idPersona;
-                cedulaActual = valor.persona.cedula;
-                correoActual = valor.persona.correoElectronico;
+            //Desasociar eventos de componentes
+            idForm.unbind("submit");
+            idCedula.unbind("blur");
+            idCorreoElectronico.unbind("blur");
 
-                $("#idCedulaPersona").val(valor.persona.cedula);
-                $("#idNombrePersona").val(valor.persona.nombre);
-                $("#idApellidosPersona").val(valor.persona.apellidos);
-                $("#idFechaNacimientoPersona").val(valor.persona.fechaNacimiento);
-                $("#idCorreoPersona").val(valor.persona.correoElectronico);   
-                $("#idTipoTel1Persona").val(valor.telefonosPersona[indice].tipo).change();
-                $("#idNumTel1Persona").val(valor.telefonosPersona[indice].numero);
-                
-                if(valor.telefonosPersona.length > 1){
-                
-                  $("#idTipoTel2Persona").val(valor.telefonosPersona[indice+1].tipo).change();
-                  $("#idNumTel2Persona").val(valor.telefonosPersona[indice+1].numero);
-                
-                }else{
-                
-                  $("#idTipoTel2Persona").val("").change();
-                  $("#idNumTel2Persona").val("");
-                
-                }
-                
-                $("#idDireccionPersona").val(valor.persona.direccion);
-                $("#idPuestoPersona").val(valor.persona.puesto);
-                $("#idDescripcionPuestoPersona").val(valor.persona.descripcionPuesto);
-                  
-             });
-
-             var idForm = $("#idEditarPersonaForm"); 
-             var idCedula = $("#idCedulaPersona");
-             var idCorreoElectronico = $("#idCorreoPersona");
-
-             //Desasociar eventos de componentes
-             idForm.unbind("submit");
-             idCedula.unbind("blur");
-             idCorreoElectronico.unbind("blur");
-
-             //Validaciones para el form de editar persona
-             blurCamposEnEdicion(idCedula,cedulaActual,"verificarCedulaExistenteEditar","de la cédula ingresada",$('#mensajeVerificacionCedula'));
-             blurCamposEnEdicion(idCorreoElectronico,correoActual,"verificarCorreoElectronicoExistenteEditar","del correo electrónico ingresado",$('#mensajeVerificacionCorreo'));
+            //Validaciones para el form de editar persona
+            blurCamposEnEdicion(idCedula,cedulaActual,"verificarCedulaExistenteEditar","de la cédula ingresada",$('#mensajeVerificacionCedula'));
+            blurCamposEnEdicion(idCorreoElectronico,correoActual,"verificarCorreoElectronicoExistenteEditar","del correo electrónico ingresado",$('#mensajeVerificacionCorreo'));
              
-             //Activar .submit del formulario
-             activarEnvioDatos(idForm,idPersonaActual,cedulaActual,correoActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+            //Activar .submit del formulario
+            activarEnvioDatos(idForm,idPersonaActual,cedulaActual,correoActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
 
-             $("#editarPersona").dialog("open");
+            $("#editarPersona").dialog("open");
            
            }else{
 

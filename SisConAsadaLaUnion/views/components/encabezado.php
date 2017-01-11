@@ -72,10 +72,7 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Reportes<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Metros cúbicos consumidos en el mes actual</a></li>
-					<li><a href="#">Metros cúbicos consumidos en meses anteriores</a></li>	
-					<li><a href="#">Reporte de fugas</a></li>
-					<li><a href="#">Reporte de medidores</a></li>	
+					<li><a href="#">Control de consumo</a></li>
 				</ul>
 			</li>
 			<li><a href="#">Configuración</a></li>
