@@ -22,7 +22,7 @@
 
         ejecutarAccionSeleccionada(idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
 
-     });
+    });
 
   /*
   //Metodo para enviar el formulario de tarifa, usa ajax para la comunicacion del servidor

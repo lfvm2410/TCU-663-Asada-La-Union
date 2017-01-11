@@ -34,7 +34,7 @@ class abonadoAsada{
 
 	public function getIdAbonadoAsada(){
 
-		return $this->idAbonadoAsada
+		return $this->idAbonadoAsada;
 	}
 
 	public function getRango(){
