@@ -3,7 +3,7 @@
 .ui-widget-header {
     border: 1px solid #aaaaaa;
     background: #00ABFF;
-    color: #222222;
+    color: #222222 !important;
     font-weight: bold;
 }
 

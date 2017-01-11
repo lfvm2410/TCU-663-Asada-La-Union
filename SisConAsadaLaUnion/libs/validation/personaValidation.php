@@ -12,6 +12,24 @@
 		}
 
 		/*
+		//Metodo encargado de validar si un usuario cuenta con el perfil administrativo
+		*/
+
+		public function validarTipoUsuarioAdministrativo($tipoUsuario){
+
+			$estadoTipoUsuario = false;
+
+			if (strcmp($tipoUsuario, "Administrador") == 0) {
+
+				$estadoTipoUsuario = true;
+				
+			}
+
+			return $estadoTipoUsuario;
+
+		}
+
+		/*
 		//Metodo encargado de validar el tipo de usuario
 		*/
 
@@ -206,6 +224,63 @@
 			}
 
 			return $estadoCedula;
+		}
+
+		/*
+		// Metodo encargado de validar el tipo de persona a consultar
+		*/
+
+		public function validarTipoPersonaAConsultar($tipoPersona){
+
+			$estadoTipoPersona = false;
+
+			if (strcmp($tipoPersona, "Administrador") == 0 || strcmp($tipoPersona, "Colaborador") == 0) {
+
+				$estadoTipoPersona = true;
+				
+			}
+
+			return $estadoTipoPersona;
+
+		}
+
+		/*
+		// Metodo encargado de verificar si la persona a eliminar es del perfil que se solicita
+		*/
+
+		public function verificarPerfilPersonaAEliminar($idPersona, $tipoPersona, personaData $personaData){
+
+			$estadoPerfilPersona = false;
+
+			$persona = $personaData->getPersonaPorId($idPersona, $tipoPersona);
+
+			if ($this->validarArray($persona)) {
+				
+				$estadoPerfilPersona = true;
+
+			}
+
+			return $estadoPerfilPersona;
+
+		}
+
+		/*
+		// Metodo encargado de validar una solicitud de inicio de sesión al sistema
+		*/
+
+		public function validarInicioSesionSistema(usuarioSistema $usuarioSistema, $nombreUsuario, $contrasenia){
+
+			$estadoInicioSesionSistema = false;
+
+			if (strcmp($nombreUsuario, $usuarioSistema->getNombreUsuario()) == 0 && 
+			    password_verify($contrasenia, $usuarioSistema->getContrasenia())) {
+
+				$estadoInicioSesionSistema = true;				
+			
+			}
+
+			return $estadoInicioSesionSistema;
+		
 		}
 
 	}

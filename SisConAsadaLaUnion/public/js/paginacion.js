@@ -83,7 +83,7 @@
     }else{
 
       idCuerpoTabla.html("<tr><td colspan='"+colspan+"' style='text-align:center;'>No se encontraron resultados</td></tr>");
-
+      
     }
     
   }

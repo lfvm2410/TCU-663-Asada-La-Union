@@ -1,5 +1,6 @@
 <?php include COMPONENTS.'header.php';?>
 	<link href="<?php print URL;?>public/css/loginForm.css" type="text/css" rel="stylesheet"/>
+	<script src="<?php print URL;?>public/js/operacionesGenerales.js" type="text/javascript"></script>
 	<script src="<?php print URL;?>public/js/login.js" type="text/javascript"></script>
 </head>
 <body>
@@ -26,7 +27,22 @@
 			    <input type="submit" class="btn btn-info center-block" id="idBtnIniciarSesion" value="Iniciar sesión"/>
 			</div>
  	</form>
- 	<a href="#"><h5 class="text-center" style="margin-top:5.6%;">¡Olvide mi contraseña!</h5></a> 
+ 	<a id="idOlvidoContrasenia"><h5 class="text-center" style="margin-top:5.6%;">¡Olvide mi contraseña!</h5></a> 
+</div>
+<div id="idRecuperarContrasenia" class="container table-responsive" title="Recuperar contraseña" style="display:none;">
+    <div class="container" style="margin-top:2%; width:80%;">
+      <form class="form-horizontal" action="" method="post" name="recuperarContraseniaForm" id="idRecuperarContraseniaForm">
+         <div class="form-group">
+            <label id="idLblCorreoElectronico" for="idCorreoElectronico">Correo electrónico:</label>  
+            <input type="email" class="form-control" name="correoElectronico" id="idCorreoElectronico"
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" maxlength="30" 
+            placeholder="Ingrese el correo electrónico asociado a su cuenta para recuperar su contraseña" required/> 
+         </div>
+         <div class="form-group">
+            <input type="submit" class="btn btn-primary center-block" id="idBtnRecuperarContrasenia" value="Recuperar contraseña"/>
+         </div>
+     </form>
+    </div>
 </div>
 <footer class="footer">
 	<div class="container pie">

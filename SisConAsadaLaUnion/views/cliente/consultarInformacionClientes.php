@@ -35,7 +35,7 @@
     <ul id="paginacion" class="pagination"></ul>
 </center>
 <div id="verNumsTel" class="container table-responsive" title="Números de teléfono"></div>
-<div id="editarCliente" title="Editar cliente" style="display:none;">
+<div id="editarCliente" class="container table-responsive" title="Editar cliente" style="display:none;">
     <div class="container" style="margin-top:2%; width:80%;">
       <form class="form-horizontal" action="" method="post" name="editarClienteForm" id="idEditarClienteForm">
          <div class="form-group">
@@ -100,3 +100,4 @@
 </div>
 <?php include COMPONENTS.'pie.php';?>
 </body>
+</html>

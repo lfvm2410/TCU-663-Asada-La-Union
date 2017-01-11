@@ -2,7 +2,7 @@
 
    /*
    // Clase logica intermediaria entre el controlador y la data del producto, tiene como objetivo validar
-   // reglas de negocio y gestiona los llamados hacia la data
+   // reglas de negocio y gestionar los llamados hacia la data
    */
 
    class productoLogic extends productoValidation{
@@ -136,7 +136,7 @@
 
 	                         $fecha = date_create($valorAtributo);
 	                       	
-	                         $tablaProductos = $tablaProductos."<td>".date_format($fecha,'d/m/Y g:i:s A')."</td>";
+	                         $tablaProductos = $tablaProductos."<td>".date_format($fecha,'d/m/Y h:i:s A')."</td>";
 	                       
 	                       }else{
 

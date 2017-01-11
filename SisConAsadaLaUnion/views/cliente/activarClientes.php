@@ -35,3 +35,4 @@
 <div id="verNumsTel" class="container table-responsive" title="Números de teléfono"></div>
 <?php include COMPONENTS.'pie.php';?>
 </body>
+</html>

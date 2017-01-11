@@ -27,7 +27,7 @@
 
             $estadoTransaccion = false;
 
-            $estadoTransaccion = mysql_query("call SP_registrarProducto('$nombre','$descripcion',$cantidad)",$conexionBD);
+            $estadoTransaccion = mysql_query("call SP_registrarProducto('$nombre','$descripcion',$cantidad)",$conexionBD) or die("Error al tratar de registrar el producto en la base de datos");
                
             mysql_close($conexionBD);     
 
@@ -207,7 +207,7 @@
                     $cantidad = $producto['cantidad_Producto'];
                     $fechaModificacion = $producto['fechaModificacionCantidad_Producto'];
             
-                    $productoSeleccionado[] = array('idProducto'=>$idProducto, 'nombre'=>$nombre, 'descripcion'=>$descripcion, 
+                    $productoSeleccionado = array('idProducto'=>$idProducto, 'nombre'=>$nombre, 'descripcion'=>$descripcion, 
                         'cantidad'=>$cantidad);
 
                     }

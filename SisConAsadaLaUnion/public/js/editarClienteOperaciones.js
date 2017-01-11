@@ -17,54 +17,47 @@
 
            if (respuesta != "false") {
 
-            var cedulaActual = "";
-            var correoActual = "";
+            var cedulaActual = respuesta.cliente.cedula;
+            var correoActual = respuesta.cliente.correo;
             var numeroPlanoActual = "";
 
-             $(respuesta).each(function(indice, valor){
-
-                cedulaActual = valor.cliente.cedula;
-                correoActual = valor.cliente.correo;
-
-                $("#idCedulaCliente").val(valor.cliente.cedula);
-                $("#idNombreCliente").val(valor.cliente.nombre);
-                $("#idApellidosCliente").val(valor.cliente.apellidos);
-                $("#idCorreoCliente").val(valor.cliente.correo);
-                $("#idTipoTel1Cliente").val(valor.telefonosCliente[indice].tipo).change();
-                $("#idNumTel1Cliente").val(valor.telefonosCliente[indice].numero);
+            $("#idCedulaCliente").val(respuesta.cliente.cedula);
+            $("#idNombreCliente").val(respuesta.cliente.nombre);
+            $("#idApellidosCliente").val(respuesta.cliente.apellidos);
+            $("#idCorreoCliente").val(respuesta.cliente.correo);
+            $("#idTipoTel1Cliente").val(respuesta.telefonosCliente[0].tipo).change();
+            $("#idNumTel1Cliente").val(respuesta.telefonosCliente[0].numero);
                 
-                if(valor.telefonosCliente.length > 1){
+            if(respuesta.telefonosCliente.length > 1){
                 
-                  $("#idTipoTel2Cliente").val(valor.telefonosCliente[indice+1].tipo).change();
-                  $("#idNumTel2Cliente").val(valor.telefonosCliente[indice+1].numero);
+              $("#idTipoTel2Cliente").val(respuesta.telefonosCliente[1].tipo).change();
+              $("#idNumTel2Cliente").val(respuesta.telefonosCliente[1].numero);
                 
-                }else{
+            }else{
                 
-                  $("#idTipoTel2Cliente").val("").change();
-                  $("#idNumTel2Cliente").val("");
+              $("#idTipoTel2Cliente").val("").change();
+              $("#idNumTel2Cliente").val("");
                 
-                }
+            }
                 
-                $("#idDireccionCliente").val(valor.cliente.direccion);
+            $("#idDireccionCliente").val(respuesta.cliente.direccion);
 
-                if (valor.cliente.numeroPlano != null) {
+            if (respuesta.cliente.numeroPlano != null) {
 
-                  numeroPlanoActual = valor.cliente.numeroPlano;
-                  $("#idNumPlanoCliente").val(valor.cliente.numeroPlano);
+              numeroPlanoActual = respuesta.cliente.numeroPlano;
+              $("#idNumPlanoCliente").val(respuesta.cliente.numeroPlano);
 
-                }else{
+            }else{
 
-                  numeroPlanoActual = "";
-                  $("#idNumPlanoCliente").val("");
+              numeroPlanoActual = "";
+              $("#idNumPlanoCliente").val("");
 
-                }
-                  
-             });
+            }
 
-             var idForm = $("#idEditarClienteForm");
-             var idCedula = $("#idCedulaCliente");
-             var idCorreoElectronico = $("#idCorreoCliente");
-             var idNumeroPlano = $("#idNumPlanoCliente");
+            var idForm = $("#idEditarClienteForm");
+            var idCedula = $("#idCedulaCliente");
+            var idCorreoElectronico = $("#idCorreoCliente");
+            var idNumeroPlano = $("#idNumPlanoCliente");
 
             //Desasociar eventos de componentes
             idForm.unbind("submit");
@@ -80,7 +73,7 @@
             //Activar .submit del formulario
             activarEnvioDatos(idForm,cedulaActual,correoActual,numeroPlanoActual);
              
-             $("#editarCliente").dialog("open");
+            $("#editarCliente").dialog("open");
            
            }else{
 
@@ -238,7 +231,7 @@
 
             }else{
 
-              verificarExistenciaCampos(metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
+              verificarExistenciaCampos("persona/"+metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
             
             }
         
@@ -256,15 +249,15 @@
 
                     }else{
 
-                      verificarExistenciaCampos(metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
+                      verificarExistenciaCampos("persona/"+metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
                     
                     }
                 
                   }else{
 
-                      verificarExistenciaCampos(metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
+                      verificarExistenciaCampos("cliente/"+metodoNombre,valorActual,valorNuevo,mensajeError,idDivMensaje);
                 
-                    }
+                  }
 
               }
 
@@ -281,10 +274,10 @@
   //Metodo ajax que permite verificar la existencia de varios campos del formulario en la base de datos
   */
 
-  function verificarExistenciaCampos(metodoNombre,valorAct,valorNue,mensajeError,idDivMensaje){
+  function verificarExistenciaCampos(controladorMetodoNombre,valorAct,valorNue,mensajeError,idDivMensaje){
 
         $.ajax({
-          url: "/SisConAsadaLaUnion/cliente/"+metodoNombre,
+          url: "/SisConAsadaLaUnion/"+controladorMetodoNombre,
           type: "POST",
           data: "valorActual="+valorAct+"&valorNuevo="+valorNue,
           beforeSend: function(){

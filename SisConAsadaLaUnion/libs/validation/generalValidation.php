@@ -25,6 +25,22 @@
 		}
 
 		/*
+        //Metodo encargado de validar campos de texto de acuerdo a la condición: No nulo
+		*/
+
+		public function validarCamposTextoRequeridos($texto){
+
+			$estadoCampo = false;
+
+			if (!is_null($texto) && !empty($texto)) {
+				
+				$estadoCampo = true;
+			}
+
+			return $estadoCampo;
+		}
+
+		/*
 	    //Metodo encargado de validar solamente la longitud de un campo de texto
 		*/
 
@@ -93,6 +109,24 @@
 		}
 
 		/*
+        //Metodo encargado de validar campos numericos (numericos decimales) de acuerdo a las condiciones: 
+        //Mínimo de 0.01, Máximo de 999999999999.99, no nulo
+		*/
+
+		public function validarCamposNumericosDecimales($numero){
+
+			$estadoCampo = false;
+
+			if (is_numeric($numero) && $numero >= 0.01 && $numero <= 999999999999.99 && 
+				!is_null($numero) && !empty($numero)) {
+				
+				$estadoCampo = true;
+			}
+			
+			return $estadoCampo;
+		}
+
+		/*
 		//Metodo encargado de validar si una fecha es correcta
 		*/
 
@@ -104,9 +138,9 @@
 
                 $fechaDividida = explode ("/", $fecha);
 
-                $dia=$fechaDividida[0]; 
-                $mes=$fechaDividida[1]; 
-                $anio=$fechaDividida[2];
+                $dia = $fechaDividida[0]; 
+                $mes = $fechaDividida[1]; 
+                $anio = $fechaDividida[2];
 
                 if(checkdate($mes,$dia,$anio)){ 
                 
@@ -117,6 +151,24 @@
 			}
 			
 			return $estadoFecha;
+		}
+
+		/*
+		//Metodo encargado de verificar si 2 cadenas son iguales
+		*/
+
+		public function verificarCadenasIguales($cadena1, $cadena2){
+
+			$cadenasIguales = false;
+
+			if (strcmp($cadena1, $cadena2) == 0) {
+
+				$cadenasIguales = true;
+				
+			}
+
+			return $cadenasIguales;
+
 		}
 
 	}

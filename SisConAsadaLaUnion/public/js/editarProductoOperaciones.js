@@ -17,17 +17,11 @@
 
            if (respuesta != "false") {
 
-            var idProductoActual = 0;
+            var idProductoActual = respuesta.idProducto;
 
-             $(respuesta).each(function(indice, valor){
-
-                idProductoActual = valor.idProducto;
-
-                $("#idNombreProducto").val(valor.nombre);
-                $("#idDescripcionProducto").val(valor.descripcion);
-                $("#idCantidadProducto").val(valor.cantidad);
-
-             });
+            $("#idNombreProducto").val(respuesta.nombre);
+            $("#idDescripcionProducto").val(respuesta.descripcion);
+            $("#idCantidadProducto").val(respuesta.cantidad);
 
             var idForm = $("#idEditarProductoForm");
 
@@ -48,7 +42,7 @@
           },
           error: function(error){
 
-            alertify.error("Error de conexión al tratar de cargar la información del cliente seleccionado");
+            alertify.error("Error de conexión al tratar de cargar la información del producto seleccionado");
 
           }
 

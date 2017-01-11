@@ -4,62 +4,42 @@
 
   $(document).on("ready", function () {
 
-    activarEnvioDatos($("#idLoginForm"));
+    crearVentanaModal($("#idRecuperarContrasenia"),845,210,"false");
+
+    levantarVentanaModalRecuperarContrasenia();
+
+    activarEnvioDatosLogueoSistema($("#idLoginForm"));
+
+    activarEnvioDatosRecuperarContrasenia($("#idRecuperarContraseniaForm"));
 
    });
 
   /*
-  //Metodo para que el usuario confirme la transaccion
+  //Metodo para enviar el formulario de login, usa ajax para la comunicacion del servidor
   */
 
-  function confirmarTransaccion(mensaje) {
-
-   return confirm(mensaje);
-
-  }
-
-  /*
-  //Metodo para limpiar campos de formulario
-  */
-
-  function limpiarCamposForm(idForm){
-
-    idForm.each (function(){
-      
-      this.reset();
-
-    });
-
-  }
-
-  /*
-  //Metodo para enviar el formulario de producto, usa ajax para la comunicacion del servidor
-  */
-
-  function enviarFormularioProducto(idForm,url,datosFormulario){
+  function enviarFormularioLogin(idForm,url,datosFormulario){
 
     $.ajax({
       url:  url,
       type: "POST",
       data: datosFormulario,
       success: function(respuesta){
-          alert(respuesta);
-      /*    if (respuesta == "true") {
-            
-              alertify.success("Producto registrado con éxito");
 
-              limpiarCamposForm(idForm);
+        if (respuesta == "true") {
 
-          }else{
-            
-              alertify.error("Ha ocurrido un error al tratar de registrar el producto, inténtelo de nuevo");
+          window.location.href = "/SisConAsadaLaUnion/persona/registrarPersonaForm";
 
-          }*/
+        }else{
 
+          alertify.error(respuesta);
+
+        }
+        
       },
       error: function(error){
 
-          alertify.error("Error de conexión al tratar de registrar el producto, inténtelo de nuevo");
+        alertify.error("Error de conexión al tratar de iniciar sesión en el sistema, inténtelo de nuevo");
 
       }
 
@@ -68,26 +48,92 @@
   }
 
   /*
-  //Metodo para enviar el formulario de registro de producto
+  //Metodo para enviar el formulario de logueo al sistema
   */
 
-  function activarEnvioDatos(idForm){
+  function activarEnvioDatosLogueoSistema(idForm){
 
     idForm.on('submit', function(e){
 
       e.preventDefault();
 
-      
-            
-          var url = "/SisConAsadaLaUnion/login/validarLogin";
+      var url = "/SisConAsadaLaUnion/login/validarLogin";
 
-          var datosFormulario = idForm.serialize();
+      var datosFormulario = idForm.serialize();
 
-          alert(datosFormulario);
-          console.log(datosFormulario);
-
-          enviarFormularioProducto(idForm,url,datosFormulario);
+      enviarFormularioLogin(idForm,url,datosFormulario);
 
     });
+
+  }
+
+  /*
+  //Metodo encargado de levantar la ventana modal para la recuperación de la contraseña
+  */
+
+  function levantarVentanaModalRecuperarContrasenia(){
+
+    $("#idOlvidoContrasenia").click(function() {
+      
+      $("#idRecuperarContrasenia").dialog("open");
+
+    });
+
+  }
+
+  /*
+  //Metodo para enviar el formulario de recuperar contraseña, usa ajax para la comunicacion del servidor
+  */
+
+  function enviarFormularioRecuperarContrasenia(idForm,url,datosFormulario){
+
+    $.ajax({
+      url:  url,
+      type: "POST",
+      data: datosFormulario,
+      success: function(respuesta){
+
+        if (respuesta == "true") {
+
+          alertify.success("Un correo ha sido enviado a su cuenta de email con las instrucciones para restablecer la contraseña");
+
+          $("#idRecuperarContrasenia").dialog("close");
+
+          limpiarCamposForm(idForm);
+
+        }else{
+
+          alertify.error(respuesta);
+
+        }
+        
+      },
+      error: function(error){
+
+        alertify.error("Error de conexión al tratar de enviar la solicitud para la recuperación de la contraseña de su cuenta, inténtelo de nuevo");
+
+      }
+
+    });
+
+  }
+
+  /*
+  //Metodo encargado de enviar el formulario de recuperar contraseña
+  */
+
+  function activarEnvioDatosRecuperarContrasenia(idForm){
+
+    idForm.on('submit', function(e){
+
+      e.preventDefault();
+
+      var url = "/SisConAsadaLaUnion/login/solicitudRecuperarContrasenia";
+
+      var datosFormulario = idForm.serialize();
+
+      enviarFormularioRecuperarContrasenia(idForm,url,datosFormulario);
+      
+    });  
 
   }

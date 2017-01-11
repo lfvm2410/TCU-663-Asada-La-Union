@@ -58,9 +58,8 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Tarifas<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar tarifa</a></li>
-					<li><a href="#">Actualizar tarifa</a></li>
-					<li><a href="#">Consultar información sobre las tarifas</a></li>			
+					<li><a href="<?php print URL;?>tarifa/registrarTarifaForm">Registrar tarifa</a></li>
+					<li><a href="<?php print URL;?>tarifa/consultarInformacionTarifas">Consultar información sobre las tarifas</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">
@@ -73,10 +72,7 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Reportes<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Metros cúbicos consumidos en el mes actual</a></li>
-					<li><a href="#">Metros cúbicos consumidos en meses anteriores</a></li>	
-					<li><a href="#">Reporte de fugas</a></li>
-					<li><a href="#">Reporte de medidores</a></li>	
+					<li><a href="#">Control de consumo</a></li>
 				</ul>
 			</li>
 			<li><a href="#">Configuración</a></li>
@@ -84,7 +80,7 @@
 				<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Mi cuenta <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="#">Información personal</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
+					<li><a href="<?php print URL;?>login/cerrarSession"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
 				</ul>
 			</li>
 		</ul>
