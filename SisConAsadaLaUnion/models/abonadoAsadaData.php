@@ -58,6 +58,35 @@
         }
 
         /*
+        ** Metodo encargado de comprobar si un rango de abonados existe dentro de la base de datos
+        */
+        
+        public function comprobarExistenciaRangoAbonados($rangosAbonados){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $consultaRangoAbonadosExistente = mysql_query("call SP_comprobarExistenciaRangoAbonados('$rangosAbonados')",$conexionBD) or die("Error al tratar de verificar el rango de abonados ingresado en la base de datos");
+
+            $rangoAbonadosExistente = false;
+
+            if ($consultaRangoAbonadosExistente) {
+                
+                if (mysql_num_rows($consultaRangoAbonadosExistente) > 0) {
+
+                    $rangoAbonadosExistente = true;
+
+                }
+            }
+
+            mysql_close($conexionBD);
+
+            return $rangoAbonadosExistente;
+
+        }
+
+        /*
         // Método encargado de obtener un abonado por id
         */
 

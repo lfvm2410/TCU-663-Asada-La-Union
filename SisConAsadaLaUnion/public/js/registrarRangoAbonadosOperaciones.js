@@ -4,6 +4,8 @@
 
   $(document).on("ready", function () {
 
+    blurCamposGenerico($("#idRangoAbonados"),"abonadoAsada/verificarRangoAbonadosExistente","del rango de abonados ingresado",$("#mensajeVerificacionRangoAbonados"));
+    
     activarEnvioDatos($("#idRegistrarRangoAbonadosForm"));
 
    });
@@ -53,7 +55,11 @@
 
       e.preventDefault();
 
-      if (confirmarTransaccion('¿Está seguro de proceder con el registro del rango de abonados?')){
+      var verificarRangoAbonados = $("#msjRangoAbonados").attr("data-rangoAbonados");
+
+      if (verificarRangoAbonados == "true") {
+        
+        if (confirmarTransaccion('¿Está seguro de proceder con el registro del rango de abonados?')){
             
           var url = "/SisConAsadaLaUnion/abonadoAsada/registrarAbonado";
 
@@ -62,6 +68,8 @@
           enviarFormularioRangoAbonados(idForm,url,datosFormulario);
 
         }
+
+      }
 
     });
 

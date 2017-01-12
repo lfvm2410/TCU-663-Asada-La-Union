@@ -91,14 +91,15 @@
       public function editarAbonado(){
 
         if ($this->verificarSessionIniciada() && isset($_POST['idAbonadoAsada']) &&
-            isset($_POST['rangoAbonados'])) {
+            isset($_POST['rangoAbonadosActual']) && isset($_POST['rangoAbonados'])) {
 
           $idAbonadoAsada = $_POST['idAbonadoAsada'];
-          $rangoAbonados = $_POST['rangoAbonados'];
+          $rangoAbonadosActual = $_POST['rangoAbonadosActual'];
+          $rangoAbonadosNuevo = $_POST['rangoAbonados'];
 
-          $abonadoAsada = new abonadoAsada($idAbonadoAsada, $rangoAbonados, null);
+          $abonadoAsada = new abonadoAsada($idAbonadoAsada, $rangoAbonadosNuevo, null);
 
-          $this->logica->editarAbonado($abonadoAsada);
+          $this->logica->editarAbonado($abonadoAsada, $rangoAbonadosActual);
          
         }else{
 
@@ -161,6 +162,47 @@
            
         }
 
+      }
+
+      /*
+      // Metodo para verificar si un rango de abonados existe
+      */
+
+      public function verificarRangoAbonadosExistente(){
+
+        if ($this->verificarSessionIniciada() && isset($_POST['valor'])) {
+
+          $rangoAbonados = trim($_POST['valor']);
+
+          $this->logica->comprobarExistenciaRangoAbonados($rangoAbonados);
+          
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+         
+        }
+
+      }
+
+      /*
+      // Metodo para verificar si un rango de abonados (en edición) existe
+      */
+
+      public function verificarRangoAbonadosExistenteEditar(){
+
+        if ($this->verificarSessionIniciada() && isset($_POST['valorActual']) && isset($_POST['valorNuevo'])) {
+
+          $rangoAbonadosActual = trim($_POST['valorActual']);
+          $rangoAbonadosNuevo = trim($_POST['valorNuevo']);
+
+          $this->logica->comprobarExistenciaRangoAbonadosEnEdicion($rangoAbonadosActual, $rangoAbonadosNuevo);
+
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+           
+        }
+      
       }
 
       /*

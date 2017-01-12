@@ -12,9 +12,10 @@
         <input type="text" class="form-control" name="rangoAbonados" id="idRangoAbonados" maxlength="16" 
         placeholder="Ingrese el rango de abonados" required/>
     </div>
-     <div class="form-group">
-        <input type="submit" class="btn btn-primary center-block" id="idBtnRegistrarRangoAbonados" value="Registrar"/>
-     </div>
+    <div class="row" id="mensajeVerificacionRangoAbonados"></div>
+    <div class="form-group">
+      <input type="submit" class="btn btn-primary center-block" id="idBtnRegistrarRangoAbonados" value="Registrar"/>
+    </div>
  </form>
 </div>
 <?php include COMPONENTS.'pie.php';?>
