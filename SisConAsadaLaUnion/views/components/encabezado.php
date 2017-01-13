@@ -22,6 +22,7 @@
 				<ul class="dropdown-menu">
 					<li><a href="#">Ir a página de presentación</a></li>
 					<li><a href="#">Actualizar página de presentación</a></li>
+					<li><a href="<?php print URL;?>index/adjuntarArchivosForm">Adjuntar archivos</a></li>
 				</ul>
 			</li>
 			<li class="dropdown">
@@ -74,7 +75,6 @@
 					<li><a href="#">Control de consumo</a></li>
 				</ul>
 			</li>
-			<li><a href="#">Configuración</a></li>
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Mi cuenta <b class="caret"></b></a>
 				<ul class="dropdown-menu">

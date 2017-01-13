@@ -21,6 +21,42 @@
 
 		}
 
+		public function adjuntarArchivosForm(){
+
+			if ($this->verificarSessionIniciada()) {
+
+				$this->vista->render($this,'adjuntarArchivos','Adjuntar archivos');
+            
+          	}else{
+
+            	$this->redireccionActividadNoAutorizada();
+
+          	}
+
+		}
+
+		/*
+		// Metodo encargado de guardar los archivos adjuntos en el servidor
+		*/
+
+		public function guardarArchivosAdjuntos(){
+
+			if ($this->verificarSessionIniciada() && isset($_FILES['disponibilidaHidrica']) && 
+				isset($_FILES['arregloPagos'])) {
+
+				$archivoDisponibilidadHidrica = $_FILES['disponibilidaHidrica'];
+				$archivoArregloPagos = $_FILES['arregloPagos'];
+
+				$this->logica->guardarArchivosAdjuntos($archivoDisponibilidadHidrica, $archivoArregloPagos);
+
+          	}else{
+
+            	$this->redireccionActividadNoAutorizada();
+
+          	}
+
+		}
+
 	}
 
 ?>
