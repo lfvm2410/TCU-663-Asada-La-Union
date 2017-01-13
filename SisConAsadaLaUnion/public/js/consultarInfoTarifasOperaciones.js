@@ -12,13 +12,13 @@
 
         var idCuerpoTabla = $("#cuerpoTablaTarifas");
 
-        var colspan = 6;
+        var colspan = 7;
 
         crearListaPaginasPaginacion(direccionCantidadPaginas,direccionConsultaRegistros,1,idFiltroBusqueda.val().trim(),idCuerpoTabla,colspan);
 
         buscarRegistrosPorFiltro(direccionCantidadPaginas,direccionConsultaRegistros,idFiltroBusqueda,idCuerpoTabla,colspan);
 
-        crearVentanaModal($("#editarTarifa"),600,425,"false");
+        crearVentanaModal($("#editarTarifa"),600,600,"false");
 
         ejecutarAccionSeleccionada(idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
 
@@ -28,12 +28,12 @@
   //Metodo para enviar el formulario de tarifa, usa ajax para la comunicacion del servidor
   */
 
-  function enviarFormularioTarifa(idForm,url,idTarifaActual,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
+  function enviarFormularioTarifa(idForm,url,idTarifaActual,descripcionAct,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
 
     $.ajax({
       url:  url,
       type: "POST",
-      data: "idTarifa="+idTarifaActual+"&"+datosFormulario,
+      data: "idTarifa="+idTarifaActual+"&descripcionActual="+descripcionAct+"&"+datosFormulario,
       success: function(respuesta){
 
           if (respuesta == "true") {
@@ -43,6 +43,7 @@
               $("#editarTarifa").dialog("close");
              
               limpiarCamposForm(idForm);
+              $("#mensajeVerificacionDescripcion").html("");
 
               //Se recarga la tabla de tarifas
 
@@ -69,21 +70,27 @@
   //Metodo para enviar el formulario de edición de la tarifa seleccionada
   */
 
-  function activarEnvioDatos(idForm,idTarifaActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
+  function activarEnvioDatos(idForm,idTarifaActual,descripcionActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
 
     idForm.on('submit', function(e){
 
       e.preventDefault();
 
-      if (confirmarTransaccion('¿Está seguro de proceder con la edición de información de la tarifa seleccionada?')){
-              
-        var url = "/SisConAsadaLaUnion/tarifa/editarTarifa";
+      var verificarDescripcion = $("#msjDescripcion").attr("data-descripcion");
 
-        var datosFormulario = idForm.serialize();
+      if (verificarDescripcion != "false") {
 
-        enviarFormularioTarifa(idForm,url,idTarifaActual,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+        if (confirmarTransaccion('¿Está seguro de proceder con la edición de información de la tarifa seleccionada?')){
+                
+          var url = "/SisConAsadaLaUnion/tarifa/editarTarifa";
 
-      }  
+          var datosFormulario = idForm.serialize();
+
+          enviarFormularioTarifa(idForm,url,idTarifaActual,descripcionActual,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+
+        }  
+
+    }
 
     });
 
@@ -103,21 +110,29 @@
           success: function(respuesta){
 
            if (respuesta != "false") {
-            
-            var idTarifaActual = respuesta.idTarifa;
-
-            $("#idRangoAbonados").val(respuesta.idAbonadoAsada).change();
-            $("#idNombreTarifa").val(respuesta.nombre);
-            $("#idTipoServicio").val(respuesta.tipoServicio).change();
-            $("#idMontoTarifa").val(respuesta.monto);
 
             var idForm = $("#idEditarTarifaForm");
+            var idComboRangoAbonados = $("#idRangoAbonados");
+            var idComboDescripcion = $("#idDescripcionTarifa");
+            var idTarifaActual = respuesta.idTarifa;
+            var descripcionActual = respuesta.descripcion;
 
             //Desasociar eventos de componentes
             idForm.unbind("submit");
+            idComboDescripcion.unbind("change");
+            idComboRangoAbonados.unbind("change");
+
+            $("#idRangoAbonados").val(respuesta.idAbonadoAsada).change();
+            $("#idNombreTarifa").val(respuesta.nombre);
+            $("#idDescripcionTarifa").val(respuesta.descripcion).change();
+            $("#idTipoServicio").val(respuesta.tipoServicio).change();
+            $("#idMontoTarifa").val(respuesta.monto);
+
+            //Validación para la descripción del form de tarifa
+            activarValidacionExistenciaDescripcionEnEdicion(idComboRangoAbonados,idComboDescripcion,descripcionActual);
              
             //Activar .submit del formulario
-            activarEnvioDatos(idForm,idTarifaActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+            activarEnvioDatos(idForm,idTarifaActual,descripcionActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
 
             $("#editarTarifa").dialog("open");
            
@@ -155,9 +170,11 @@
 
           //Limpiar campos siempre antes de cargar form de edicion
           limpiarCamposForm(idForm);
+          $("#mensajeVerificacionDescripcion").html("");
 
-          //Se cargan los rangos de tarifas
-          llenarComboboxRangoAbonados();
+          //Se cargan los combos
+          llenarCombobox($("#idRangoAbonados"),"tarifa/llenarComboRangoAsada","la lista desplegable del campo rango de abonados");
+          llenarCombobox($("#idDescripcionTarifa"),"tarifa/llenarComboDescripcion","la lista desplegable del campo de descripción");
 
           //Llamada al metodo ajax para cargar el form edicion con los datos de la tarifa seleccionada
           cargarTarifaPorId(idTarifa,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);

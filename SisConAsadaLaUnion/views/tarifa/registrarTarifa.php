@@ -8,9 +8,9 @@
 <h4 class="text-center"><strong>Registrar tarifa</strong></h4>
 <div class="container" style="margin-top:2%; width:30%;">
   <form class="form-horizontal" action="" method="post" name="registrarTarifaForm" id="idRegistrarTarifaForm">
-    <div class="form-group">
+     <div class="form-group">
         <label id="idLblRangoAbonados" for="idRangoAbonados">Rango de abonados:</label>
-        <select class="form-control" name="rangoAbonados" id="idRangoAbonados" required>
+        <select class="form-control combo" name="rangoAbonados" id="idRangoAbonados" required>
              <option value="">Seleccione</option>
         </select>
      </div>
@@ -19,6 +19,13 @@
         <input type="text" class="form-control" name="nombreTarifa" id="idNombreTarifa" maxlength="16" 
         placeholder="Ingrese el nombre de la tarifa" required/>
      </div>
+     <div class="form-group">
+        <label id="idLblDescripción" for="idDescripcionTarifa">Descripción:</label>
+        <select class="form-control combo" name="descripcionTarifa" id="idDescripcionTarifa" required>
+             <option value="">Seleccione</option>
+        </select>
+     </div>
+     <div class="row" id="mensajeVerificacionDescripcion"></div>
      <div class="form-group">
         <label id="idLblTipoServicio" for="idTipoServicio">Tipo de servicio:</label>
         <select class="form-control" name="tipoServicio" id="idTipoServicio" required>

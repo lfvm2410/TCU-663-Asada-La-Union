@@ -106,40 +106,40 @@
 		}
 
 		/*
-    	// Método encargado de gestionar la comprobación de un rango de abonados (en edición) existente en la base de datos
-    	*/
+	    // Método encargado de gestionar la comprobación de un rango de abonados (en edición) existente en la base de datos
+	    */
 
-    public function comprobarExistenciaRangoAbonadosEnEdicion($rangoAbonadosActual, $rangoAbonadosNuevo){
+	    public function comprobarExistenciaRangoAbonadosEnEdicion($rangoAbonadosActual, $rangoAbonadosNuevo){
 
-      if ($this->abonadoAsadaValidation->validarCamposTexto($rangoAbonadosActual, 16) &&
-          $this->abonadoAsadaValidation->validarCamposTexto($rangoAbonadosNuevo, 16)) {
+	      if ($this->abonadoAsadaValidation->validarCamposTexto($rangoAbonadosActual, 16) &&
+	          $this->abonadoAsadaValidation->validarCamposTexto($rangoAbonadosNuevo, 16)) {
 
-          if ($this->abonadoAsadaData->comprobarExistenciaCampoEnEdicion("tbAbonadoAsada","rango_AbonadoAsada",$rangoAbonadosActual,$rangoAbonadosNuevo)) {
+	          if ($this->abonadoAsadaData->comprobarExistenciaCampoEnEdicion("tbAbonadoAsada","rango_AbonadoAsada",$rangoAbonadosActual,$rangoAbonadosNuevo)) {
 
-            echo "<div id='msjRangoAbonados' class='alert alert-danger' data-rangoAbonados='false'>
-		              	  	<strong><span class='glyphicon glyphicon-remove'></span></strong> 
-		              	   	El rango de abonados digitado ya existe, debe cambiarlo
-		            	  </div>";
+	            echo "<div id='msjRangoAbonados' class='alert alert-danger' data-rangoAbonados='false'>
+			              	  	<strong><span class='glyphicon glyphicon-remove'></span></strong> 
+			              	   	El rango de abonados digitado ya existe, debe cambiarlo
+			            	  </div>";
 
-          }else{
+	          }else{
 
-             echo "<div id='msjRangoAbonados' class='alert alert-success' data-rangoAbonados='true'>
-		               	  	<strong><span class='glyphicon glyphicon-ok'></span></strong> 
-		                   	Rango de abonados disponible para ser registrado
-		              	  </div>";
+	             echo "<div id='msjRangoAbonados' class='alert alert-success' data-rangoAbonados='true'>
+			               	  	<strong><span class='glyphicon glyphicon-ok'></span></strong> 
+			                   	Rango de abonados disponible para ser registrado
+			              	  </div>";
 
-          }
+	          }
 
-      }else{
+	      }else{
 
-        echo "<div id='msjRangoAbonados' class='alert alert-danger' data-rangoAbonados='false'>
-		                <strong><span class='glyphicon glyphicon-remove'></span></strong> 
-		                El contenido del campo correspondiente a rango de abonados admite un máximo de 16 caracteres y no puede estar vacío
-		              </div>";
+	        echo "<div id='msjRangoAbonados' class='alert alert-danger' data-rangoAbonados='false'>
+			                <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+			                El contenido del campo correspondiente a rango de abonados admite un máximo de 16 caracteres y no puede estar vacío
+			              </div>";
 
-      }
+	      }
 
-    }
+	    }
 
 	    /*
     	// Metodo encargado de obtener un abonado por su id

@@ -4,7 +4,11 @@
 
   $(document).on("ready", function () {
 
-    llenarComboboxRangoAbonados();
+    llenarCombobox($("#idRangoAbonados"),"tarifa/llenarComboRangoAsada","la lista desplegable del campo rango de abonados");
+
+    llenarCombobox($("#idDescripcionTarifa"),"tarifa/llenarComboDescripcion","la lista desplegable del campo de descripción");
+
+    activarValidacionExistenciaDescripcion($("#idRangoAbonados"),$("#idDescripcionTarifa"));
 
     activarEnvioDatos($("#idRegistrarTarifaForm"));
 
@@ -28,7 +32,11 @@
 
               limpiarCamposForm(idForm);
 
-              llenarComboboxRangoAbonados();
+              $("#mensajeVerificacionDescripcion").html("");
+
+              llenarCombobox($("#idRangoAbonados"),"tarifa/llenarComboRangoAsada","la lista desplegable de rango de abonados");
+
+              llenarCombobox($("#idDescripcionTarifa"),"tarifa/llenarComboDescripcion","la lista desplegable del campo de descripción");
 
           }else{
             
@@ -57,15 +65,21 @@
 
       e.preventDefault();
 
-      if (confirmarTransaccion('¿Está seguro de proceder con el registro de la tarifa?')){
-            
-          var url = "/SisConAsadaLaUnion/tarifa/registrarTarifa";
+      var verificarDescripcion = $("#msjDescripcion").attr("data-descripcion");
 
-          var datosFormulario = idForm.serialize();
+      if (verificarDescripcion == "true") {
 
-          enviarFormularioTarifa(idForm,url,datosFormulario);
+        if (confirmarTransaccion('¿Está seguro de proceder con el registro de la tarifa?')){
+              
+            var url = "/SisConAsadaLaUnion/tarifa/registrarTarifa";
 
-        }
+            var datosFormulario = idForm.serialize();
+
+            enviarFormularioTarifa(idForm,url,datosFormulario);
+
+          }
+
+      }
 
     });
 

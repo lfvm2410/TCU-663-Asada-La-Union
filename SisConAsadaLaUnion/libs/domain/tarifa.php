@@ -8,15 +8,17 @@ class tarifa{
 	
 	private $idTarifa;
 	private $nombre;
+	private $descripcion;
 	private $tipoServicio;
 	private $monto;
 	private $fechaModificacion;
 	private $idAbonadoAsada;
 
-	public function __construct($idTarifa, $nombre, $tipoServicio, $monto, $fechaModificacion, $idAbonadoAsada){
+	public function __construct($idTarifa, $nombre, $descripcion, $tipoServicio, $monto, $fechaModificacion, $idAbonadoAsada){
 
 		$this->idTarifa = $idTarifa;
 		$this->nombre = $nombre;
+		$this->descripcion = $descripcion;
 		$this->tipoServicio = $tipoServicio;
 		$this->monto = $monto;
 		$this->fechaModificacion = $fechaModificacion;
@@ -31,6 +33,11 @@ class tarifa{
 	public function setNombre($nombre){
 
 		$this->nombre = $nombre;
+	}
+
+	public function setDescripcion($descripcion){
+
+		$this->descripcion = $descripcion;
 	}
 
 	public function setTipoServicio($tipoServicio){
@@ -61,6 +68,11 @@ class tarifa{
 	public function getNombre(){
 
 		return $this->nombre;
+	}
+
+	public function getDescripcion(){
+
+		return $this->descripcion;
 	}
 
 	public function getTipoServicio(){
