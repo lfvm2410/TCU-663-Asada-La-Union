@@ -44,6 +44,53 @@
 
 		}
 
+		/*
+        // Metodo encargado de validar el atributo de rango de abonados
+		*/
+
+		// A tomar en cuenta: Máximo de 16 caracteres, no nulo y unique
+
+		public function validarRangoAbonados($rangoAbonados){
+
+			$estadoRangoAbonados = false;
+
+			if ($this->validarCamposTexto($rangoAbonados, 16)) {
+				
+				if (!$this->abonadoAsadaData->comprobarExistenciaRangoAbonados($rangoAbonados)) {
+
+					$estadoRangoAbonados = true;
+
+				}
+
+			}
+
+			return $estadoRangoAbonados;
+		}
+
+		/*
+        // Metodo encargado de validar el atributo de rango de abonados que se encuentra en edición
+		*/
+
+		// A tomar en cuenta: Máximo de 16 caracteres, no nulo y unique
+
+		public function validarRangoAbonadosEnEdicion($rangoAbonadosActual, $rangoAbonadosNuevo){
+
+			$estadoRangoAbonados = false;
+
+			if ($this->validarCamposTexto($rangoAbonadosActual, 16) &&
+				$this->validarCamposTexto($rangoAbonadosNuevo, 16)) {
+				
+				if (!$this->abonadoAsadaData->comprobarExistenciaCampoEnEdicion("tbAbonadoAsada","rango_AbonadoAsada",$rangoAbonadosActual,$rangoAbonadosNuevo)) {
+
+					$estadoRangoAbonados = true;
+
+				}
+
+			}
+
+			return $estadoRangoAbonados;
+		}
+
 	}
 
 ?>

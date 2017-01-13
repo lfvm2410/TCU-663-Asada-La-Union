@@ -18,7 +18,7 @@
 
         buscarRegistrosPorFiltro(direccionCantidadPaginas,direccionConsultaRegistros,idFiltroBusqueda,idCuerpoTabla,colspan);
 
-        crearVentanaModal($("#editarRangoAbonados"),600,425,"false");
+        crearVentanaModal($("#editarRangoAbonados"),600,295,"false");
 
         ejecutarAccionSeleccionada(idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
 
@@ -28,12 +28,12 @@
   //Metodo para enviar el formulario de rangos de abonados, usa ajax para la comunicacion del servidor
   */
 
-  function enviarFormularioRangoAbonados(idForm,url,idAbonadoAsadaActual,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
+  function enviarFormularioRangoAbonados(idForm,url,idAbonadoAsadaActual,rangoAbonadosAct,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
 
     $.ajax({
       url:  url,
       type: "POST",
-      data: "idAbonadoAsada="+idAbonadoAsadaActual+"&"+datosFormulario,
+      data: "idAbonadoAsada="+idAbonadoAsadaActual+"&rangoAbonadosActual="+rangoAbonadosAct+"&"+datosFormulario,
       success: function(respuesta){
 
           if (respuesta == "true") {
@@ -43,6 +43,7 @@
               $("#editarRangoAbonados").dialog("close");
              
               limpiarCamposForm(idForm);
+              $('#mensajeVerificacionRangoAbonados').html("");
 
               //Se recarga la tabla de rangos de abonados
 
@@ -69,19 +70,25 @@
   //Metodo para enviar el formulario de edición del rango de abonados seleccionado
   */
 
-  function activarEnvioDatos(idForm,idAbonadoAsadaActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
+  function activarEnvioDatos(idForm,idAbonadoAsadaActual,rangoAbonadosActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan){
 
     idForm.on('submit', function(e){
 
       e.preventDefault();
 
-      if (confirmarTransaccion('¿Está seguro de proceder con la edición de información del rango de abonados seleccionado?')){
-              
-        var url = "/SisConAsadaLaUnion/abonadoAsada/editarAbonado";
+      var verificarRangoAbonados = $("#msjRangoAbonados").attr("data-rangoAbonados");
 
-        var datosFormulario = idForm.serialize();
+      if (verificarRangoAbonados != "false") {
 
-        enviarFormularioRangoAbonados(idForm,url,idAbonadoAsadaActual,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+        if (confirmarTransaccion('¿Está seguro de proceder con la edición de información del rango de abonados seleccionado?')){
+                
+          var url = "/SisConAsadaLaUnion/abonadoAsada/editarAbonado";
+
+          var datosFormulario = idForm.serialize();
+
+          enviarFormularioRangoAbonados(idForm,url,idAbonadoAsadaActual,rangoAbonadosActual,datosFormulario,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+
+        }
 
       }  
 
@@ -103,18 +110,23 @@
           success: function(respuesta){
 
            if (respuesta != "false") {
-            
-            var idAbonadoAsadaActual = respuesta.idAbonadoAsada;
-
-            $("#idRangoAbonados").val(respuesta.rango);
 
             var idForm = $("#idEditarRangoAbonadosForm");
+            var idRangoAbonados = $("#idRangoAbonados");
+            var idAbonadoAsadaActual = respuesta.idAbonadoAsada;
+            var rangoAbonadosActual = respuesta.rango;
+            
+            idRangoAbonados.val(respuesta.rango);
 
             //Desasociar eventos de componentes
             idForm.unbind("submit");
+            idRangoAbonados.unbind("blur");
+
+            //Validaciones para el form de editar rango de abonados
+            blurCamposEnEdicionGenerico(idRangoAbonados,rangoAbonadosActual,"abonadoAsada/verificarRangoAbonadosExistenteEditar","del rango de abonados ingresado",$("#mensajeVerificacionRangoAbonados"));
              
             //Activar .submit del formulario
-            activarEnvioDatos(idForm,idAbonadoAsadaActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
+            activarEnvioDatos(idForm,idAbonadoAsadaActual,rangoAbonadosActual,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
 
             $("#editarRangoAbonados").dialog("open");
            
@@ -152,6 +164,7 @@
 
           //Limpiar campos siempre antes de cargar form de edicion
           limpiarCamposForm(idForm);
+          $('#mensajeVerificacionRangoAbonados').html("");
 
           //Llamada al metodo ajax para cargar el form edicion con los datos del rango de abonados seleccionado
           cargarRangoAbonadosPorId(idAbonadoAsada,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);

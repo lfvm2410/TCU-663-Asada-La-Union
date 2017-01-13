@@ -88,15 +88,17 @@
 
       public function registrarTarifa(){
 
-        if ($this->verificarSessionIniciada() && isset($_POST['rangoAbonados']) && isset($_POST['nombreTarifa']) && 
+        if ($this->verificarSessionIniciada() && isset($_POST['rangoAbonados']) && 
+            isset($_POST['nombreTarifa']) && isset($_POST['descripcionTarifa']) && 
             isset($_POST['tipoServicio']) && isset($_POST['montoTarifa'])) {
 
           $idAbonadoAsada = $_POST['rangoAbonados'];
+          $descripcion = $_POST['descripcionTarifa'];
           $nombre = $_POST['nombreTarifa'];
           $tipoServicio = $_POST['tipoServicio'];
           $monto = $_POST['montoTarifa'];
 
-          $tarifa = new tarifa(0, $nombre, $tipoServicio, $monto, null, $idAbonadoAsada);
+          $tarifa = new tarifa(0, $nombre, $descripcion, $tipoServicio, $monto, null, $idAbonadoAsada);
 
           $this->logica->registrarTarifa($tarifa);
          
@@ -115,18 +117,21 @@
       public function editarTarifa(){
 
         if ($this->verificarSessionIniciada() && isset($_POST['idTarifa']) &&
-            isset($_POST['rangoAbonados']) && isset($_POST['nombreTarifa']) && 
+            isset($_POST['descripcionActual']) && isset($_POST['rangoAbonados']) && 
+            isset($_POST['descripcionTarifa']) && isset($_POST['nombreTarifa']) && 
             isset($_POST['tipoServicio']) && isset($_POST['montoTarifa'])) {
 
           $idTarifa = $_POST['idTarifa'];
+          $descripcionActual = $_POST['descripcionActual'];
           $idAbonadoAsada = $_POST['rangoAbonados'];
           $nombre = $_POST['nombreTarifa'];
+          $descripcionNueva = $_POST['descripcionTarifa'];
           $tipoServicio = $_POST['tipoServicio'];
           $monto = $_POST['montoTarifa'];
 
-          $tarifa = new tarifa($idTarifa, $nombre, $tipoServicio, $monto, null, $idAbonadoAsada);
+          $tarifa = new tarifa($idTarifa, $nombre, $descripcionNueva, $tipoServicio, $monto, null, $idAbonadoAsada);
 
-          $this->logica->editarTarifa($tarifa);
+          $this->logica->editarTarifa($tarifa, $descripcionActual);
          
         }else{
 
@@ -177,7 +182,7 @@
 
           $filtroBusqueda = trim($_POST['filtroBusqueda']);
 
-          $cadenaAtributos = "id_Tarifa,rango_AbonadoAsada,nombre_Tarifa,tipoServicio_Tarifa,monto_Tarifa,fechaModificacion_Tarifa";
+          $cadenaAtributos = "id_Tarifa,rango_AbonadoAsada,nombre_Tarifa,descripcion_Tarifa,tipoServicio_Tarifa,monto_Tarifa,fechaModificacion_Tarifa";
           
           $cadenaAcciones = "Elegir,Editar";
 
@@ -213,6 +218,71 @@
           }
       
       } 
+
+      /*
+      // Metodo encargado de llenar el combobox de descripcion
+      */
+
+      public function llenarComboDescripcion(){
+
+          header("Content-Type: application/json");
+
+          if ($this->verificarSessionIniciada()) {
+            
+            $this->logica->formatearComboBoxDescripcion();
+            
+          }else{
+
+            $this->redireccionActividadNoAutorizada();
+
+          }
+      
+      }
+
+      /*
+      // Metodo para verificar si una descripcion existe para un abonado
+      */
+
+      public function verificarDescripcionExistente(){
+
+        if ($this->verificarSessionIniciada() && isset($_POST['idAbonadoAsada']) &&
+            isset($_POST['descripcion'])) {
+
+            $idAbonadoAsada = trim($_POST['idAbonadoAsada']);
+            $descripcion = trim($_POST['descripcion']);
+
+            $this->logica->comprobarExistenciaDescripcionPorAbonado($idAbonadoAsada, $descripcion);
+
+        }else{
+
+            $this->redireccionActividadNoAutorizada();
+         
+        }
+    
+      }
+
+      /*
+      // Metodo para verificar si una descripcion existe para un abonado, al momento de editar una tarifa
+      */
+
+      public function verificarDescripcionExistenteEnEdicion(){
+
+        if ($this->verificarSessionIniciada() && isset($_POST['idAbonadoAsada']) &&
+            isset($_POST['descripcionActual']) && isset($_POST['descripcionNueva'])) {
+
+            $idAbonadoAsada = trim($_POST['idAbonadoAsada']);
+            $descripcionActual = trim($_POST['descripcionActual']);
+            $descripcionNueva = trim($_POST['descripcionNueva']);
+
+            $this->logica->comprobarExistenciaDescripcionPorAbonadoEnEdicion($idAbonadoAsada, $descripcionActual, $descripcionNueva);
+
+        }else{
+
+            $this->redireccionActividadNoAutorizada();
+         
+        }
+    
+      }
 
 	}
 

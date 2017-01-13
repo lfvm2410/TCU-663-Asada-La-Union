@@ -12,7 +12,8 @@
 <div class="container">
     <div class="form-inline form-group">
       <label id="idLblBuscarTarifa" for="buscar">Buscar:</label>
-      <input type="text" class="form-control" id="buscar" placeholder="Buscar por rango de abonados, nombre y tipo de servicio" maxlength="1000" style="width: 34.5% !important;"/>
+      <input type="text" class="form-control" id="buscar" placeholder="Buscar por rango de abonados, nombre, descripción o tipo de servicio" 
+       maxlength="1000" style="width: 41.5% !important;"/>
     </div>
 </div>
 <div class="container table-responsive">
@@ -22,6 +23,7 @@
             <th>Acciones</th>
             <th>Rango de abonados</th>
             <th>Nombre</th>
+            <th>Descripción</th>
             <th>Tipo de servicio</th>
             <th>Monto</th>
             <th>Fecha de modificación (D/M/A H:M:S AM/PM)</th>
@@ -38,7 +40,7 @@
         <form class="form-horizontal" action="" method="post" name="editarTarifaForm" id="idEditarTarifaForm">
             <div class="form-group">
                 <label id="idLblRangoAbonados" for="idRangoAbonados">Rango de abonados:</label>
-                <select class="form-control" name="rangoAbonados" id="idRangoAbonados" required>
+                <select class="form-control combo" name="rangoAbonados" id="idRangoAbonados" required>
                      <option value="">Seleccione</option>
                 </select>
              </div>
@@ -47,6 +49,13 @@
                 <input type="text" class="form-control" name="nombreTarifa" id="idNombreTarifa" maxlength="16" 
                 placeholder="Ingrese el nombre de la tarifa" required/>
              </div>
+             <div class="form-group">
+                <label id="idLblDescripción" for="idDescripcionTarifa">Descripción:</label>
+                <select class="form-control combo" name="descripcionTarifa" id="idDescripcionTarifa" required>
+                     <option value="">Seleccione</option>
+                </select>
+             </div>
+             <div class="row" id="mensajeVerificacionDescripcion"></div>
              <div class="form-group">
                 <label id="idLblTipoServicio" for="idTipoServicio">Tipo de servicio:</label>
                 <select class="form-control" name="tipoServicio" id="idTipoServicio" required>
