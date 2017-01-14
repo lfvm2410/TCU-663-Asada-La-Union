@@ -27,7 +27,7 @@
 
 		public function badRequest(){ 
 	
-			$this->vista->render($this,'400','Bad request');
+			$this->vista->render($this,'400','Bad Request');
 
 		}
 
@@ -45,13 +45,13 @@
 
 		public function notFound(){ 
 	
-			$this->vista->render($this,'404','Not found');
+			$this->vista->render($this,'404','Not Found');
 
 		}
 
 		public function internalServerError(){ 
 	
-			$this->vista->render($this,'500','Internal server error');
+			$this->vista->render($this,'500','Internal Server Error');
 
 		}
 

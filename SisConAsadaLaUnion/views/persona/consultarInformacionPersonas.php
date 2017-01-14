@@ -37,6 +37,9 @@
 <center>
     <ul id="paginacion" class="pagination"></ul>
 </center>
+<div class="container">
+    <button class="btn btn-info pull-right" onclick="window.print();">Imprimir</button>
+</div>
 <div id="verNumsTel" class="container table-responsive" title="Números de teléfono"></div>
 <div id="editarPersona" class="container table-responsive" title="Editar persona" style="display:none;">
     <div class="container" style="margin-top:2%; width:80%;">
