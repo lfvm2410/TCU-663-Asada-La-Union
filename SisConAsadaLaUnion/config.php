@@ -4,6 +4,7 @@
 	define('URL', '/SisConAsadaLaUnion/');
 	define('LIBS', 'libs/');
 	define('DOMAIN', 'libs/domain/');
+	define('XML', $_SERVER['DOCUMENT_ROOT'].URL."storage/xml/");
 	define('VALIDATION', 'libs/validation/');
 	define('LOGIC', 'logic/');
 	define('MODELS', 'models/');
@@ -19,8 +20,8 @@
 	define('TOTAL_ABONADOSASADA', 8);
 
 	//Ruta para guardar archivos adjuntos
-	define('RUTA_ARCHIVOS_ADJUNTOS', $_SERVER['DOCUMENT_ROOT']."/SisConAsadaLaUnion/public/assets/archivos/");	
-	
+	define('RUTA_ARCHIVOS_ADJUNTOS', $_SERVER['DOCUMENT_ROOT'].URL."public/assets/files/");
+
 	define('DB_HOST', 'localhost');
 	define('DB_USER', 'root');
 	define('DB_PASS', '1234');

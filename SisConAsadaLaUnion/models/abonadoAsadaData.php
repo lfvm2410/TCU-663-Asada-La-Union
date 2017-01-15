@@ -161,6 +161,38 @@
             return $listaRangosAbonadosAsada;
 
         }
+
+        /*
+        // Metodo encargado de obtener el id del abonado actual de la asada
+        */
+
+        public function obtenerIdAbonadoActualAsada(){
+
+            $idAbonadoAsadaActual = "";
+
+            $abonadoAsada = simplexml_load_file(XML."abonadoAsada.xml");
+                
+            $idAbonadoAsadaActual = $abonadoAsada[0]->idAbonadoAsada;
+
+            return $idAbonadoAsadaActual;
+
+        }
+
+        /*
+        // Metodo encargado de guardar el rango de abonados actual de la asada
+        */
+
+        public function guardarRangoAbonadosActualAsada($rangoAbonadosActualAsada){
+
+            $abonadoAsada = simplexml_load_file(XML."abonadoAsada.xml");
+                
+            $abonadoAsada[0]->idAbonadoAsada = $rangoAbonadosActualAsada;
+
+            $abonadoAsada->asXML(XML."abonadoAsada.xml");
+
+            return true;
+
+        }
         
     }
     

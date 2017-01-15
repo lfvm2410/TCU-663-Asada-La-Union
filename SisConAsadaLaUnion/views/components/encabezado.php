@@ -52,7 +52,8 @@
 				<a class="dropdown-toggle" data-toggle="dropdown">Abonados<b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="<?php print URL;?>abonadoAsada/registrarRangoAbonadosForm">Registrar rango de abonados</a></li>
-					<li><a href="<?php print URL;?>abonadoAsada/consultarInformacionRangosAbonados">Consultar información de los rangos de abonados</a></li>			
+					<li><a href="<?php print URL;?>abonadoAsada/consultarInformacionRangosAbonados">Consultar información de los rangos de abonados</a></li>
+					<li><a href="<?php print URL;?>abonadoAsada/rangoAbonadosActualAsadaForm">Rango de abonados actual de la ASADA</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">

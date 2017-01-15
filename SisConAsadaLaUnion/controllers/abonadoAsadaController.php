@@ -62,6 +62,20 @@
 
       }
 
+      public function rangoAbonadosActualAsadaForm(){
+
+        if ($this->verificarSessionIniciada()) {
+
+          $this->vista->render($this,'rangoAbonadosActualAsada','Rango de abonados actual de la ASADA');
+            
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+  
+      }
+
       /*
       // Metodo encargado de registrar un abonado
       */
@@ -225,7 +239,47 @@
 
           }
       
-      } 
+      }
+
+      /*
+      //Metodo encargado de llenar el combobox de rango de abonados actual
+      */
+
+      public function llenarComboRangoAbonadosActualAsada(){
+
+        header("Content-Type: application/json");
+
+        if ($this->verificarSessionIniciada()) {
+
+          $this->logica->formatearComboBoxRangoAbonadosActual();
+
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+
+      }
+
+      /*
+      // Metodo encargado de guardar el rango de abonados actual de la asada
+      */
+
+      public function guardarRangoAbonadosActualAsada(){
+
+        if ($this->verificarSessionIniciada() && isset($_POST['rangoAbonadosActualAsada'])) {
+
+          $rangoAbonadosActualAsada = $_POST['rangoAbonadosActualAsada'];
+
+          $this->logica->guardarRangoAbonadosActualAsada($rangoAbonadosActualAsada);
+         
+        }else{
+
+          $this->redireccionActividadNoAutorizada();
+
+        }
+
+      }
 
 	}
 

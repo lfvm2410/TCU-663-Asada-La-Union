@@ -169,6 +169,64 @@
 
 	    }
 
+	    /*
+    	// Metodo encargado de formatear las opciones para el combobox de rango de abonados actual de la asada
+   		*/
+    	
+    	public function formatearComboBoxRangoAbonadosActual(){
+
+      		$listaAbonadosAsada = $this->abonadoAsadaData->obtenerRangosAbonadosAsada();
+
+      		$abonadoAsadaActual = $this->abonadoAsadaData->obtenerIdAbonadoActualAsada();
+
+      		$optionsList = "<option value=''>Seleccione</option>";
+
+	        foreach ($listaAbonadosAsada as $abonadoAsada) {
+
+	        	if (strcmp($abonadoAsadaActual, $abonadoAsada['id']) == 0) {
+
+	        		$optionsList .= "<option value='".$abonadoAsada['id']."' selected>"
+	                              .$abonadoAsada['rango']."</option>";
+	        		
+	        	}else{
+
+	        		$optionsList .= "<option value='".$abonadoAsada['id']."'>"
+	                              .$abonadoAsada['rango']."</option>";
+
+	        	}
+
+	        }               
+            
+      		print_r(json_encode(array("optionsList" => $optionsList)));
+
+    	}
+
+    	/*
+		// Metodo encargado de guardar el rango de abonados actual de la asada
+    	*/
+
+    	public function guardarRangoAbonadosActualAsada($rangoAbonadosActualAsada){
+
+    		if ($this->abonadoAsadaValidation->validarIdAbonadoAsada($rangoAbonadosActualAsada)) {
+
+    			if ($this->abonadoAsadaData->guardarRangoAbonadosActualAsada($rangoAbonadosActualAsada)) {
+    				
+    				echo "true";
+    			
+    			}else{
+
+    				echo "false";
+
+    			}
+
+    		}else{
+
+    			echo "false";
+
+    		}
+
+    	}
+
 	}
 
 ?>
