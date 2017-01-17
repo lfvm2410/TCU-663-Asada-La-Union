@@ -23,7 +23,7 @@
 
 		public function adjuntarArchivosForm(){
 
-			if ($this->verificarSessionIniciada()) {
+			if (true) {
 
 				$this->vista->render($this,'adjuntarArchivos','Adjuntar archivos');
             
@@ -41,7 +41,7 @@
 
 		public function guardarArchivosAdjuntos(){
 
-			if ($this->verificarSessionIniciada() && isset($_FILES['disponibilidaHidrica']) && 
+			if (true && isset($_FILES['disponibilidaHidrica']) && 
 				isset($_FILES['arregloPagos'])) {
 
 				$archivoDisponibilidadHidrica = $_FILES['disponibilidaHidrica'];
