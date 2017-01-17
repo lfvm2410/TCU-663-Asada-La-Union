@@ -30,19 +30,16 @@
 
       	 require_once VALIDATION.$class.".php";
 
+      }elseif (file_exists(LOGIC.$class.".php")) {
+
+      	 	require_once LOGIC.$class.".php";
+
       }elseif (file_exists(MODELS.$class.".php")) {
 
       	 	require_once MODELS.$class.".php";
       		
-      	 }else{
-	
-		 	if (file_exists(LOGIC.$class.".php")) {
-
-      	 	require_once LOGIC.$class.".php";
-      	 }
-      
       }
-	
+      
 	});
 
 	$path = './controllers/'.$controlador.'.php';

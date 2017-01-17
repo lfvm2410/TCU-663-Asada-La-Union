@@ -32,6 +32,9 @@
 <center>
     <ul id="paginacion" class="pagination"></ul>
 </center>
+<div class="container">
+    <button class="btn btn-info pull-right" onclick="window.print();">Imprimir</button>
+</div>
 <div id="verNumsTel" class="container table-responsive" title="Números de teléfono"></div>
 <?php include COMPONENTS.'pie.php';?>
 </body>

@@ -138,30 +138,30 @@
   //Metodo encargado de crear ventana modal
   */
 
- function crearVentanaModal(idVentana,tamanioAncho,tamanioAlto,limpiarAlFinal){
+  function crearVentanaModal(idVentana,tamanioAncho,tamanioAlto,limpiarAlFinal){
 
-  idVentana.dialog({
-      autoOpen: false,
-      modal: true,
-      width: tamanioAncho,
-      height: tamanioAlto,
-      show: {
-        effect: "blind",
-        duration: 1000
-      },
-      hide: {
-        effect: "explode",
-        duration: 1000
-      },
-      close: function(ev,ui){
+    idVentana.dialog({
+        autoOpen: false,
+        modal: true,
+        width: tamanioAncho,
+        height: tamanioAlto,
+        show: {
+          effect: "blind",
+          duration: 1000
+        },
+        hide: {
+          effect: "explode",
+          duration: 1000
+        },
+        close: function(ev,ui){
 
-        if (limpiarAlFinal == "true") {
+          if (limpiarAlFinal == "true") {
 
-          idVentana.empty();
+            idVentana.empty();
 
+          }
+          
         }
-        
-      }
-    });
+      });
 
- }
+  }

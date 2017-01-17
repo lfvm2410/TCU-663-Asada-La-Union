@@ -4,6 +4,7 @@
 	define('URL', '/SisConAsadaLaUnion/');
 	define('LIBS', 'libs/');
 	define('DOMAIN', 'libs/domain/');
+	define('XML', $_SERVER['DOCUMENT_ROOT'].URL."storage/xml/");
 	define('VALIDATION', 'libs/validation/');
 	define('LOGIC', 'logic/');
 	define('MODELS', 'models/');
@@ -17,6 +18,7 @@
 	define('TOTAL_TARIFAS', 6);
 	define('PAGINACION_ABONADOSASADA', 7);
 	define('TOTAL_ABONADOSASADA', 8);
+<<<<<<< HEAD
 	
 	define('DB_HOST', 'db4free.net');
 	define('DB_USER', 'devasada');
@@ -24,6 +26,13 @@
 	define('DB_BASE', 'bdasada_launion');
 
 	/*define('DB_HOST', 'localhost');
+=======
+
+	//Ruta para guardar archivos adjuntos
+	define('RUTA_ARCHIVOS_ADJUNTOS', $_SERVER['DOCUMENT_ROOT'].URL."public/assets/files/");
+
+	define('DB_HOST', 'localhost');
+>>>>>>> refs/remotes/origin/Mantenimiento-Cliente
 	define('DB_USER', 'root');
 	define('DB_PASS', '1234');
 	define('DB_BASE', 'BDASADA_LaUnion');*/

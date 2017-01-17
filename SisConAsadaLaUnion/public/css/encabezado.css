@@ -104,3 +104,11 @@ a{
 	}
 
 }
+
+@media print {
+
+	#presentacionEncabezado a[href]:after { 
+		display:none; 
+	}
+
+}
