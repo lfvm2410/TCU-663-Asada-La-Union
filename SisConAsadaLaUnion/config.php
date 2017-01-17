@@ -18,6 +18,8 @@
 	define('TOTAL_TARIFAS', 6);
 	define('PAGINACION_ABONADOSASADA', 7);
 	define('TOTAL_ABONADOSASADA', 8);
+	define('PAGINACION_CONTROLCONSUMO', 11);
+	define('TOTAL_CONTROLCONSUMO', 12);
 
 	//Ruta para guardar archivos adjuntos
 	define('RUTA_ARCHIVOS_ADJUNTOS', $_SERVER['DOCUMENT_ROOT'].URL."public/assets/files/");
