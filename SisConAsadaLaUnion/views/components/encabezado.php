@@ -73,7 +73,7 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Reportes<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Control de consumo</a></li>
+					<li><a href="<?php print URL;?>reportes/controlDeConsumo">Control de consumo</a></li>
 				</ul>
 			</li>
 			<li class="dropdown">

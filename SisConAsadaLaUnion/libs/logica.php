@@ -70,7 +70,6 @@
 	          $listaRegistros = $this->obtenerRegistrosPaginados($listaCampos, $idConsulta, $filtroBusqueda, $registroActual,
 	        										  			  $limiteRegistros, $registrosActivos);
 
-
 	          //Formateo de registros para redireccionar al controlador, que posteriormente lo enviará a la vista que lo solicite
 
 	          //Validando si la lista viene con o sin registros
@@ -112,7 +111,12 @@
 
 	                		 	$tablaRegistros = $tablaRegistros."</select></td>";
 	                         	
-	                         }
+	                         }else{
+
+		                       	 $tablaRegistros = $tablaRegistros.
+		                                        "<td>".$valorAtributo."</td>";
+
+	                       	 }
 
 	                       }else{
 
