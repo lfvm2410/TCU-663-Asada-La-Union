@@ -1,21 +1,20 @@
 <?php
 
+    /*
+    // Clase controladora de las operaciones sobre los reportes a generar
+    */
 
-/*
-// Clase controladora de las operaciones sobre los reportes a generar
-*/
-
-	class reportesController extends controlador{
+	  class reportesController extends controlador{
 		
-		public function __construct(){
+    		public function __construct(){
 
-			parent::__construct();
-			
-		}
+    			parent::__construct();
+    			
+    		}
 
-      	/*
-	    // Metodos para mostrar las vistas asociadas a este controlador
-	    */
+        /*
+    	  // Metodos para mostrar las vistas asociadas a este controlador
+    	  */
 
       	public function index(){
 
@@ -50,8 +49,8 @@
       	}
 
       	/*
-     	// Metodo encargado de consultar la totalidad de páginas sobre rl reporte de control de consumo
-     	*/
+     	  // Metodo encargado de consultar la totalidad de páginas sobre rl reporte de control de consumo
+     	  */
 
       	public function consultarTotalidadPaginasControlConsumo(){
 
@@ -76,7 +75,7 @@
 
       	/*
       	// Metodo encargado de generar el reporte de control de consumo
-     	 */
+     	  */
 
       	public function generarReporteControlConsumo(){
 
@@ -102,6 +101,6 @@
 
       	}
 
-	}
+	 }
 
 ?>
