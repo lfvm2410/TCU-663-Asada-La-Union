@@ -18,7 +18,7 @@
 
       public function index(){
 
-        if ($this->verificarSessionIniciada()) {
+        if (true) {
 
           //Temporal, mientras se define la vista principal del controlador
 
@@ -36,7 +36,7 @@
 
       public function registrarTarifaForm(){
 
-        if ($this->verificarSessionIniciada()) {
+        if (true) {
 
           $this->vista->render($this,'registrarTarifa','Registrar tarifa');
             
@@ -50,7 +50,7 @@
 
       public function consultarInformacionTarifas(){
 
-        if ($this->verificarSessionIniciada()) {
+        if (true) {
 
           $this->vista->render($this,'consultarInformacionTarifas','Consultar información de tarifas');
             
@@ -70,7 +70,7 @@
 
         header("Content-Type: application/json");
 
-        if ($this->verificarSessionIniciada()) {
+        if (true) {
 
           $this->logica->formatearComboBoxRangosAbonadosAsada();
 
@@ -88,7 +88,7 @@
 
       public function registrarTarifa(){
 
-        if ($this->verificarSessionIniciada() && isset($_POST['rangoAbonados']) && 
+        if (true && isset($_POST['rangoAbonados']) && 
             isset($_POST['nombreTarifa']) && isset($_POST['descripcionTarifa']) && 
             isset($_POST['tipoServicio']) && isset($_POST['montoTarifa'])) {
 
@@ -116,7 +116,7 @@
 
       public function editarTarifa(){
 
-        if ($this->verificarSessionIniciada() && isset($_POST['idTarifa']) &&
+        if (true && isset($_POST['idTarifa']) &&
             isset($_POST['descripcionActual']) && isset($_POST['rangoAbonados']) && 
             isset($_POST['descripcionTarifa']) && isset($_POST['nombreTarifa']) && 
             isset($_POST['tipoServicio']) && isset($_POST['montoTarifa'])) {
@@ -149,7 +149,7 @@
 
         header("Content-Type: application/json");
 
-        if ($this->verificarSessionIniciada() && isset($_POST['permisoConsultaTotalPaginas']) && 
+        if (true && isset($_POST['permisoConsultaTotalPaginas']) && 
             isset($_POST['filtroBusqueda'])) {
 
           $permisoConsultaTotalPaginas = trim($_POST['permisoConsultaTotalPaginas']);
@@ -175,7 +175,7 @@
 
         header("Content-Type: application/json");
 
-        if ($this->verificarSessionIniciada() && isset($_POST['paginaActual']) && 
+        if (true && isset($_POST['paginaActual']) && 
             isset($_POST['filtroBusqueda'])) {
 
           $paginaActual = trim($_POST['paginaActual']);
@@ -205,7 +205,7 @@
 
           header("Content-Type: application/json");
 
-          if ($this->verificarSessionIniciada() && isset($_POST['idTarifa'])) {
+          if (true && isset($_POST['idTarifa'])) {
 
             $idTarifa = trim($_POST['idTarifa']);
             
@@ -227,7 +227,7 @@
 
           header("Content-Type: application/json");
 
-          if ($this->verificarSessionIniciada()) {
+          if (true) {
             
             $this->logica->formatearComboBoxDescripcion();
             
@@ -245,7 +245,7 @@
 
       public function verificarDescripcionExistente(){
 
-        if ($this->verificarSessionIniciada() && isset($_POST['idAbonadoAsada']) &&
+        if (true && isset($_POST['idAbonadoAsada']) &&
             isset($_POST['descripcion'])) {
 
             $idAbonadoAsada = trim($_POST['idAbonadoAsada']);
@@ -267,7 +267,7 @@
 
       public function verificarDescripcionExistenteEnEdicion(){
 
-        if ($this->verificarSessionIniciada() && isset($_POST['idAbonadoAsada']) &&
+        if (true && isset($_POST['idAbonadoAsada']) &&
             isset($_POST['descripcionActual']) && isset($_POST['descripcionNueva'])) {
 
             $idAbonadoAsada = trim($_POST['idAbonadoAsada']);

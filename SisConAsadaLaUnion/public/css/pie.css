@@ -13,7 +13,8 @@ body{
   bottom: 0;
   width: 100%;
   /* Altura de footer */
-  min-height: 195px;
+  /*max-height: 195px;*/
+  min-height: 150px;
   /*Imagen de fondo*/
   background-image: url('/SisConAsadaLaUnion/public/assets/templates/Footer-Sistema.png'); 
   background-size: 100% 100%;

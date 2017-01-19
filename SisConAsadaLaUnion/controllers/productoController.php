@@ -18,7 +18,7 @@
 
       public function index(){
 
-          if ($this->verificarSessionIniciada()) {
+          if (true) {
 
             //Temporal, mientras se define la vista principal del controlador
 
@@ -36,7 +36,7 @@
 
       public function registrarProductoForm(){
 
-        if ($this->verificarSessionIniciada()) {
+        if (true) {
 
           $this->vista->render($this,'registrarProducto','Registrar producto');
             
@@ -50,7 +50,7 @@
 
       public function consultarInformacionProductos(){
 
-        if ($this->verificarSessionIniciada()) {
+        if (true) {
 
           $this->vista->render($this,'consultarInformacionProductos','Consultar información de productos');
             
@@ -68,7 +68,7 @@
 
       public function registrarProducto(){
 
-         if ($this->verificarSessionIniciada() && isset($_POST['nombreProducto']) && 
+         if (true && isset($_POST['nombreProducto']) && 
              isset($_POST['descripcionProducto']) && isset($_POST['cantidadProducto'])) {
 
         	$nombre = trim($_POST['nombreProducto']);
@@ -95,7 +95,7 @@
 
         header("Content-Type: application/json");
 
-        if ($this->verificarSessionIniciada() && isset($_POST['permisoConsultaTotalPaginas']) && 
+        if (true && isset($_POST['permisoConsultaTotalPaginas']) && 
             isset($_POST['metodo']) && isset($_POST['busqueda'])) {
 
           $permisoConsultaTotalPaginas = trim($_POST['permisoConsultaTotalPaginas']);
@@ -120,7 +120,7 @@
 
         header("Content-Type: application/json");
 
-        if ($this->verificarSessionIniciada() && isset($_POST['paginaActual']) && 
+        if (true && isset($_POST['paginaActual']) && 
             isset($_POST['metodo']) && isset($_POST['busqueda'])) {
 
           $paginaActual = trim($_POST['paginaActual']);
@@ -145,7 +145,7 @@
 
         header("Content-Type: application/json");
 
-        if ($this->verificarSessionIniciada() && isset($_POST['idProducto'])) {
+        if (true && isset($_POST['idProducto'])) {
 
           $idProducto = trim($_POST['idProducto']);
           
@@ -165,7 +165,7 @@
 
       public function editarProducto(){
 
-         if ($this->verificarSessionIniciada() && isset($_POST['idProducto']) && 
+         if (true && isset($_POST['idProducto']) && 
              isset($_POST['nombreProducto']) && isset($_POST['descripcionProducto']) && 
              isset($_POST['cantidadProducto'])) {
 
@@ -192,7 +192,7 @@
 
     public function eliminarProducto(){
 
-        if ($this->verificarSessionIniciada() && isset($_POST['idProducto'])) {
+        if (true && isset($_POST['idProducto'])) {
 
           $idProducto = trim($_POST['idProducto']);
           

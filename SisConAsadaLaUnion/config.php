@@ -21,12 +21,22 @@
 	define('PAGINACION_CONTROLCONSUMO', 11);
 	define('TOTAL_CONTROLCONSUMO', 12);
 
+	
+	define('DB_HOST', 'db4free.net');
+	define('DB_USER', 'devasada');
+	define('DB_PASS', 'lokeraPerrito69');
+	define('DB_BASE', 'bdasada_launion');
+
+	/*define('DB_HOST', 'localhost');
+
+
 	//Ruta para guardar archivos adjuntos
 	define('RUTA_ARCHIVOS_ADJUNTOS', $_SERVER['DOCUMENT_ROOT'].URL."public/assets/files/");
 
 	define('DB_HOST', 'localhost');
+
 	define('DB_USER', 'root');
 	define('DB_PASS', '1234');
-	define('DB_BASE', 'BDASADA_LaUnion');
+	define('DB_BASE', 'BDASADA_LaUnion');*/
 	
 ?>
