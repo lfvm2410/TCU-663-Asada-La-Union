@@ -55,6 +55,8 @@
           $this->indexValidation->validarCamposTexto($vision, 250) && 
           $this->indexValidation->validarCamposTexto($valores, 250) &&
           $this->indexValidation->validarListaImagenes($listaImagenes)) {
+
+        array_map('unlink', glob(RUTA_ARCHIVOS_ADJUNTOS."*"));
         
         echo "true";
 
