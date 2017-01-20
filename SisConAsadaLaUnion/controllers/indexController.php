@@ -96,6 +96,26 @@
 
 		}
 
+		/*
+      	//Metodo encargado de obtener la información actual de la página de presentación
+      	*/
+
+      	public function obtenerInformacionPaginaPresentacion(){
+
+	        header("Content-Type: application/json");
+
+	        if ($this->verificarSessionIniciada()) {
+
+	          $this->logica->obtenerInformacionPaginaPresentacion();
+
+	        }else{
+
+	          $this->redireccionActividadNoAutorizada();
+
+	        }
+
+      	}
+
 	}
 
 ?>

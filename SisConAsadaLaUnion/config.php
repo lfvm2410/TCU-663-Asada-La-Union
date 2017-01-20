@@ -24,6 +24,9 @@
 	//Ruta para guardar archivos adjuntos
 	define('RUTA_ARCHIVOS_ADJUNTOS', $_SERVER['DOCUMENT_ROOT'].URL."public/assets/files/");
 
+	//Ruta para guardar las imagenes de la página de presentación
+	define('RUTA_IMAGENES_PAGINA_PRESENTACION', $_SERVER['DOCUMENT_ROOT'].URL."public/assets/imagesPresentacion/");
+
 	define('DB_HOST', 'localhost');
 	define('DB_USER', 'root');
 	define('DB_PASS', '1234');

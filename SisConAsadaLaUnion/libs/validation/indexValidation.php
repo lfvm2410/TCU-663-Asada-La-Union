@@ -37,14 +37,14 @@
 
 		public function validarListaImagenes($listaImagenes){
 
-			$cantidadImagenes = count($listaImagenes['name']);
-			$cantidadMegaBytes = 1024*(1024*2);
-
 			if(!file_exists($listaImagenes['tmp_name'][0]) || !is_uploaded_file($listaImagenes['tmp_name'][0])) {
    				 
 				return true;
 
 			}else{
+
+				$cantidadImagenes = count($listaImagenes['name']);
+				$cantidadMegaBytes = 1024*(1024*2);
 
 				for($i = 0; $i < $cantidadImagenes; $i++) {
 

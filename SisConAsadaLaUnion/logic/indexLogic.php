@@ -7,10 +7,12 @@
 
 	class indexlogic extends logica{
 
+    private $indexData;
     private $indexValidation;
 
 		public function __construct(){
 
+      $this->indexData = new indexData();
       $this->indexValidation = new indexValidation();
 
 		}
@@ -45,6 +47,18 @@
     }
 
     /*
+    // Metodo encargado de retornar la información para la página de presentación
+    */
+      
+      public function obtenerInformacionPaginaPresentacion(){
+
+        $informacionPaginaPresentacion = $this->indexData->obtenerInformacionPaginaPresentacion();
+
+        print_r(json_encode($informacionPaginaPresentacion));
+
+      }
+
+    /*
     // Metodo encargado de guardar la informacion de la pagina de presentacion
     */
 
@@ -56,10 +70,16 @@
           $this->indexValidation->validarCamposTexto($valores, 250) &&
           $this->indexValidation->validarListaImagenes($listaImagenes)) {
 
-        array_map('unlink', glob(RUTA_ARCHIVOS_ADJUNTOS."*"));
-        
-        echo "true";
+        if ($this->indexData->guardarInformacionPaginaPresentacion($quienesSomos, $mision, $vision, $valores, $listaImagenes)) {
 
+          echo "true";
+        
+        }else{
+
+          echo "false";
+
+        }
+        
       }else{
 
         echo "false";

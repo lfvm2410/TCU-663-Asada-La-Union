@@ -4,11 +4,40 @@
 
   $(document).on("ready", function () {
 
+    cargarFormInfoPaginaPresentacion("index/obtenerInformacionPaginaPresentacion", "la información del formulario para actualizar la página de presentación");
+
     validarVisualizarImagenesSubidas($("#idImagenesPantallaPresentacion"), $("#idVistaPrevia"));
 
     activarEnvioDatosPaginaPresentacion($("#idActualizarPaginaPresentacionForm"));
 
   });
+
+  /*
+  //Metodo encargado de cargar la informacion del formulario de la pagina de presentacion
+  */
+
+  function cargarFormInfoPaginaPresentacion(direccionControladorMetodo,mensajeError){
+
+    $.ajax({
+      url: "/SisConAsadaLaUnion/"+direccionControladorMetodo,
+      type: "POST",
+      success: function(respuesta){
+
+        $("#idQuienesSomos").val(respuesta.quienesSomos[0]);
+        $("#idMision").val(respuesta.mision[0]);
+        $("#idVision").val(respuesta.vision[0]);
+        $("#idValores").val(respuesta.valores[0]);
+          
+      },
+      error: function(error){
+
+        alertify.error("Error de conexión al tratar de cargar "+mensajeError);
+
+      }
+
+    });
+
+  }
 
   /*
   // Metodo encargado de validar las imagenes subidas por el usuario
@@ -114,6 +143,8 @@
           $("#idVistaPrevia").attr("data-validacion", "");
           
           $("#idVistaPrevia").empty();
+
+          cargarFormInfoPaginaPresentacion("index/obtenerInformacionPaginaPresentacion", "la información para la página de presentación");
 
         }else{
 
