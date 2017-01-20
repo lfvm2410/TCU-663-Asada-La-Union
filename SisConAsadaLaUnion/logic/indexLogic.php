@@ -44,6 +44,29 @@
 
     }
 
+    /*
+    // Metodo encargado de guardar la informacion de la pagina de presentacion
+    */
+
+    public function guardarInformacionPaginaPresentacion($quienesSomos, $mision, $vision, $valores, $listaImagenes){
+
+      if ($this->indexValidation->validarCamposTexto($quienesSomos, 250) && 
+          $this->indexValidation->validarCamposTexto($mision, 250) &&
+          $this->indexValidation->validarCamposTexto($vision, 250) && 
+          $this->indexValidation->validarCamposTexto($valores, 250) &&
+          $this->indexValidation->validarListaImagenes($listaImagenes)) {
+        
+        echo "true";
+
+      }else{
+
+        echo "false";
+
+      }
+
+
+    }
+
 	}
 
 ?>

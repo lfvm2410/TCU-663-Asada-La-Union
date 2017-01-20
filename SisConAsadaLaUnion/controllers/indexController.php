@@ -1,7 +1,7 @@
 <?php
 
     /*
-    // Clase para controladora de las operaciones sobre la página principal del sitio web
+    // Clase controladora de las operaciones sobre la página principal del sitio web
     */
 
 	class indexController extends controlador{
@@ -18,6 +18,20 @@
 		public function index(){ 
 	
 			$this->vista->render($this,'index','ASADA La Unión');
+
+		}
+
+		public function actualizarPaginaPresentacionForm(){
+
+			if ($this->verificarSessionIniciada()) {
+
+				$this->vista->render($this,'actualizarPaginaPresentacion','Actualizar página de presentación');
+            
+          	}else{
+
+            	$this->redireccionActividadNoAutorizada();
+
+          	}
 
 		}
 
@@ -48,6 +62,31 @@
 				$archivoArregloPagos = $_FILES['arregloPagos'];
 
 				$this->logica->guardarArchivosAdjuntos($archivoDisponibilidadHidrica, $archivoArregloPagos);
+
+          	}else{
+
+            	$this->redireccionActividadNoAutorizada();
+
+          	}
+
+		}
+
+		/*
+		// Metodo encargado de guardar la información que contendrá la página principal de la ASADA
+		*/
+
+		public function guardarInformacionPaginaPresentacion(){
+
+			if ($this->verificarSessionIniciada() && isset($_POST['quienesSomos']) && isset($_POST['mision']) &&
+				isset($_POST['vision']) && isset($_POST['valores']) && isset($_FILES['imagenesPantallaPresentacion'])) {
+
+				$quienesSomos = trim($_POST['quienesSomos']);
+				$mision = trim($_POST['mision']);
+				$vision = trim($_POST['vision']);
+				$valores = trim($_POST['valores']);
+				$listaImagenes = $_FILES['imagenesPantallaPresentacion'];
+
+				$this->logica->guardarInformacionPaginaPresentacion($quienesSomos, $mision, $vision, $valores, $listaImagenes);
 
           	}else{
 

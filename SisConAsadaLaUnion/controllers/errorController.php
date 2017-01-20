@@ -1,7 +1,7 @@
 <?php
 
 	/*
-    // Clase para controladora de las operaciones sobre los errores
+    // Clase controladora de las operaciones sobre los errores
 	*/
 
 	class errorController extends controlador{

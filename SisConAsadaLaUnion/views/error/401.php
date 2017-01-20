@@ -1,6 +1,5 @@
 <?php include COMPONENTS.'header.php';?>
 	<link href="<?php print URL;?>public/css/encabezado.css" rel="stylesheet"/>
-	<script src="<?php print URL;?>public/js/encabezado.js" type="text/javascript"></script>
 </head>
 	<body>
 		<div id="presentacionEncabezado">

@@ -1,7 +1,7 @@
 <link href="<?php print URL;?>public/css/encabezado.css" rel="stylesheet"/>
 <script src="<?php print URL;?>public/js/encabezado.js" type="text/javascript"></script>
 <div id="presentacionEncabezado">
-	<a href="<?php print URL;?>index"><img id="logoAsada" src="<?php print URL;?>public/assets/images/LogoAsadaUnion.png"/></a>
+	<a href="<?php print URL;?>"><img id="logoAsada" src="<?php print URL;?>public/assets/images/LogoAsadaUnion.png"/></a>
 	<h1><em>Sistema de control ASADA La Unión</em></h1>
 	<h4><em>!Cuidamos tu agua!</em></h4>
 </div>
@@ -20,8 +20,8 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Presentación<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Ir a página de presentación</a></li>
-					<li><a href="#">Actualizar página de presentación</a></li>
+					<li><a href="<?php print URL;?>">Ir a página de presentación</a></li>
+					<li><a href="<?php print URL;?>index/actualizarPaginaPresentacionForm">Actualizar página de presentación</a></li>
 					<li><a href="<?php print URL;?>index/adjuntarArchivosForm">Adjuntar archivos</a></li>
 				</ul>
 			</li>
