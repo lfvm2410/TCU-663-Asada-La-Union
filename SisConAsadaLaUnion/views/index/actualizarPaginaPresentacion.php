@@ -9,7 +9,7 @@
   <form class="form-horizontal" enctype="multipart/form-data" action="" method="post" name="actualizarPaginaPresentacionForm" 
    id="idActualizarPaginaPresentacionForm">
      <div class="form-group">
-        <label id="idLblQuienesSomos" for="idQuienesSomos">¿Quienes somos?</label>
+        <label id="idLblQuienesSomos" for="idQuienesSomos">¿Quiénes somos?</label>
         <textarea class="form-control" name="quienesSomos" rows="4" id="idQuienesSomos" 
         placeholder="Ingrese la descripción general de la ASADA" maxlength="250" required></textarea>
      </div>

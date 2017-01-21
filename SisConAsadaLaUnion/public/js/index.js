@@ -46,7 +46,7 @@
 
   function cargarSlider(informacionAsada,imagenes){
 
-    $("#item1").append("<div class='carousel-caption hidden-xs hidden-sm'><h3>Quienes somos</h3><p>"+informacionAsada.quienesSomos[0]+"</p></div>");
+    $("#item1").append("<div class='carousel-caption hidden-xs hidden-sm'><h3>Quiénes somos</h3><p>"+informacionAsada.quienesSomos[0]+"</p></div>");
     $("#item2").append("<div class='carousel-caption hidden-xs hidden-sm'><h3>Misión</h3><p>"+informacionAsada.mision[0]+"</p></div>");
     $("#item3").append("<div class='carousel-caption hidden-xs hidden-sm'><h3>Visión</h3><p>"+informacionAsada.vision[0]+"</p></div>");
     $("#item4").append("<div class='carousel-caption hidden-xs hidden-sm'><h3>Valores</h3><p>"+informacionAsada.valores[0]+"</p></div>");

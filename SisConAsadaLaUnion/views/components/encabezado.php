@@ -43,9 +43,8 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Servicios<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar servicio a cliente</a></li>
-					<li><a href="#">Actualizar servicio de cliente</a></li>
-					<li><a href="#">Consultar información de los servicios de clientes</a></li>			
+					<li><a href="<?php print URL;?>servicio/registrarServicioForm">Registrar servicio</a></li>
+					<li><a href="<?php print URL;?>servicio/consultarInformacionServicio">Consultar información de servicios</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">

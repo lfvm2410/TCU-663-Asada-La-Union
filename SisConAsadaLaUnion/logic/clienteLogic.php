@@ -520,6 +520,12 @@
       }
 
     }
+
+    public function obtenerClientesSinFiltro($estadoCliente){
+
+      return $this->clienteData->obtenerClientesSinFiltro($estadoCliente);
+
+    }
     
 }
 

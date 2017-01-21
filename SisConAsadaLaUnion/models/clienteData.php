@@ -422,6 +422,47 @@
             
         }
 
+        /*
+        // Método encargado de obtener los clientes a mostrar, totalidad sin filtros.
+        */
+
+        public function obtenerClientesSinFiltro($estadoCliente){
+
+           $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $consultaClientes = mysql_query("call SP_obtenerClientesSinFiltros('$estadoCliente')",$conexionBD) or die("Error al tratar de obtener los clientes en la base de datos");
+
+            $listaClientes = array();
+
+            if ($consultaClientes) {
+                
+                if (mysql_num_rows($consultaClientes) > 0) {
+
+                    while ($cli = mysql_fetch_array($consultaClientes)) {
+
+                    $idCliente = $cli['id_Cliente'];
+                    $cedula = $cli['cedula_Persona'];
+                    $nombre = $cli['nombre_Persona'];
+                    $apellidos = $cli['apellidos_Persona'];
+                    $correoElectronico = $cli['correoElectronico_Persona'];
+                    $direccion = $cli['direccion_Persona'];
+                    $numeroPlano = $cli['numeroPlano_Cliente'];
+            
+                    $listaClientes[] = array('id'=>$idCliente,'cedula'=>$cedula, 'nombre'=>$nombre, 'apellidos'=>$apellidos, 
+                        'correoElectronico'=>$correoElectronico,'direccion'=>$direccion, 'numeroPlano'=>$numeroPlano);
+
+                    }
+
+                }
+            }
+
+            mysql_close($conexionBD);
+
+            return $listaClientes;
+    }
+
     }
     
 ?>
