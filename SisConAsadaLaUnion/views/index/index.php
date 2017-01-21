@@ -25,10 +25,10 @@
 						<a href="<?php print URL;?>login">Control interno</a>
 					</li>
 					<li class="dropdown">
-						<a href="">Formulario de disponibilidad hídrica</a>
+						<a href="<?php print URL;?>index/descargarArchivoAdjunto/?nombreArchivo=disponibilidadHidrica.pdf">Formulario de disponibilidad hídrica</a>
 					</li>
 					<li class="dropdown">
-						<a href="">Formulario de arreglo de pagos</a>
+						<a href="<?php print URL;?>index/descargarArchivoAdjunto/?nombreArchivo=arregloPagos.pdf">Formulario de arreglo de pagos</a>
 					</li>
 				</ul>
 			</div>

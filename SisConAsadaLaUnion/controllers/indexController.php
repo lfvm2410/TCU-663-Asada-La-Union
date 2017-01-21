@@ -128,6 +128,26 @@
 
       	}
 
+      	/*
+		//Metodo encargado de recibir una solicitud para la descarga de un archivo
+      	*/
+
+      	public function descargarArchivoAdjunto(){
+
+      		if (isset($_GET['nombreArchivo'])) {
+
+				$nombreArchivo = trim($_GET['nombreArchivo']);
+
+				$this->logica->descargarArchivoAdjunto($nombreArchivo);
+
+          	}else{
+
+            	$this->redireccionActividadNoAutorizada();
+
+          	}
+
+      	}
+
 	}
 
 ?>
