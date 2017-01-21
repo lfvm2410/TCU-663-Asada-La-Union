@@ -252,8 +252,11 @@
             </table>
         </div>
         <center>
-    <ul id="paginacion" class="pagination"></ul>
-    </center>
+        <ul id="paginacion" class="pagination"></ul>
+        </center>
+        <div class="container">
+        <button class="btn btn-info pull-right" onclick="window.print();">Imprimir</button>
+        </div>
 </div>
 </div>
 </body>
