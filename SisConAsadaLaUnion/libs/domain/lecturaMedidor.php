@@ -8,14 +8,16 @@ class lecturaMedidor{
 
 	private $idLectura;
 	private $cantidadMetrosCubicos;
-	private $fecha;
+	private $fechaCreacion;
+	private $fechaModificacion;
 	private $idServicio;
 
-	public function __construct($idLectura, $cantidadMetrosCubicos, $fecha, $idServicio){
+	public function __construct($idLectura, $cantidadMetrosCubicos, $fechaCreacion, $fechaModificacion, $idServicio){
 
 		$this->idLectura = $idLectura;
 		$this->cantidadMetrosCubicos = $cantidadMetrosCubicos;
-		$this->fecha = $fecha;
+		$this->fechaCreacion = $fechaCreacion;
+		$this->fechaModificacion = $fechaModificacion;
 		$this->idServicio = $idServicio;
 	}
 
@@ -29,9 +31,14 @@ class lecturaMedidor{
 		$this->cantidadMetrosCubicos = $cantidadMetrosCubicos;
 	}
 
-	public function setFecha($fecha){
+	public function setFechaCreacion($fechaCreacion){
 
-		$this->fecha = $fecha;
+		$this->fechaCreacion = $fechaCreacion;
+	}
+
+	public function setFechaModificacion($fechaModificacion){
+
+		$this->fechaModificacion = $fechaModificacion;
 	}
 
 	public function setIdServicio($idServicio){
@@ -49,9 +56,14 @@ class lecturaMedidor{
 		return $this->cantidadMetrosCubicos;
 	}
 
-	public function getFecha(){
+	public function getFechaCreacion(){
 
-		return $this->fecha;
+		return $this->fechaCreacion;
+	}
+
+	public function getFechaModificacion(){
+
+		return $this->fechaModificacion;
 	}
 
 	public function getIdServicio(){

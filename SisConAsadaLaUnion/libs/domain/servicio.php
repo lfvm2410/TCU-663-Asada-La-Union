@@ -10,12 +10,14 @@ class servicio{
 	private $numeroNIS;
 	private $estado;
 	private $fechaModificacion;
+	private $tipoServicio;
 
-	public function __construct($idServicio, $numeroNIS, $estado, $fechaModificacion){
+	public function __construct($idServicio, $numeroNIS, $estado, $tipoServicio,$fechaModificacion){
 
 		$this->idServicio = $idServicio;
 		$this->numeroNIS = $numeroNIS;
 		$this->estado = $estado;
+		$this->tipoServicio = $tipoServicio;
 		$this->fechaModificacion = $fechaModificacion;
 	}
 
@@ -32,6 +34,11 @@ class servicio{
 	public function setEstado($estado){
 
 		$this->estado = $estado;
+	}
+
+	public function setTipoServicio($tipoServicio){
+
+		$this->tipoServicio = $tipoServicio;
 	}
 
 	public function setFechaModificacion($fechaModificacion){
@@ -52,6 +59,11 @@ class servicio{
 	public function getEstado(){
 
 		return $this->estado;
+	}
+
+	public function getTipoServicio(){
+
+		return $this->tipoServicio;
 	}
 
 	public function getFechaModificacion(){

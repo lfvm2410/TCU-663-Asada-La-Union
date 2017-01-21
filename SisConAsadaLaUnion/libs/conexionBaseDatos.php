@@ -74,11 +74,11 @@
 
 		public function getConexion(){
 
-  		  	$conexion = mysql_connect($this->getHost(),$this->getUser(),$this->getPass()) or die("Problemas al conectar.");
+  		  	$conexion = @mysql_connect($this->getHost(),$this->getUser(),$this->getPass()) or die("Problemas al conectar con el servidor que aloja la base de datos del sistema");
 
-  		 	 mysql_select_db($this->getBase(), $conexion) or die("Problemas al conectar con la base de datos.");
+  		 	@mysql_select_db($this->getBase(), $conexion) or die("Problemas al conectar con la base de datos del sistema");
 
-    		 return $conexion;
+    		return $conexion;
 
 		}
 

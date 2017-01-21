@@ -50,6 +50,10 @@
 
               $('#mensajeVerificacionPlano').html("");
 
+              $("#idTipoTel2Cliente").removeAttr("required");
+
+              $("#idNumTel2Cliente").removeAttr("required");
+
           }else{
           	
               alertify.error("Ha ocurrido un error al tratar de registrar el cliente, inténtelo de nuevo");
@@ -148,7 +152,7 @@
 
             }else{
 
-              verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError,idDivMensaje);
+              verificarExistenciaCampos("persona/"+metodoNombre,datosEnvio,mensajeError,idDivMensaje);
             
             }
         
@@ -165,15 +169,15 @@
 
                     }else{
 
-                      verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError,idDivMensaje);
+                      verificarExistenciaCampos("persona/"+metodoNombre,datosEnvio,mensajeError,idDivMensaje);
                     
                     }
                 
                   }else{
 
-                      verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError,idDivMensaje);
+                      verificarExistenciaCampos("cliente/"+metodoNombre,datosEnvio,mensajeError,idDivMensaje);
                 
-                    }
+                  }
 
               }
 
@@ -190,10 +194,10 @@
   //Metodo ajax que permite verificar la existencia de varios campos del formulario en la base de datos
   */
 
-  function verificarExistenciaCampos(metodoNombre,datosEnvio,mensajeError,idDivMensaje){
+  function verificarExistenciaCampos(controladorMetodoNombre,datosEnvio,mensajeError,idDivMensaje){
 
         $.ajax({
-          url: "/SisConAsadaLaUnion/cliente/"+metodoNombre,
+          url: "/SisConAsadaLaUnion/"+controladorMetodoNombre,
           type: "POST",
           data: "valor="+datosEnvio,
           beforeSend: function(){

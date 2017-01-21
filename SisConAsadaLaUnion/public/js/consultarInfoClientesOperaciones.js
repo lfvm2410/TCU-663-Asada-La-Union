@@ -8,11 +8,23 @@
 
     crearDialogTelefonos();
 
+    crearDialogEditarCliente();
+
     buscarClientesCedulaNombre();
 
     levantarVentanaModalTelefonos($("#verNumsTel"));
 
+    validarTelefonoNoRequeridoCombo();
+
+    validarTelefonoNoRequeridoInput();
+
+    ejecutarAccionSeleccionada();
+
   });
+
+  //Variable global que contiene el numero de la pagina actual de la paginacion
+
+  var paginaActualGlb = 0;
 
   /*
   //Metodo encargado de gestionar la carga de la lista de clientes con el servidor
@@ -27,7 +39,7 @@
           dataType: "json",
           beforeSend: function(){
 
-            $("#cuerpoTablaClientes").html('<tr><td colspan="7"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
+            $("#cuerpoTablaClientes").html('<tr><td colspan="8"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
 
           },
           success: function(respuesta){
@@ -77,11 +89,12 @@
         prev: '&laquo; Anterior',
         next: 'Siguiente &raquo;',
         last: 'Último',
-        onPageClick: function (event, page) {
+        onPageClick: function (event, page) { 
+          paginaActualGlb = page;
           if (ejecucionOnLoad) {
             ejecucionOnLoad = false;
           }else{
-            $("#paginacion").twbsPagination('destroy'); 
+            $("#paginacion").twbsPagination('destroy');
             crearListaPaginasPaginacion(page,nombreMetodo,cedulaNombre);
           }
           cargarListaClientes(page,nombreMetodo,cedulaNombre);
@@ -90,7 +103,7 @@
 
     }else{
 
-      $("#cuerpoTablaClientes").html("<tr><td colspan='7' style='text-align:center;'>No se encontraron resultados</td></tr>");
+      $("#cuerpoTablaClientes").html("<tr><td colspan='8' style='text-align:center;'>No se encontraron resultados</td></tr>");
 
     }
     
@@ -109,7 +122,7 @@
           dataType: "json",
           beforeSend: function(){
 
-            $("#cuerpoTablaClientes").html('<tr><td colspan="7"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
+            $("#cuerpoTablaClientes").html('<tr><td colspan="8"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
 
           },
           success: function(respuesta){
@@ -178,6 +191,31 @@
  }
 
   /*
+  //Metodo encargado de crear el dialog correspondiente para mostrar la pagina para editar un cliente
+  */
+
+ function crearDialogEditarCliente(){
+
+  var idVentanaEditarCliente = $("#editarCliente");
+
+  idVentanaEditarCliente.dialog({
+      autoOpen: false,
+      modal: true,
+      width: 600,
+      height: 600,
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      }
+    });
+
+ }
+
+  /*
   //Metodo encargado de gestionar la busqueda de clientes por su cedula o nombre
   */
 
@@ -187,7 +225,7 @@
 
     $("#buscarCliente").on('keyup', function() {
 
-    $("#cuerpoTablaClientes").html('<tr><td colspan="7"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
+    $("#cuerpoTablaClientes").html('<tr><td colspan="8"><img class="center-block" src="/SisConAsadaLaUnion/public/assets/images/Loading.gif" alt="Cargando" width="38px"/></td></tr>');
 
     var cedulaNombre = $(this).val().trim();
     
@@ -275,6 +313,66 @@
         var cedulaCliente = $(this).attr("data-cedula");
 
         cargarTelefonosCliente(cedulaCliente,idVentanaNumsTel);
+
+      });
+
+  }
+
+  /*
+  // Metodo para que el usuario confirme una transaccion
+  */
+
+  function confirmarTransaccion(mensaje) {
+
+   return confirm(mensaje);
+
+  }
+
+  /*
+  // Metodo encargado de ejecutar una accion seleccionada por el usuario en el combobox de Acciones
+  */
+
+  function ejecutarAccionSeleccionada() {
+
+     $("#tablaClientes").on("change", ".form-control.acciones", function(e){
+        
+        var accion = $(this).val();
+
+        if (accion == "Editar") {
+
+          var idForm = $("#idEditarClienteForm");
+          var cedulaCliente = $(this).attr("data-cedula");
+
+          //Limpiar campos siempre antes de cargar form de edicion
+          limpiarCamposForm(idForm);
+          $('#mensajeVerificacionCedula').empty();
+          $('#mensajeVerificacionCorreo').empty();
+          $('#mensajeVerificacionPlano').empty();
+          $("#idTipoTel2Cliente").removeAttr("required");
+          $("#idNumTel2Cliente").removeAttr("required");
+          
+          //Llamada al metodo ajax para cargar el form edicion con los datos del cliente seleccionado
+          cargarClientePorCedula(cedulaCliente);
+
+          $(this).closest('select').val("");
+
+        }
+
+        if (accion == "Anular") {
+
+          if (confirmarTransaccion("¿Desea continuar con la exclusión del cliente seleccionado?")) {
+      
+              var cedulaCliente = $(this).attr("data-cedula");
+
+              anularCliente(cedulaCliente,$(this));
+
+            }else{
+
+              $(this).closest('select').val("");
+            
+            }
+
+        }
 
       });
 

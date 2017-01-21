@@ -32,6 +32,27 @@ body{
   text-shadow: 2px 0 0 #0174DF, -2px 0 0 #0174DF, 0 2px 0 #0174DF, 0 -2px 0 #0174DF, 1px 1px #0174DF, -1px -1px 0 #0174DF, 1px -1px 0 #0174DF, -1px 1px 0 #0174DF;
 }
 
+/*JQuery dialog style*/
+
+.ui-widget-header{
+  background: none;
+  background-color: #00ABFF;
+}
+
+/*JQuery dialog title style*/
+
+.ui-dialog-title{
+  color: #FFFFFF;
+}
+
+/*JQuery dialog button style*/
+
+.ui-dialog-titlebar-close{
+  background-image: url("/SisConAsadaLaUnion/public/assets/images/cerrar.png");
+  background-size: 100% 100%;
+  background-color: #FFFFFF;
+}
+
 /*Media queries*/
 
 @media only screen and (max-width: 991px) {

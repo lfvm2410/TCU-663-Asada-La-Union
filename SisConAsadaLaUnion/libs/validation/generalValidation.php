@@ -16,7 +16,40 @@
 
 			$estadoCampo = false;
 
-			if (strlen($texto) <= $maximaCantidadCaracteres && !is_null($texto) && !empty($texto)) {
+			if (mb_strlen($texto,"UTF-8") <= $maximaCantidadCaracteres && !is_null($texto) && !empty($texto)) {
+				
+				$estadoCampo = true;
+			}
+			
+			return $estadoCampo;
+		
+		}
+
+		/*
+        //Metodo encargado de validar campos de texto de acuerdo a la condición: No nulo
+		*/
+
+		public function validarCamposTextoRequeridos($texto){
+
+			$estadoCampo = false;
+
+			if (!is_null($texto) && !empty($texto)) {
+				
+				$estadoCampo = true;
+			}
+
+			return $estadoCampo;
+		}
+
+		/*
+	    //Metodo encargado de validar solamente la longitud de un campo de texto
+		*/
+
+		public function validarLongitudCampoTexto($texto,$maximaCantidadCaracteres){
+
+			$estadoCampo = false;
+
+			if (mb_strlen($texto,"UTF-8") <= $maximaCantidadCaracteres) {
 				
 				$estadoCampo = true;
 			}
@@ -32,7 +65,7 @@
 
 			$estadoCampo = false;
 
-			if (strlen($texto) <= $maximaCantidadCaracteres && !is_null($texto) && !empty($texto) && 
+			if (mb_strlen($texto,"UTF-8") <= $maximaCantidadCaracteres && !is_null($texto) && !empty($texto) && 
 				preg_match($patternRegex, $texto)) {
 
 				$estadoCampo = true;
@@ -57,6 +90,85 @@
 			}
 
 			return $estadoArray;
+
+		}
+
+		/*
+        //Metodo encargado de validar campos numericos (numericos enteros) de acuerdo a las condiciones: Máximo de 2147483647, no nulo
+		*/
+
+		public function validarCamposNumericosEnteros($numero){
+
+			$estadoCampo = false;
+
+			if (intval($numero) > 0 && $numero <= 2147483647 && !is_null($numero) && !empty($numero)) {
+				
+				$estadoCampo = true;
+			}
+			
+			return $estadoCampo;
+		}
+
+		/*
+        //Metodo encargado de validar campos numericos (numericos decimales) de acuerdo a las condiciones: 
+        //Mínimo de 0.01, Máximo de 999999999999.99, no nulo
+		*/
+
+		public function validarCamposNumericosDecimales($numero){
+
+			$estadoCampo = false;
+
+			if (is_numeric($numero) && $numero >= 0.01 && $numero <= 999999999999.99 && 
+				!is_null($numero) && !empty($numero)) {
+				
+				$estadoCampo = true;
+			}
+			
+			return $estadoCampo;
+		}
+
+		/*
+		//Metodo encargado de validar si una fecha es correcta
+		*/
+
+		public function validarFecha($fecha){
+
+			$estadoFecha = false;
+
+			if (!is_null($fecha) && !empty($fecha)) {
+
+                $fechaDividida = explode ("/", $fecha);
+
+                $dia = $fechaDividida[0]; 
+                $mes = $fechaDividida[1]; 
+                $anio = $fechaDividida[2];
+
+                if(checkdate($mes,$dia,$anio)){ 
+                
+                	$estadoFecha = true;
+
+                }
+				
+			}
+			
+			return $estadoFecha;
+		}
+
+		/*
+		//Metodo encargado de verificar si 2 cadenas son iguales
+		*/
+
+		public function verificarCadenasIguales($cadena1, $cadena2){
+
+			$cadenasIguales = false;
+
+			if (strcmp($cadena1, $cadena2) == 0) {
+
+				$cadenasIguales = true;
+				
+			}
+
+			return $cadenasIguales;
 
 		}
 
