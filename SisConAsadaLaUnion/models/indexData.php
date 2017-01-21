@@ -1,16 +1,16 @@
 <?php
 
-    /*
-    * Clase encargada de contener todas las operaciones de datos referentes a index
-    */
+      /*
+      * Clase encargada de contener todas las operaciones de datos referentes a index
+      */
 
-    class indexData extends modelo{
+      class indexData extends modelo{
     		
-    	public function __construct(){
+      	public function __construct(){
 
-            parent::__construct();
-    	
-    	}
+              parent::__construct();
+      	
+      	}
 
         /*
         // Metodo encargado de eliminar las imagenes adjuntas para ser visualizadas en la página de presentación
@@ -137,6 +137,6 @@
 
         }
         
-    }
+      }
     
 ?>

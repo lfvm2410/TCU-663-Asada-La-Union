@@ -17,7 +17,7 @@
 
 		public function index(){ 
 	
-			$this->vista->render($this,'index','ASADA La Unión');
+			$this->vista->render($this,'index','Bienvenidos al sitio web ASADA La Unión');
 
 		}
 
@@ -113,6 +113,18 @@
 	          $this->redireccionActividadNoAutorizada();
 
 	        }
+
+      	}
+
+      	/*
+      	//Metodo encargado de retornar las imagenes (nombres) y la información de la asada
+      	*/
+
+      	public function obtenerInformacionImagenesPaginaPresentacion(){
+
+	        header("Content-Type: application/json");
+	        
+	        $this->logica->obtenerInformacionImagenesPaginaPresentacion();
 
       	}
 

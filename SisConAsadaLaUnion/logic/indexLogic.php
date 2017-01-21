@@ -50,13 +50,50 @@
     // Metodo encargado de retornar la información para la página de presentación
     */
       
-      public function obtenerInformacionPaginaPresentacion(){
+    public function obtenerInformacionPaginaPresentacion(){
 
-        $informacionPaginaPresentacion = $this->indexData->obtenerInformacionPaginaPresentacion();
+      $informacionPaginaPresentacion = $this->indexData->obtenerInformacionPaginaPresentacion();
 
-        print_r(json_encode($informacionPaginaPresentacion));
+      print_r(json_encode($informacionPaginaPresentacion));
 
+    }
+
+    /*
+    // Metodo encargado de retornar las imagenes (nombres) y la información de la asada
+    */
+
+    public function obtenerInformacionImagenesPaginaPresentacion(){
+
+      $informacionAsada = $this->indexData->obtenerInformacionPaginaPresentacion();
+
+      $imagenes = scandir(RUTA_IMAGENES_PAGINA_PRESENTACION);
+
+      if ($imagenes != false) {
+
+        // Se limpia el array de imagenes
+
+        $imagenesLimpias = array();
+
+        foreach ($imagenes as $imagen) {
+          
+          if (!$this->indexValidation->verificarCadenasIguales($imagen,".") &&
+              !$this->indexValidation->verificarCadenasIguales($imagen,"..")) {
+
+            $imagenesLimpias[] = $imagen;
+
+          }
+
+        }
+
+        print_r(json_encode(array('informacionAsada' => $informacionAsada, 'imagenes' => $imagenesLimpias)));
+        
+      }else{
+
+        print_r(json_encode("false"));
+        
       }
+
+    }
 
     /*
     // Metodo encargado de guardar la informacion de la pagina de presentacion
