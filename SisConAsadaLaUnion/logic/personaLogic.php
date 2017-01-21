@@ -5,17 +5,88 @@
   // reglas de negocio y gestiona los llamados hacia la data
   */
 
-	class personaLogic{
+	class personaLogic extends logica{
 
 		private $personaData;
+    private $telefonoData;
     private $personaValidation;
+    private $telefonoValidation;
 
 		public function __construct(){
 
 			$this->personaData = new personaData();
+      $this->telefonoData = new telefonoData();
       $this->personaValidation = new personaValidation();
+      $this->telefonoValidation = new telefonoValidation();
 
 		}
+
+    /*
+    // Método encargado de gestionar el registro de una persona como usuario, mediando entre controlador y data
+    */
+
+    public function registrarPersona(usuarioSistema $usuario, telefono $telefono1, telefono $telefono2){
+
+          $patternTelefono = "/^[0-9]{8}$/";
+
+          if ($this->personaValidation->validarTipoUsuario($usuario->getTipoUsuario()) &&
+              $this->personaValidation->validarCedula($usuario->getCedula(),$this->personaData) &&
+              $this->personaValidation->validarCamposTexto($usuario->getNombre(),30) &&
+              $this->personaValidation->validarCamposTexto($usuario->getApellidos(),30) &&
+              $this->personaValidation->validarFecha($usuario->getFechaNacimiento()) &&
+              $this->personaValidation->validarCorreoElectronico($usuario->getCorreoElectronico(),$this->personaData) &&
+              $this->personaValidation->validarNombreUsuario($usuario->getTipoUsuario(), $usuario->getNombreUsuario(),$this->personaData) &&
+              $this->personaValidation->validarContrasenias($usuario->getTipoUsuario(), $usuario->getContrasenia(),$usuario->getConfirmarContrasenia()) &&
+              $this->telefonoValidation->validarTipoTelefonoRequerido($telefono1->getTipo()) &&
+              $this->telefonoValidation->validarCamposTextoRegex($telefono1->getNumero(),8,$patternTelefono) &&
+              $this->personaValidation->validarCamposTexto($usuario->getDireccion(),300) &&
+              $this->personaValidation->validarCamposTexto($usuario->getPuesto(),15) &&
+              $this->personaValidation->validarCamposTexto($usuario->getDescripcionPuesto(),50)) {
+
+              //Setear nombre de usuario y contraseña de acuerdo al perfil de la persona
+              if (strcmp($usuario->getTipoUsuario(), "Administrador") == 0) {
+
+                $usuario->setNombreUsuario("'".$usuario->getNombreUsuario()."'");
+                $usuario->setContrasenia("'".password_hash($usuario->getContrasenia(), PASSWORD_DEFAULT)."'");
+        
+              } elseif (strcmp($usuario->getTipoUsuario(), "Colaborador") == 0) {
+
+                $usuario->setNombreUsuario('NULL');
+                $usuario->setContrasenia('NULL');
+            
+              }
+
+              //Verificar si se incluye el telefono #2 a la lista
+              $telefonoLogic = new telefonoLogic();
+
+              $telefonoLogic->setTelefonoALista($telefono1);
+
+              if ($this->telefonoValidation->validarTipoTelefonoRequerido($telefono2->getTipo()) &&
+                  $this->telefonoValidation->validarCamposTextoRegex($telefono2->getNumero(),8,$patternTelefono)) {
+
+                  $telefonoLogic->setTelefonoALista($telefono2);
+                
+              }
+
+              $listaTelefonos = $telefonoLogic->getListaTelefonos();
+
+              //Se registra la persona
+              if($this->personaData->registrarPersona($usuario,$listaTelefonos)){
+
+                echo "true";
+                
+              }else{
+
+                echo "false";
+              }
+                
+          }else{
+
+            echo "false";
+
+          }
+
+    }
 
     /*
     // Método encargado de gestionar la comprobación de una cédula existente en la base de datos, mediando entre controlador y data
@@ -92,7 +163,310 @@
 
       }
 
-    }    
+    }
+
+    /*
+    // Método encargado de gestionar la comprobación de una cédula (en edición) existente en la base de datos, mediando entre controlador y data
+    */
+
+    public function comprobarExistenciaCedulaEnEdicion($cedulaActual,$cedulaNueva){
+
+      $patternCedula = "/^[0-9]*$/";
+
+      if ($this->personaValidation->validarCamposTextoRegex($cedulaActual,16,$patternCedula) &&
+          $this->personaValidation->validarCamposTextoRegex($cedulaNueva,16,$patternCedula)) {
+
+          if ($this->personaData->comprobarExistenciaCampoEnEdicion("tbPersona","cedula_Persona",$cedulaActual,$cedulaNueva)) {
+
+            echo "<div id='msjCedula' class='alert alert-danger' data-cedula='false'>
+                        <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                        La cédula digitada ya existe, debe cambiarla
+                 </div>";
+
+
+          }else{
+
+             echo "<div id='msjCedula' class='alert alert-success' data-cedula='true'>
+                      <strong><span class='glyphicon glyphicon-ok'></span></strong> 
+                      Cédula disponible para ser registrada
+                  </div>";
+
+          }
+
+      }else{
+
+        echo "<div id='msjCedula' class='alert alert-danger' data-cedula='false'>
+                <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                El contenido del campo correspondiente a cédula solo admite números (no más de 16) y no puede estar vacío
+              </div>";
+
+      }
+
+    }
+
+    /*
+    // Método encargado de gestionar la comprobación de un correo electrónico (en edición) existente en la base de datos, mediando entre controlador y data
+    */
+
+    public function comprobarExistenciaCorreoElectronicoEnEdicion($correoElectronicoActual,$correoElectronicoNuevo){
+
+      $patternCorreoElectronico = "/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/";
+
+      if ($this->personaValidation->validarCamposTextoRegex($correoElectronicoActual,30,$patternCorreoElectronico) &&
+          $this->personaValidation->validarCamposTextoRegex($correoElectronicoNuevo,30,$patternCorreoElectronico)) {
+
+          if ($this->personaData->comprobarExistenciaCampoEnEdicion("tbPersona","correoElectronico_Persona",$correoElectronicoActual,$correoElectronicoNuevo)) {
+
+            echo "<div id='msjCorreo' class='alert alert-danger' data-correo='false'>
+                        <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                        El correo electrónico digitado ya existe, debe cambiarlo
+                 </div>";
+
+
+          }else{
+
+             echo "<div id='msjCorreo' class='alert alert-success' data-correo='true'>
+                      <strong><span class='glyphicon glyphicon-ok'></span></strong> 
+                          Correo electrónico disponible para ser registrado
+                     </div>";
+
+          }
+
+      }else{
+
+        echo "<div id='msjCorreo' class='alert alert-danger' data-correo='false'>
+                <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                El contenido del campo correspondiente a correo electrónico no puede estar vacío y no puede execederse de 30 caracteres
+                <br>Formato: ejemplo@gmail.com
+              </div>";
+
+      }
+
+    }
+
+    /*
+    // Método encargado de gestionar la comprobación de un nombre de usuario existente en la base de datos, 
+    // mediando entre controlador y data
+    */
+
+    public function comprobarExistenciaNombreUsuario($nombreUsuario){
+
+      if ($this->personaValidation->validarCamposTexto($nombreUsuario,15)) {
+
+          if ($this->personaData->comprobarExistenciaNombreUsuario($nombreUsuario)) {
+
+            echo "<div id='msjNombreUsuario' class='alert alert-danger' data-nombreUsuario='false'>
+                        <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                        El nombre de usuario digitado ya existe, debe cambiarlo
+                 </div>";
+
+
+          }else{
+
+             echo "<div id='msjNombreUsuario' class='alert alert-success' data-nombreUsuario='true'>
+                      <strong><span class='glyphicon glyphicon-ok'></span></strong> 
+                          Nombre de usuario disponible para ser registrado
+                   </div>";
+
+          }
+
+      }else{
+
+        echo "<div id='msjNombreUsuario' class='alert alert-danger' data-nombreUsuario='false'>
+                <strong><span class='glyphicon glyphicon-remove'></span></strong> 
+                Para verificar si un nombre de usuario ya existe, es necesario que el contenido del campo correspondiente a él no este vacío y no se exceda de 15 caracteres
+              </div>";
+
+      }
+
+    }
+
+    /*
+    // Metodo encargado de obtener una persona por su id
+    */
+
+    public function obtenerPersonaPorId($idPersona, $tipoPersona){
+
+      if ($this->personaValidation->validarCamposNumericosEnteros($idPersona) &&
+          $this->personaValidation->validarTipoPersonaAConsultar($tipoPersona)) {
+
+          $persona = $this->personaData->getPersonaPorId($idPersona, $tipoPersona);
+          $telefonosPersona = $this->telefonoData->obtenerTelefonosPorIdPersona($idPersona);
+
+          if ($this->personaValidation->validarArray($persona) && $this->personaValidation->validarArray($telefonosPersona)) {
+
+              $personaResultante = array('persona' => $persona, 'telefonosPersona' => $telefonosPersona);
+              
+              print_r(json_encode($personaResultante));
+                  
+          }else{
+
+              print_r(json_encode("false"));
+
+          }
+
+      }else{
+
+          print_r(json_encode("false"));
+
+      }
+
+    }
+
+    /*
+    // Metodo encargado de gestionar la edicion de una persona como usuario, mediando entre controlador y data
+    */
+
+    public function editarPersona($cedulaActual, $correoElectronicoActual, usuarioSistema $usuario, 
+                                  telefono $telefono1, telefono $telefono2){
+
+          $patternTelefono = "/^[0-9]{8}$/";
+
+          if ($this->personaValidation->validarCamposNumericosEnteros($usuario->getIdPersona()) &&
+              $this->personaValidation->validarTipoUsuario($usuario->getTipoUsuario()) &&
+              $this->personaValidation->validarCedulaEnEdicion($cedulaActual,$usuario->getCedula(),$this->personaData) &&
+              $this->personaValidation->validarCamposTexto($usuario->getNombre(),30) &&
+              $this->personaValidation->validarCamposTexto($usuario->getApellidos(),30) &&
+              $this->personaValidation->validarFecha($usuario->getFechaNacimiento()) &&
+              $this->personaValidation->validarCorreoElectronicoEnEdicion($correoElectronicoActual,$usuario->getCorreoElectronico(),$this->personaData) &&
+              $this->personaValidation->validarNombreUsuario($usuario->getTipoUsuario(), $usuario->getNombreUsuario(),$this->personaData) &&
+              $this->personaValidation->validarContrasenias($usuario->getTipoUsuario(), $usuario->getContrasenia(),$usuario->getConfirmarContrasenia()) &&
+              $this->telefonoValidation->validarTipoTelefonoRequerido($telefono1->getTipo()) &&
+              $this->telefonoValidation->validarCamposTextoRegex($telefono1->getNumero(),8,$patternTelefono) &&
+              $this->personaValidation->validarCamposTexto($usuario->getDireccion(),300) &&
+              $this->personaValidation->validarCamposTexto($usuario->getPuesto(),15) &&
+              $this->personaValidation->validarCamposTexto($usuario->getDescripcionPuesto(),50)) {
+
+              //Setear nombre de usuario y contraseña de acuerdo al perfil de la persona
+              if (strcmp($usuario->getTipoUsuario(), "Administrador") == 0) {
+
+                $usuario->setNombreUsuario("'".$usuario->getNombreUsuario()."'");
+                $usuario->setContrasenia("'".password_hash($usuario->getContrasenia(), PASSWORD_DEFAULT)."'");
+        
+              } elseif (strcmp($usuario->getTipoUsuario(), "Colaborador") == 0) {
+
+                $usuario->setNombreUsuario('NULL');
+                $usuario->setContrasenia('NULL');
+            
+              }
+
+              //Verificar si se incluye el telefono #2 a la lista
+              $telefonoLogic = new telefonoLogic();
+
+              $telefonoLogic->setTelefonoALista($telefono1);
+
+              if ($this->telefonoValidation->validarTipoTelefonoRequerido($telefono2->getTipo()) &&
+                  $this->telefonoValidation->validarCamposTextoRegex($telefono2->getNumero(),8,$patternTelefono)) {
+
+                  $telefonoLogic->setTelefonoALista($telefono2);
+                
+              }
+
+              $listaTelefonos = $telefonoLogic->getListaTelefonos();
+
+              //Se edita la persona
+              if($this->personaData->editarPersona($usuario,$listaTelefonos)){
+
+                echo "true";
+                
+              }else{
+
+                echo "false";
+              }
+                
+          }else{
+
+            echo "false";
+
+          }
+
+    }
+
+    /*
+    // Metodo encargado de gestionar la eliminacion de una persona
+    */
+
+    public function eliminarPersona($idPersona, $tipoPersona){
+
+      if ($this->personaValidation->validarCamposNumericosEnteros($idPersona) &&
+          $this->personaValidation->verificarPerfilPersonaAEliminar($idPersona, $tipoPersona, $this->personaData)) {
+
+        if ($this->personaData->eliminarPersona($idPersona)) {
+            
+          echo "true";
+
+        }else{
+
+          echo "false";
+
+        }
+
+      }else{
+
+        echo "false";
+
+      }
+
+    }
+
+    /*
+    //Metodo encargado de validar una solicitud para iniciar sesión en el sistema
+    */
+
+    public function validarLogin(usuarioSistema $usuario){
+
+      if ($this->personaValidation->validarCamposTexto($usuario->getNombreUsuario(),15) &&
+          $this->personaValidation->validarCamposTexto($usuario->getContrasenia(),15)) {
+      
+        $usuarioSistema = $this->personaData->obtenerUsuarioSistemaPorNombreUsuario($usuario->getNombreUsuario());
+        
+        if(!is_null($usuarioSistema)){
+
+          if($this->personaValidation->validarInicioSesionSistema($usuarioSistema, $usuario->getNombreUsuario(), $usuario->getContrasenia())) {
+          
+              session::init();
+
+              session::set("usuarioSistema",$usuarioSistema);
+
+              echo "true";
+          
+          }else{
+          
+              echo "La contraseña para el usuario ingresado es incorrecta";
+          
+          }
+        
+        }else{
+        
+          echo "El usuario ingresado no se encuentra registrado en la base de datos";
+        
+        }
+
+    }else{
+
+      echo "Los campos referentes a usuario y contraseña no pueden estar vacíos. El contenido de estos campos no puede exceder los 15 caracteres";
+
+    }
+
+  }
+
+    /*
+    // Metodo encargado de cerrar la sesión del usuario activo
+    */
+
+    public function cerrarSession(){
+
+      session::init();
+
+      session::remove("usuarioSistema");
+
+      session::destroy();
+
+      header('Location: '.URL.'login');
+
+      exit;
+
+    } 
 
 	}
 

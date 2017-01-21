@@ -72,6 +72,43 @@
             return $listaTelefonos;
 
         }
+
+        /*
+        // Metodo encargado de obtener los telefonos correspondientes a una persona por su id
+        */
+
+        public function obtenerTelefonosPorIdPersona($idPersona){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $telefonosPersona = mysql_query("call SP_obtenerTelefonosPorIdPersona($idPersona)",$conexionBD) or die("Error al tratar de obtener los teléfonos en la base de datos");
+
+            $listaTelefonos = array();
+
+            if ($telefonosPersona) {
+                
+                if (mysql_num_rows($telefonosPersona) > 0) {
+
+                    while ($tel = mysql_fetch_array($telefonosPersona)) {
+
+                        $tipo = $tel['tipo_Telefono'];
+                        $numero = $tel['numero_Telefono'];
+            
+                        $listaTelefonos[] = array('tipo'=>$tipo, 'numero'=>$numero);
+
+                    }
+
+                }
+
+            }
+
+            mysql_close($conexionBD);
+
+            return $listaTelefonos;
+
+        }
         
     }
     

@@ -1,0 +1,21 @@
+/*Estilos personalizados para el datepicker de jquery*/
+
+.ui-widget-header {
+    border: 1px solid #aaaaaa;
+    background: #00ABFF;
+    color: #222222 !important;
+    font-weight: bold;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    color: #000 !important;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #00ABFF;
+}
+
+a:hover {
+    background: #00ABFF!important;
+    text-decoration: underline;
+}

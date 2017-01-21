@@ -25,44 +25,25 @@
 				</ul>
 			</li>
 			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown">Usuarios<b class="caret"></b></a>
+				<a class="dropdown-toggle" data-toggle="dropdown">Personas<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar usuario</a></li>
-					<li><a href="#">Consultar información de usuarios</a></li>			
-				</ul>
-			</li>
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown">Colaboradores<b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="#">Registrar colaborador</a></li>
-					<li><a href="#">Actualizar colaborador</a></li>
-					<li><a href="#">Consultar información de colaboradores</a></li>
-					<li><a href="#">Eliminar colaborador</a></li>			
+					<li><a href="<?php print URL;?>persona/registrarPersonaForm">Registrar persona</a></li>
+					<li><a href="<?php print URL;?>persona/consultarInformacionPersonas">Consultar información de personas</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Clientes<b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="<?php print URL;?>cliente/registrarClienteForm">Registrar cliente</a></li>
-					<li><a href="#">Actualizar cliente</a></li>
 					<li><a href="<?php print URL;?>cliente/consultarInformacionClientes">Consultar información de clientes</a></li>	
-					<li><a href="#">Deshabilitar cliente</a></li>		
+					<li><a href="<?php print URL;?>cliente/activarClientes">Activar clientes</a></li>		
 				</ul>
 			</li>
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Servicios<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar servicio a cliente</a></li>
-					<li><a href="#">Actualizar servicio de cliente</a></li>
-					<li><a href="#">Consultar información de los servicios de clientes</a></li>			
-				</ul>
-			</li>
-			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown">Lecturas<b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="#">Registrar lectura</a></li>
-					<li><a href="#">Actualizar lectura</a></li>
-					<li><a href="#">Consultar información de lecturas capturadas</a></li>			
+					<li><a href="<?php print URL;?>servicio/registrarServicioForm">Registrar servicio a cliente</a></li>
+					<li><a href="<?php print URL;?>servicio/consultarInformacionServicio">Consultar información de los servicios de clientes</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">
@@ -84,10 +65,8 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Productos<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Registrar producto</a></li>
-					<li><a href="#">Actualizar producto</a></li>
-					<li><a href="#">Consultar información sobre los productos</a></li>
-					<li><a href="#">Eliminar producto</a></li>			
+					<li><a href="<?php print URL;?>producto/registrarProductoForm">Registrar producto</a></li>
+					<li><a href="<?php print URL;?>producto/consultarInformacionProductos">Consultar información sobre los productos</a></li>			
 				</ul>
 			</li>
 			<li class="dropdown">
@@ -101,10 +80,10 @@
 			</li>
 			<li><a href="#">Configuración</a></li>
 			<li class="dropdown">
-				<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Mi cuenta<b class="caret"></b></a>
+				<a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Mi cuenta <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="#">Información personal</a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
+					<li><a href="<?php print URL;?>login/cerrarSession"><span class="glyphicon glyphicon-log-out"></span> Cerrar sesión</a></li>
 				</ul>
 			</li>
 		</ul>

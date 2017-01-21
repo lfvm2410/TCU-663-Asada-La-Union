@@ -25,6 +25,22 @@
 		}
 
 		/*
+	    //Metodo encargado de validar solamente la longitud de un campo de texto
+		*/
+
+		public function validarLongitudCampoTexto($texto,$maximaCantidadCaracteres){
+
+			$estadoCampo = false;
+
+			if (strlen($texto) <= $maximaCantidadCaracteres) {
+				
+				$estadoCampo = true;
+			}
+
+			return $estadoCampo;
+		}
+
+		/*
         //Metodo encargado de validar campos de texto de acuerdo a las condiciones: Máximo de N caracteres, no nulo, pattern
 		*/
 
@@ -58,6 +74,49 @@
 
 			return $estadoArray;
 
+		}
+
+		/*
+        //Metodo encargado de validar campos numericos (numericos enteros) de acuerdo a las condiciones: Máximo de 2147483647, no nulo
+		*/
+
+		public function validarCamposNumericosEnteros($numero){
+
+			$estadoCampo = false;
+
+			if (intval($numero) > 0 && $numero <= 2147483647 && !is_null($numero) && !empty($numero)) {
+				
+				$estadoCampo = true;
+			}
+			
+			return $estadoCampo;
+		}
+
+		/*
+		//Metodo encargado de validar si una fecha es correcta
+		*/
+
+		public function validarFecha($fecha){
+
+			$estadoFecha = false;
+
+			if (!is_null($fecha) && !empty($fecha)) {
+
+                $fechaDividida = explode ("/", $fecha);
+
+                $dia=$fechaDividida[0]; 
+                $mes=$fechaDividida[1]; 
+                $anio=$fechaDividida[2];
+
+                if(checkdate($mes,$dia,$anio)){ 
+                
+                	$estadoFecha = true;
+
+                }
+				
+			}
+			
+			return $estadoFecha;
 		}
 
 	}
