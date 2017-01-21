@@ -16,12 +16,13 @@
 
 			$estadoCampo = false;
 
-			if (strlen($texto) <= $maximaCantidadCaracteres && !is_null($texto) && !empty($texto)) {
+			if (mb_strlen($texto,"UTF-8") <= $maximaCantidadCaracteres && !is_null($texto) && !empty($texto)) {
 				
 				$estadoCampo = true;
 			}
-
+			
 			return $estadoCampo;
+		
 		}
 
 		/*
@@ -48,7 +49,7 @@
 
 			$estadoCampo = false;
 
-			if (strlen($texto) <= $maximaCantidadCaracteres) {
+			if (mb_strlen($texto,"UTF-8") <= $maximaCantidadCaracteres) {
 				
 				$estadoCampo = true;
 			}
@@ -64,7 +65,7 @@
 
 			$estadoCampo = false;
 
-			if (strlen($texto) <= $maximaCantidadCaracteres && !is_null($texto) && !empty($texto) && 
+			if (mb_strlen($texto,"UTF-8") <= $maximaCantidadCaracteres && !is_null($texto) && !empty($texto) && 
 				preg_match($patternRegex, $texto)) {
 
 				$estadoCampo = true;

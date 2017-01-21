@@ -4,10 +4,15 @@
 	<script src="<?php print URL;?>public/js/index.js" type="text/javascript"></script>
 </head>
 <body>
+<style type="text/css">
+	h3, p{
+		color:#00ABFF !important;
+	}
+</style>
 	<div id="presentacionEncabezado">
 		<a href="<?php print URL;?>"><img id="logoAsada" src="<?php print URL;?>public/assets/images/LogoAsadaUnion.png"/></a>
 		<h1><em>Bienvenidos al sitio web ASADA La Unión</em></h1>
-		<h4><em>!Cuidamos tu agua!</em></h4>
+		<h4><em>¡Cuidamos tu agua!</em></h4>
 	</div>
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="container-fluid">

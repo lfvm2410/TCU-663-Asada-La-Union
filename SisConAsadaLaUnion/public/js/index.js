@@ -51,24 +51,37 @@
     $("#item3").append("<div class='carousel-caption hidden-xs hidden-sm'><h3>Visión</h3><p>"+informacionAsada.vision[0]+"</p></div>");
     $("#item4").append("<div class='carousel-caption hidden-xs hidden-sm'><h3>Valores</h3><p>"+informacionAsada.valores[0]+"</p></div>");
     
-    var contadorImagenes = 0;
+    var contadorImagenes = 4;
+    var contadorImagenesGenericas = 0;
+  
+    if (imagenes.length > 0){
 
-    $(imagenes).each(function(index) {
+      var i = 0;
 
-      var idActual = "#item"+(index+1);
+      $(imagenes).each(function(index) {
         
-      $(idActual).append("<img src='/SisConAsadaLaUnion/public/assets/imagesPresentacion/"+imagenes[index]+"' width='1200' class='img-responsive' alt=''/>");
-        
-      contadorImagenes++;
+        var idActual = "#item"+(index+1);
+          
+        $(idActual).append("<img src='/SisConAsadaLaUnion/public/assets/imagesPresentacion/"+imagenes[index]+"' width='1200' class='img-responsive' alt=''/>");
+          
+        contadorImagenes--;
 
-    });
+        i++;
 
-    var contadorImagenesGenericas = contadorImagenes;
+      });
 
+      contadorImagenesGenericas = i;
+
+    }else{
+
+      contadorImagenesGenericas = 0;
+
+    }
+    
     for (i = 0; i < contadorImagenes; i++) {
 
       var idActual = "#item"+(contadorImagenesGenericas+1);
-      
+
       $(idActual).append("<img src='/SisConAsadaLaUnion/public/assets/images/acueductoGenerico.jpg' width='1200' class='img-responsive' alt=''/>");
       
       contadorImagenesGenericas++;
