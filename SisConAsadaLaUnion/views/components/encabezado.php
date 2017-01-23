@@ -23,7 +23,7 @@
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Presentación<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="<?php print URL;?>">Ir a página de presentación</a></li>
+					<li><a href="<?php print URL;?>">Ir a la página de presentación</a></li>
 					<li><a href="<?php print URL;?>index/actualizarPaginaPresentacionForm">Actualizar página de presentación</a></li>
 					<li><a href="<?php print URL;?>index/adjuntarArchivosForm">Adjuntar archivos</a></li>
 				</ul>
