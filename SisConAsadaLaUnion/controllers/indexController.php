@@ -21,6 +21,20 @@
 
 		}
 
+		public function inicio(){
+
+			if ($this->verificarSessionIniciada()) {
+
+				$this->vista->render($this,'inicio','Bienvenidos al sistema de control ASADA La Unión');
+            
+          	}else{
+
+            	$this->redireccionActividadNoAutorizada();
+
+          	}
+
+		}
+
 		public function actualizarPaginaPresentacionForm(){
 
 			if ($this->verificarSessionIniciada()) {

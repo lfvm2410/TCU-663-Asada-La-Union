@@ -4,7 +4,7 @@
 		<div class="col-md-4 pieCol">
 		    <h4>ASADA La Unión, Guápiles</h4>
 		    <hr>
-			<a href="#"><h5>Quiénes somos</h5></a>
+			<a href="<?php print URL;?>"><h5>Quiénes somos</h5></a>
 			<h5 style="">&copy Copyright 2016. Todos los derechos reservados.</h5>
 		</div>
 		<div class="col-md-4 pieCol">

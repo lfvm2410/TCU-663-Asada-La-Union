@@ -85,9 +85,7 @@ class lecturaController extends controlador{
 
           $permisoConsultaTotalPaginas = trim($_POST['permisoConsultaTotalPaginas']);
 
-          $filtroBusqueda = "";
-
-          $idServicio = trim($_POST['filtroBusqueda']);
+          $filtroBusqueda = trim($_POST['filtroBusqueda']);
 
           $this->logica->obtenertotalidadPaginas(TOTAL_LECTURAS, $permisoConsultaTotalPaginas, $filtroBusqueda, LIMITE_REGISTROS, "Si");
         

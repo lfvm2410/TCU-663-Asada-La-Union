@@ -17,6 +17,9 @@
 	</div>
 	<div id="acolapsar" class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
+			<li>
+				<a href="<?php print URL;?>index/inicio">Inicio</a>
+			</li>
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown">Presentación<b class="caret"></b></a>
 				<ul class="dropdown-menu">
