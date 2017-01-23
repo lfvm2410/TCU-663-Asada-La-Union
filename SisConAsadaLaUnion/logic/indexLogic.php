@@ -174,7 +174,7 @@
 
         }else{
 
-          header('Location: '.URL);
+          header('Location: '.URL."error/notFound");
 
           exit;
 
@@ -182,7 +182,7 @@
 
       }else{
 
-        header('Location: '.URL);
+        header('Location: '.URL.'error/badRequest');
 
         exit;
 

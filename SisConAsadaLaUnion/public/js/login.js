@@ -28,7 +28,7 @@
 
         if (respuesta == "true") {
 
-          window.location.href = "/SisConAsadaLaUnion/persona/registrarPersonaForm";
+          window.location.href = "/SisConAsadaLaUnion/index/inicio";
 
         }else{
 

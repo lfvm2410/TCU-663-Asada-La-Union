@@ -194,18 +194,17 @@ function cargarTablaLecturas()
   			var idServicio = $(this).attr("data-identificador");
   			cargarServicioPorId(idServicio,idFiltroBusqueda,direccionCantidadPaginas,direccionConsultaRegistros,idCuerpoTabla,colspan);
   			
-  		  	//limpiarCamposForm(idForm);
+        $(this).closest('select').val("");
   		}
       else if(accion == "Lecturas")
       {
-        //var idForm = $("#idRegistrarLecturaForm");
         var idServicio = $(this).attr("data-identificador");
-   
-        //$("#idIframe").attr("src","/SisConAsadaLaUnion/lectura/registrarLecturaForm/?idServicio="+idServicio);
       
         $("#dialogLectura").html('<iframe id="idIframe" title="La pinga de herodes" width="100%" height="100%"></iframe>');
         $('#idIframe').attr("src","/SisConAsadaLaUnion/lectura/registrarLecturaForm/?idServicio="+idServicio);
         $("#dialogLecturas").dialog("open");
+
+        $(this).closest('select').val("");
 
       }
 

@@ -209,6 +209,8 @@
         });
 
         $("#idLecturaSeleccionado").val(idLectura);
+
+        $(this).closest('select').val("");
       }
 
     });
