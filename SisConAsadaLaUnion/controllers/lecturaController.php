@@ -13,7 +13,7 @@ class lecturaController extends controlador{
 
           //Temporal, mientras se define la vista principal del controlador
 
-          header('Location: '.URL);
+          header('Location: '.URL.'index/inicio');
 
           exit;
             

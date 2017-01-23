@@ -462,7 +462,7 @@
 
       session::destroy();
 
-      header('Location: '.URL.'login');
+      header('Location: '.URL);
 
       exit;
 
