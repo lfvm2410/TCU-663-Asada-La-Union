@@ -21,6 +21,12 @@
 
 		}
 
+		public function contacto(){ 
+	
+			$this->vista->render($this,'contacto','Contacto');
+
+		}
+
 		public function inicio(){
 
 			if ($this->verificarSessionIniciada()) {
@@ -160,6 +166,64 @@
 
           	}
 
+      	}
+
+      	/*
+		//Metodo encargado de obtener el personal de la asada para la pagina de contacto
+      	*/
+
+      	public function obtenerPersonalAsada(){
+
+      		header("Content-Type: application/json");
+
+      		$this->logica->obtenerPersonalAsada();
+
+      	}
+
+      	/*
+      	// Metodo encargado de traer los telefonos de una persona por su id y redireccionarlos a la vista
+      	*/
+
+      	public function consultarTelefonosPersonaPorId(){
+
+        	header("Content-Type: application/json");
+
+          	if (isset($_POST['idPersona'])) {
+
+            	$idPersona = trim($_POST['idPersona']);
+
+            	$telefonoLogic = new telefonoLogic();
+
+            	$telefonoLogic->formatearTelefonosDePersonaPorId($idPersona);
+            
+          	}else{
+
+            	$this->redireccionActividadNoAutorizada();
+
+          	}
+      
+      	}
+
+      	/*
+      	// Metodo encargado de enviar una sugerencia por correo electronico
+      	*/
+
+      	public function enviarSugerencia(){
+
+          	if (isset($_POST['asunto']) && isset($_POST['comentario']) && isset($_POST['correoElectronico'])) {
+
+          		$asunto = $_POST['asunto'];
+          		$comentario = $_POST['comentario'];
+          		$correoElectronico = $_POST['correoElectronico'];
+
+          		$this->logica->enviarSugerencia($asunto, $comentario, $correoElectronico);
+            
+          	}else{
+
+            	$this->redireccionActividadNoAutorizada();
+
+          	}
+      
       	}
 
 	}
