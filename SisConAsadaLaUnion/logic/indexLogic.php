@@ -190,6 +190,103 @@
 
     }
 
+    /*
+    //Metodo encargado de obtener el personal de la asada
+    */
+
+    public function obtenerPersonalAsada(){
+
+      $personaData = new personaData();
+
+      $listaPersonalAsada = $personaData->obtenerPersonalAsada();
+
+      print_r(json_encode($listaPersonalAsada));
+
+    }
+
+    /*
+    // Metodo encargado de enviar el correo electrónico con la sugerencia
+    */
+ 
+    private function enviarCorreoElectronico($asunto, $comentario, $correoElectronico){
+
+      $personaData = new personaData();
+
+      $listaCorreosElectronicos = $personaData->obtenerCorreoElectronicoPorTipoUsuario("Administrador");
+
+      $correosElectronicos = "";
+
+      foreach ($listaCorreosElectronicos as $correo) {
+
+        $correosElectronicos .= $correo['correoElectronico'];
+
+        if ($correo !== end($listaCorreosElectronicos)) {
+
+          $correosElectronicos .= ",";
+        
+        }
+          
+      }
+
+      if (!empty($correosElectronicos)) {
+        
+        $mensaje = '<html>
+          <head>
+            <title>'.$asunto.'</title>
+          </head>
+          <body>
+            <p>Una persona con el correo electrónico: <strong>'.$correoElectronico.'</strong> ha escrito una sugerencia para la ASADA.</p>
+            <p><strong>La sugerencia es la siguiente:</strong></p>
+            <p>'.$comentario.'</p>
+          </body>
+        </html>';
+     
+        $cabeceras = 'MIME-Version: 1.0' . "\r\n";
+        $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $cabeceras .= 'From: Sistema de control ASADA La Unión <noreply@sisconasadalaunion.com>'. "\r\n";
+
+
+        // Se envia el correo a los administradores
+        if(mail($correosElectronicos, utf8_decode($asunto), utf8_decode($mensaje), $cabeceras)) {
+
+          echo "true";
+
+        }else{
+
+          echo "Ha ocurrido un error al tratar de enviar la sugerencia, inténtelo de nuevo";
+
+        } 
+
+      }else{
+
+        echo "No se encontraron administradores registrados en el sistema, por lo tanto, la sugerencia no se ha podido enviar";
+
+      }
+        
+    }
+
+    /*
+    //Metodo encargado de enviar una sugerencia al correo electrónico de los administradores
+    */
+
+    public function enviarSugerencia($asunto, $comentario, $correoElectronico){
+
+      $patternCorreoElectronico = "/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/";
+
+      if ($this->indexValidation->validarCamposTexto($asunto, 25) && 
+          $this->indexValidation->validarCamposTexto($comentario, 250) &&
+          $this->indexValidation->validarCamposTextoRegex($correoElectronico, 30, $patternCorreoElectronico)) {
+
+        $this->enviarCorreoElectronico($asunto, $comentario, $correoElectronico);
+
+      }else{
+
+        echo "Para enviar la sugerencia, es necesario que se respeten las validaciones establecidas en el formulario";
+
+      }
+
+    }
+
 	}
 
 ?>

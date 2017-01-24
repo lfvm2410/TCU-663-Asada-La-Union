@@ -34,7 +34,7 @@
 					</ul>
 				</li>
 				<li>
-					<a href="<?php print URL;?>">Contacto</a>
+					<a href="<?php print URL;?>index/contacto">Contacto</a>
 				</li>
 			</ul>
 		</div>

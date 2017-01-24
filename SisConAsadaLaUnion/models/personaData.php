@@ -597,6 +597,85 @@
             
         }
 
+        /*
+        // Metodo encargado de obtener el personal de la asada
+        */
+
+        public function obtenerPersonalAsada(){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $consultaPersonalAsada = mysql_query("call SP_obtenerPersonalAsada()",$conexionBD) or die("Error al tratar de obtener la lista del personal de la ASADA en la base de datos");
+
+            $listaPersonalAsada = array();
+
+            if($consultaPersonalAsada){
+                
+                if(mysql_num_rows($consultaPersonalAsada) > 0){
+
+                    while ($persona = mysql_fetch_array($consultaPersonalAsada)) {
+
+                        $idPersona = $persona['id_Persona'];
+                        $nombreCompleto = $persona['nombreCompleto_Persona'];
+                        $tipo = $persona['tipo_UsuarioSistema'];
+                        $puesto = $persona['puesto_UsuarioSistema'];
+                        $descripcionPuesto = $persona['descripcionPuesto_UsuarioSistema'];
+                        $correoElectronico = $persona['correoElectronico_Persona'];
+
+                        $listaPersonalAsada[] = array('idPersona' => $idPersona, 'nombreCompleto' => $nombreCompleto,
+                                                      'tipo' => $tipo, 'puesto' => $puesto, 'descripcionPuesto' => $descripcionPuesto,
+                                                      'correoElectronico' => $correoElectronico);
+     
+                    }
+
+                }
+
+            }
+
+            mysql_close($conexionBD);
+
+            return $listaPersonalAsada;
+
+        }
+
+        /*
+        // Metodo encargado de obtener los correos electronicos de acuerdo al tipo de usuario
+        */
+
+        public function obtenerCorreoElectronicoPorTipoUsuario($tipoUsuario){
+
+            $conexionBD = $this->getConexionInstance()->getConexion();
+
+            mysql_set_charset('utf8');
+
+            $consultaCorreosElectronicos = mysql_query("call SP_obtenerCorreoElectronicoPorTipoUsuario('$tipoUsuario')",$conexionBD) or die("Error al tratar de obtener la lista de correos electrónicos del personal de la ASADA en la base de datos");
+
+            $listaCorreosElectronicos = array();
+
+            if($consultaCorreosElectronicos){
+                
+                if(mysql_num_rows($consultaCorreosElectronicos) > 0){
+
+                    while ($persona = mysql_fetch_array($consultaCorreosElectronicos)) {
+
+                        $correoElectronico = $persona['correoElectronico_Persona'];
+
+                        $listaCorreosElectronicos[] = array('correoElectronico' => $correoElectronico);
+     
+                    }
+
+                }
+
+            }
+
+            mysql_close($conexionBD);
+
+            return $listaCorreosElectronicos;
+
+        }
+
     }
     
 ?>
