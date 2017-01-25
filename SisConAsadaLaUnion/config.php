@@ -11,7 +11,8 @@
 	define('COMPONENTS', 'views/components/');
 
 	//Codigos para paginacion de registros dinamica
-	define('LIMITE_REGISTROS', 10);	
+	define('LIMITE_REGISTROS', 10);
+	define('LIMITE_REGISTROS_CONSUMOMENSUAL', 12);	
 	define('PAGINACION_USUARIOS', 1);
 	define('TOTAL_USUARIOS', 2);
 	define('PAGINACION_SERVICIOS', 3);
@@ -24,6 +25,8 @@
 	define('TOTAL_LECTURAS', 10);
 	define('PAGINACION_CONTROLCONSUMO', 11);
 	define('TOTAL_CONTROLCONSUMO', 12);
+	define('PAGINACION_CONSUMOMENSUAL', 13);
+	define('TOTAL_CONSUMOMENSUAL', 14);
 
 	//Ruta para guardar archivos adjuntos
 	define('RUTA_ARCHIVOS_ADJUNTOS', $_SERVER['DOCUMENT_ROOT'].URL."public/assets/files/");
