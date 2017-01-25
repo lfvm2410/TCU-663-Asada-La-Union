@@ -54,7 +54,7 @@
   <table id="tablaPersonalAsada" class="table" width="100%"></table>
 </div>
 <a id="idEnviarSugerencia" style="color: #337ab7 !important;">
-	<h5 class="text-center" style="color: #337ab7 !important; margin-top:5.6%;">Enviar sugerencia</h5>
+	<h5 class="text-center" style="color: #337ab7 !important;">Enviar sugerencia</h5>
 </a>
 <div id="verNumsTel" class="container table-responsive" title="Números de teléfono"></div>
 <div id="idEnviarSugerenciaModal" class="container table-responsive" title="Enviar sugerencia" style="display:none;">
