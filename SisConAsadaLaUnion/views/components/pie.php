@@ -18,7 +18,7 @@
 			<h4>Desarrolladores</h4>
 			<hr>
 			<a href="https://www.linkedin.com/in/alexander-gamboa-salazar-73a800121"><h5>Alexander Gamboa Salazar</h5></a>
-			<a href="https://www.linkedin.com/in/luis-fernando-vargas-men%C3%A9ndez-1a2959136"><h5>Luis Fernando Vargas Ménendez</h5></a>
+			<a href="https://www.linkedin.com/in/luis-fernando-vargas-menéndez-1a2959136"><h5>Luis Fernando Vargas Ménendez</h5></a>
 		</div>
 	</div>
 </footer>

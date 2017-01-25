@@ -24,7 +24,7 @@
 					<a href="<?php print URL;?>login">Control interno</a>
 				</li>
 				<li>
-					<a href="<?php print URL;?>">Consumo</a>
+					<a href="<?php print URL;?>reportes/consumoMensual">Consumo mensual</a>
 				</li>
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown">Descargas<b class="caret"></b></a>
